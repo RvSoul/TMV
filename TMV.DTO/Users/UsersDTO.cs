@@ -8,25 +8,24 @@ using TMV.DTO.ModelData;
 
 namespace TMV.DTO.Users
 {
-    public class Request_Users : ModelDTO
+    public class UsersView
     {
-        //[Required(ErrorMessage = "BiaoduanId字段必填！")]
-        //[SelectField("and", "=", "string")]
-        //public string? BiaoduanId { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string LoginName { get; set; }
+        public string PassWord { get; set; }
+        public int Type { get; set; }
+        public DateTime CreateTime { get; set; }
 
+    }
+
+    public class UsersDto
+    {
         /// <summary>
         /// 用户名称
         /// </summary>
         [DefaultValue("用户名称")]
         [SelectField("and", "like", "string")]
         public string? Name { get; set; }
-
-    }
-    public class UsersModel
-    { 
-    }
-
-    public class UsersDTO
-    { 
     }
 }

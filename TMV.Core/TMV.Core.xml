@@ -119,6 +119,31 @@
             启停用时间
             </summary>
         </member>
+        <member name="T:TMV.Core.CM.TMV_Users">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Users.Name">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Users.PassWord">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Users.CreateTime">
+            <summary>
+            注册时间
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Users.Type">
+            <summary>
+            用户类型-1.管理，2.值班
+            </summary>
+        </member>
         <member name="T:TMV.Core.CM.TransportationRecords">
             <summary>
             物流订单
@@ -199,39 +224,9 @@
             创建时间
             </summary>
         </member>
-        <member name="T:TMV.Core.CM.Users">
-            <summary>
-            用户信息
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.Users.Name">
-            <summary>
-            用户名称
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.Users.Pwd">
-            <summary>
-            用户密码
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.Users.AddTime">
-            <summary>
-            注册时间
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.Users.Type">
-            <summary>
-            用户类型-1.管理，2.值班
-            </summary>
-        </member>
         <member name="T:TMV.Core.DbContext">
             <summary>
             数据库上下文对象
-            </summary>
-        </member>
-        <member name="F:TMV.Core.DbContext.Instance">
-            <summary>
-            SqlSugar 数据库实例
             </summary>
         </member>
     </members>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TMV.Core;
 
 namespace TMV.Web.Core
 {
@@ -15,6 +16,7 @@ namespace TMV.Web.Core
             services.AddControllers().AddInjectWithUnifyResult();
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddSqlsugarSetup(App.Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,5 +1,7 @@
 ﻿using Furion;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System.Collections.Generic;
 using TMV.Core.CM;
@@ -11,18 +13,31 @@ namespace TMV.Core
     /// </summary>
     public static class DbContext
     {
-        /// <summary>
-        /// SqlSugar 数据库实例
-        /// </summary>
-        public static readonly SqlSugarScope Instance = new(
-            // 读取 appsettings.json 中的 ConnectionConfigs 配置节点
-            App.GetConfig<List<ConnectionConfig>>("ConnectionConfigs")
-            , db =>
+        public static void AddSqlsugarSetup(this IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionConfigs = App.GetConfig<List<ConnectionConfig>>("ConnectionConfigs");
+            //如果多个数数据库传 List<ConnectionConfig>
+            var configConnection = new ConnectionConfig()
             {
-                // 这里配置全局事件，比如拦截执行 SQL
-            });
+                DbType = SqlSugar.DbType.SqlServer,
+                ConnectionString = connectionConfigs[0].ConnectionString,
+                IsAutoCloseConnection = true,
+            };
+
+            SqlSugarScope sqlSugar = new SqlSugarScope(configConnection,
+                db =>
+                {
+                    //单例参数配置，所有上下文生效
+                    db.Aop.OnLogExecuting = (sql, pars) =>
+                    {
+                        //Console.WriteLine(sql);//输出sql
+                    };
+                });
+
+            services.AddSingleton<ISqlSugarClient>(sqlSugar);//这边是SqlSugarScope用AddSingleton
+        }
 
 
-   
+
     }
 }
