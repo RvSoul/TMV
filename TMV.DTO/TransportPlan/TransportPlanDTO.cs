@@ -8,12 +8,12 @@ using TMV.DTO.ModelData;
 namespace TMV.DTO.TransportPlan
 {
 
-    public class Request_Transport : ModelDTO
+    public class Request_TransportPlan : ModelDTO
     {
 
     }
 
-    public class TransportModel
+    public class TransportPlanModel
     {
     }
     public class TransportPlanDTO
