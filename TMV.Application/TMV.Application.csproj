@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<DocumentationFile>TMV.Application.xml</DocumentationFile>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+
+	<ItemGroup>
+		<None Remove="applicationsettings.json" />
+		<None Remove="TMV.Application.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="applicationsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\TMV.Core\TMV.Core.csproj" />
+		<ProjectReference Include="..\TMV.DTO\TMV.DTO.csproj" />
+	</ItemGroup>
+
+</Project>
