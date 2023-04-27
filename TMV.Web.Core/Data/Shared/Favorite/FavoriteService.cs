@@ -1,0 +1,9 @@
+﻿using System.Collections.Generic;
+
+namespace TMV.Web.Core.Data.Shared.Favorite
+{
+    public static class FavoriteService
+    {
+        public static List<int> GetDefaultFavoriteMenuList() => new() { 5, 2, 15 };
+    }
+}
