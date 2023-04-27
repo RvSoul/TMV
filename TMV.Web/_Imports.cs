@@ -29,3 +29,4 @@ global using TMV.Web.Core.Data.Shared.Favorite;
 global using TMV.Web.Core.Global;
 global using TMV.Web.Core.Global.Config;
 global using TMV.Web.Core.Global.Nav.Model;
+global using TMV.Web.Core;

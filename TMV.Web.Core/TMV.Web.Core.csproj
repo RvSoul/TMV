@@ -13,17 +13,16 @@
 		<None Remove="TMV.Web.Core.xml" />
 	</ItemGroup>
 
-
-	<ItemGroup>
-	  <PackageReference Include="Masa.Blazor" Version="0.6.2" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\TMV.Application\TMV.Application.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Global\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Masa.Blazor" Version="0.6.2" />
 	</ItemGroup>
 
 </Project>
