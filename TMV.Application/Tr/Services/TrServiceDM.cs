@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using TMV.DTO.Authorization;
 using TMV.DTO.Tr;
 
-namespace TMV.Application.Tr
+namespace TMV.Application.Tr.Services
 {
-    public class TrService : ITrService, IDynamicApiController, ITransient
+    public class TrServiceDM : ITrServiceDM, IDynamicApiController, ITransient
     {
         public bool AddTransportationRecords(TransportationRecordsModel model)
         {

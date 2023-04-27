@@ -1,31 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using TMV.Application.Car;
-using TMV.DTO.Scale;
+using TMV.DTO.Car;
 
-namespace TMV.Application.Scale
+namespace TMV.Application.Car.Services
 {
-    public class ScaleService : IScaleService, IDynamicApiController, ITransient
+    public class CarServiceDM : ICarServiceDM, IDynamicApiController, ITransient
     {
-        public bool AddScale(ScaleModel model)
+        public bool AddCar(CarModel model)
         {
             throw new NotImplementedException();
         }
 
-        public List<ScaleDTO> GetScaleList(Request_Scale dto, out int count)
+        public bool DeCar(int id)
         {
             throw new NotImplementedException();
         }
 
-        public bool QtScale(int id)
+        public List<CarDTO> GetCarList(Request_Car dto, out int count)
         {
             throw new NotImplementedException();
         }
 
-        public bool UpScale(ScaleModel model)
+        public bool UpCar(CarModel model)
         {
             throw new NotImplementedException();
         }

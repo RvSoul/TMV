@@ -8,7 +8,7 @@ using TMV.DTO.Users;
 
 namespace TMV.Application.Users.Services
 {
-    public interface IUsersServices
+    public interface IUsersServiceDM
     {
         string Login(string userName, string password, out string message);
 
