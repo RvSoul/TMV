@@ -10,10 +10,10 @@ using TMV.DTO;
 
 namespace TMV.Application.Users.Services
 {
-    public class UsersServices :IUsersServices, ITransient
+    public class UsersServiceDM :IUsersServiceDM, ITransient
     {
         ISqlSugarClient _db;
-        public UsersServices(ISqlSugarClient db)
+        public UsersServiceDM(ISqlSugarClient db)
         {
             _db = db;
         }

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TMV.DTO.Car;
 
-namespace TMV.Application.Car
+namespace TMV.Application.Car.Services
 {
-    public interface ICarService
+    public interface ICarServiceDM
     {
         bool AddCar(CarModel model);
 

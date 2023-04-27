@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TMV.DTO.Scale;
 
-namespace TMV.Application.Scale
+namespace TMV.Application.Scale.Services
 {
-    public interface IScaleService
+    public interface IScaleServiceDM
     {
         List<ScaleDTO> GetScaleList(Request_Scale dto, out int count);
         bool AddScale(ScaleModel model);

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using TMV.Application.Users;
 using TMV.DTO.TransportPlan;
 
-namespace TMV.Application.TransportPlan
+namespace TMV.Application.TransportPlan.Services
 {
-    public class TransportPlanService : ITransportPlanService, IDynamicApiController, ITransient
+    public class TransportPlanServiceDM : ITransportPlanServiceDM, IDynamicApiController, ITransient
     {
         public bool AddTransportPlan(TransportPlanModel model)
         {

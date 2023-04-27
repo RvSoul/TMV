@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using TMV.DTO.Authorization;
 using TMV.DTO.Tr;
 
-namespace TMV.Application.Tr
+namespace TMV.Application.Tr.Services
 {
-    public interface ITrService
+    public interface ITrServiceDM
     {
         List<TransportationRecordsDTO> GetTransportationRecordsList(Request_TransportationRecords dto, out int count);
         bool AddTransportationRecords(TransportationRecordsModel model);

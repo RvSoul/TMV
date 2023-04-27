@@ -1,6 +1,6 @@
-﻿namespace TMV.Application
+﻿namespace TMV.Application.System.Services
 {
-    public class SystemService : ISystemService, IDynamicApiController, ITransient
+    public class SystemServiceDM : ISystemServiceDM, IDynamicApiController, ITransient
     {
         public string GetDescription()
         {
