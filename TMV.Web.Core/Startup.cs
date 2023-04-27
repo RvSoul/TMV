@@ -17,6 +17,17 @@ namespace TMV.Web.Core
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSqlsugarSetup(App.Configuration);
+            services.AddMasaBlazor(builder =>
+            {
+                builder.ConfigureTheme(theme =>
+                {
+                    theme.Themes.Light.Primary = "#4318FF";
+                    theme.Themes.Light.Accent = "#4318FF";
+                });
+            }).AddI18nForServer("wwwroot/i18n");
+            services.AddHttpContextAccessor();
+            services.AddGlobalForServer();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

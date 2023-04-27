@@ -1,0 +1,9 @@
+﻿@page "/"
+@namespace TMV.Web.Pages
+@using TMV.Web.Core.Global
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(TMV.Web.App)" render-mode="ServerPrerendered" />
