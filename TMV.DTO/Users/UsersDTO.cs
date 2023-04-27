@@ -8,18 +8,9 @@ using TMV.DTO.ModelData;
 
 namespace TMV.DTO.Users
 {
-    public class UsersView
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string LoginName { get; set; }
-        public string PassWord { get; set; }
-        public int Type { get; set; }
-        public DateTime CreateTime { get; set; }
+ 
 
-    }
-
-    public class UsersDto
+    public class Request_Users : ModelDTO
     {
         /// <summary>
         /// 用户名称
@@ -27,5 +18,31 @@ namespace TMV.DTO.Users
         [DefaultValue("用户名称")]
         [SelectField("and", "like", "string")]
         public string? Name { get; set; }
+    }
+    public class UsersModel
+    {
+        public int Id { get; set; }
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        [DefaultValue("用户名称")]
+        public string Name { get; set; }
+        /// <summary>
+        /// 用户密码
+        /// </summary>
+        [DefaultValue("用户密码")]
+        public string Pwd { get; set; }
+
+        public int Type { get; set; }
+    }
+
+    public class UsersDTO
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Pwd { get; set; }
+        public int Type { get; set; }
+        public DateTime AddTime { get; set; }
+
     }
 }

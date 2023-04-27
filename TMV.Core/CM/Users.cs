@@ -13,29 +13,28 @@ namespace TMV.Core.CM
     /// <summary>
     /// 用户信息
     /// </summary>
-    [SugarTable("tmv_user")]
+    [SugarTable("Users")]
     public class TMV_Users
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 用户名称
         /// </summary>
         [DefaultValue("用户名称")]
-        public string Name { get; set; }
-        public string LoginName { get; set; }
+        public string Name { get; set; } 
         /// <summary>
         /// 用户密码
         /// </summary>
         [DefaultValue("用户密码")]
-        public string PassWord { get; set; }
+        public string Pwd { get; set; }
 
         /// <summary>
         /// 注册时间
         /// </summary>
         [DefaultValue("注册时间")]
-        public DateTime CreateTime { get; set; }
+        public DateTime AddTime { get; set; }
 
         /// <summary>
         /// 用户类型-1.管理，2.值班

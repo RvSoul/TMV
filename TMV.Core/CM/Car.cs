@@ -14,7 +14,7 @@ namespace TMV.Core.CM
     /// 车辆信息
     /// </summary>
     [SugarTable("Car")]
-    public partial class Car
+    public partial class  TMV_Car
     {
         [Key]
         public int Id { get; set; }
@@ -105,6 +105,6 @@ namespace TMV.Core.CM
         /// <summary>
         /// 建档时间
         /// </summary> 
-        public string AddTime { get; set; } 
+        public DateTime AddTime { get; set; } 
     }
 }

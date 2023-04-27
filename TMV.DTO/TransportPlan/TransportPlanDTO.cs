@@ -15,6 +15,7 @@ namespace TMV.DTO.TransportPlan
 
     public class TransportPlanModel
     {
+        public Guid Id { get; set; }
     }
     public class TransportPlanDTO
     {

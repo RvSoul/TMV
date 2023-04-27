@@ -11,11 +11,11 @@ namespace TMV.DTO.Car
     public class Request_Car : ModelDTO
     {
         /// <summary>
-        /// 用户名称
+        /// 车牌号
         /// </summary>
         [SelectField("and", "like", "string")]
-        [DefaultValue("用户名称")]
-        public string? Name { get; set; }
+        [DefaultValue("车牌号")]
+        public string PlateNumber { get; set; }
 
     }
     public class CarModel

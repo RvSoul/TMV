@@ -14,7 +14,7 @@ namespace TMV.Core.CM
     /// 物流订单
     /// </summary>
     [SugarTable("TransportationRecords")]
-    public partial class TransportationRecords
+    public partial class TMV_TransportationRecords
     {
         [Key]
         public Guid Id { get; set; }

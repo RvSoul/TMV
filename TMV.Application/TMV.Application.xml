@@ -4,5 +4,109 @@
         <name>TMV.Application</name>
     </assembly>
     <members>
+        <member name="M:TMV.Application.Car.CarService.GetCarList(TMV.DTO.Car.Request_Car)">
+            <summary>
+            获取车辆列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Car.CarService.AddCar(TMV.DTO.Car.CarModel)">
+            <summary>
+            添加车辆
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Car.CarService.UpCar(TMV.DTO.Car.CarModel)">
+            <summary>
+            修改车辆
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Car.CarService.DeCar(System.Int32)">
+            <summary>
+            删除车辆
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Scale.ScaleService.GetScaleList(TMV.DTO.Scale.Request_Scale)">
+            <summary>
+            获取衡列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Scale.ScaleService.AddScale(TMV.DTO.Scale.ScaleModel)">
+            <summary>
+            添加衡
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Scale.ScaleService.UpScale(TMV.DTO.Scale.ScaleModel)">
+            <summary>
+            修改衡
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Scale.ScaleService.DeScale(System.Int32)">
+            <summary>
+            启用弃用衡
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.TransportPlan.TransportPlanService.GetTransportPlanList(TMV.DTO.TransportPlan.Request_TransportPlan)">
+            <summary>
+            获取运输计划列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.TransportPlan.TransportPlanService.AddTransportPlan(TMV.DTO.TransportPlan.TransportPlanModel)">
+            <summary>
+            添加运输计划
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.TransportPlan.TransportPlanService.UpTransportPlan(TMV.DTO.TransportPlan.TransportPlanModel)">
+            <summary>
+            修改运输计划
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.TransportPlan.TransportPlanService.DeTransportPlan(System.Int32)">
+            <summary>
+            删除运输计划
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Users.UsersService.GetUsersList(TMV.DTO.Users.Request_Users)">
+            <summary>
+            获取用户列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Users.UsersService.AddUsers(TMV.DTO.Users.UsersModel)">
+            <summary>
+            添加用户
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Users.UsersService.UpUsers(TMV.DTO.Users.UsersModel)">
+            <summary>
+            修改用户
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Users.UsersService.DeUsers(System.Int32)">
+            <summary>
+            删除用户
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

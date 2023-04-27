@@ -12,11 +12,11 @@ namespace TMV.Application.Users.Services
     {
         string Login(string userName, string password, out string message);
 
-        Task<ResultPageData> GetUsersList(UsersPageDto dto);
-        Task<bool> AddUsers(UserInsertDto model);
+        List<UsersDTO> GetUsersList(Request_Users dto, out int count);
+        bool AddUsers(UsersModel model);
 
-        Task<bool> UpUsers(UserInsertDto model);
+        bool UpUsers(UsersModel model);
 
-        Task<bool> DeUsers(int id);
+        bool DeUsers(int id);
     }
 }

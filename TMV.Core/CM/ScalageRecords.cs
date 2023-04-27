@@ -14,7 +14,7 @@ namespace TMV.Core.CM
     /// 称重记录
     /// </summary>
     [SugarTable("ScalageRecords")]
-    public partial class ScalageRecords
+    public partial class TMV_ScalageRecords
     {
         [Key]
         public Guid Id { get; set; }

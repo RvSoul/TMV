@@ -14,7 +14,7 @@ namespace TMV.Core.CM
     /// 异常处理记录
     /// </summary>
     [SugarTable("AbnormalRecords")]
-    public partial class AbnormalRecords
+    public partial class TMV_AbnormalRecords
     {
         [Key]
         public Guid Id { get; set; }

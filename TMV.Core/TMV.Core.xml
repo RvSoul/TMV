@@ -4,119 +4,314 @@
         <name>TMV.Core</name>
     </assembly>
     <members>
-        <member name="T:TMV.Core.CM.AbnormalRecords">
+        <member name="T:TMV.Core.CM.TMV_AbnormalRecords">
             <summary>
             异常处理记录
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.AbnormalRecords.TId">
+        <member name="P:TMV.Core.CM.TMV_AbnormalRecords.TId">
             <summary>
             运输Id
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.AbnormalRecords.UserId">
+        <member name="P:TMV.Core.CM.TMV_AbnormalRecords.UserId">
             <summary>
             用户id
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.AbnormalRecords.AbnormalCause">
+        <member name="P:TMV.Core.CM.TMV_AbnormalRecords.AbnormalCause">
             <summary>
             异常原因
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.AbnormalRecords.Disposal">
+        <member name="P:TMV.Core.CM.TMV_AbnormalRecords.Disposal">
             <summary>
             异常处理方式
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.AbnormalRecords.DisposalTime">
+        <member name="P:TMV.Core.CM.TMV_AbnormalRecords.DisposalTime">
             <summary>
             处理时间
             </summary>
         </member>
-        <member name="T:TMV.Core.CM.Car">
+        <member name="T:TMV.Core.CM.TMV_Car">
             <summary>
             车辆信息
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.Car.PlateNumber">
+        <member name="P:TMV.Core.CM.TMV_Car.PlateNumber">
             <summary>
             车牌号
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.Car.EmptyWeight">
+        <member name="P:TMV.Core.CM.TMV_Car.Type">
+            <summary>
+            车辆类型
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.SizeC">
+            <summary>
+            车厢长
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.SizeK">
+            <summary>
+            车厢宽
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.SizeG">
+            <summary>
+            车厢高
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.Surveyor">
+            <summary>
+            测量人员
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.TieBar1">
+            <summary>
+            拉筋一
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.TieBar2">
+            <summary>
+            拉筋二
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.TieBar3">
+            <summary>
+            拉筋三
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.RatedWeight">
+            <summary>
+            额定载重量
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.ExerciseCode">
+            <summary>
+            行驶证号
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.TAgCode">
+            <summary>
+            电子标签号
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.EmptyWeight">
             <summary>
             空水空油重量
-            </summary>
+            </summary> 
         </member>
-        <member name="P:TMV.Core.CM.Car.FullWeight">
+        <member name="P:TMV.Core.CM.TMV_Car.FullWeight">
             <summary>
             满水满油重量
-            </summary>
+            </summary> 
         </member>
-        <member name="P:TMV.Core.CM.Car.DriverName">
+        <member name="P:TMV.Core.CM.TMV_Car.DriverName">
             <summary>
             驾驶员名称
-            </summary>
+            </summary> 
         </member>
-        <member name="P:TMV.Core.CM.Car.DrivingCode">
+        <member name="P:TMV.Core.CM.TMV_Car.Sex">
+            <summary>
+            性别
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.Age">
+            <summary>
+            年龄
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.NativePlace">
+            <summary>
+            籍贯
+            </summary> 
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Car.DrivingCode">
             <summary>
             驾照编号
-            </summary>
+            </summary> 
         </member>
-        <member name="P:TMV.Core.CM.Car.AddTime">
+        <member name="P:TMV.Core.CM.TMV_Car.AddName">
             <summary>
-            注册时间
-            </summary>
+            建档人
+            </summary> 
         </member>
-        <member name="T:TMV.Core.CM.ScalageRecords">
+        <member name="P:TMV.Core.CM.TMV_Car.AddTime">
+            <summary>
+            建档时间
+            </summary> 
+        </member>
+        <member name="T:TMV.Core.CM.TMV_ScalageRecords">
             <summary>
             称重记录
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.ScalageRecords.ScaleId">
+        <member name="P:TMV.Core.CM.TMV_ScalageRecords.ScaleId">
             <summary>
             衡Id
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.ScalageRecords.TId">
+        <member name="P:TMV.Core.CM.TMV_ScalageRecords.TId">
             <summary>
             运输Id
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.ScalageRecords.Weigh">
+        <member name="P:TMV.Core.CM.TMV_ScalageRecords.Weigh">
             <summary>
             重量
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.ScalageRecords.AddTime">
+        <member name="P:TMV.Core.CM.TMV_ScalageRecords.AddTime">
             <summary>
             称重时间
             </summary>
         </member>
-        <member name="T:TMV.Core.CM.Scale">
+        <member name="T:TMV.Core.CM.TMV_Scale">
             <summary>
             衡管理
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.Scale.Name">
+        <member name="P:TMV.Core.CM.TMV_Scale.Name">
             <summary>
             衡名称
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.Scale.Type">
+        <member name="P:TMV.Core.CM.TMV_Scale.Type">
             <summary>
             衡类型-1.重，2.轻,3.混合
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.Scale.State">
+        <member name="P:TMV.Core.CM.TMV_Scale.State">
             <summary>
             衡状态-1.启用，2.停用
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.Scale.UpTime">
+        <member name="P:TMV.Core.CM.TMV_Scale.UpTime">
             <summary>
             启停用时间
+            </summary>
+        </member>
+        <member name="T:TMV.Core.CM.TMV_TransportationRecords">
+            <summary>
+            物流订单
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.CarId">
+            <summary>
+            车辆Id
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.CollieryId">
+            <summary>
+            矿号Id
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.RoughWeight">
+            <summary>
+            毛量
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.TareWeight">
+            <summary>
+            皮重
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.NetWeight">
+            <summary>
+            净重
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.STime">
+            <summary>
+            进厂时间
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.ETime">
+            <summary>
+            出厂时间
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.State">
+            <summary>
+            状态-1.正常，2.告警
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.IsUpload">
+            <summary>
+            是否上传-1.未上传，2.已上传
+            </summary>
+        </member>
+        <member name="T:TMV.Core.CM.TMV_TransportPlan">
+            <summary>
+            运输计划
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.Code">
+            <summary>
+            编号
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.Tonnage">
+            <summary>
+            进煤吨数
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.SendUnit">
+            <summary>
+            发货单位
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.ReceiptUnit">
+            <summary>
+            收货单位
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.CargoName">
+            <summary>
+            货物名称
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.Carrier">
+            <summary>
+            承运单位
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.ArrivalTime">
+            <summary>
+            到货日期
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.MineCode">
+            <summary>
+            矿号
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.MineName">
+            <summary>
+            矿名
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.ShipName">
+            <summary>
+            船名
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.ShippingUnit">
+            <summary>
+            船运单位
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.Sampling">
+            <summary>
+            采样方式-1.人采，2.机采
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.AddTime">
+            <summary>
+            创建时间
             </summary>
         </member>
         <member name="T:TMV.Core.CM.TMV_Users">
@@ -129,12 +324,12 @@
             用户名称
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.TMV_Users.PassWord">
+        <member name="P:TMV.Core.CM.TMV_Users.Pwd">
             <summary>
             用户密码
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.TMV_Users.CreateTime">
+        <member name="P:TMV.Core.CM.TMV_Users.AddTime">
             <summary>
             注册时间
             </summary>
@@ -142,86 +337,6 @@
         <member name="P:TMV.Core.CM.TMV_Users.Type">
             <summary>
             用户类型-1.管理，2.值班
-            </summary>
-        </member>
-        <member name="T:TMV.Core.CM.TransportationRecords">
-            <summary>
-            物流订单
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.CarId">
-            <summary>
-            车辆Id
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.CollieryId">
-            <summary>
-            矿号Id
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.RoughWeight">
-            <summary>
-            毛量
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.TareWeight">
-            <summary>
-            皮重
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.NetWeight">
-            <summary>
-            净重
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.STime">
-            <summary>
-            进厂时间
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.ETime">
-            <summary>
-            出厂时间
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.State">
-            <summary>
-            状态-1.正常，2.告警
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportationRecords.IsUpload">
-            <summary>
-            是否上传-1.未上传，2.已上传
-            </summary>
-        </member>
-        <member name="T:TMV.Core.CM.TransportPlan">
-            <summary>
-            运输计划
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportPlan.MineCode">
-            <summary>
-            矿号
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportPlan.Code">
-            <summary>
-            编号
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportPlan.ShippingUnit">
-            <summary>
-            船运单位
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportPlan.Carrier">
-            <summary>
-            承运单位
-            </summary>
-        </member>
-        <member name="P:TMV.Core.CM.TransportPlan.AddTime">
-            <summary>
-            创建时间
             </summary>
         </member>
         <member name="T:TMV.Core.DbContext">

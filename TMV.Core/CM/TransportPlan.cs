@@ -14,7 +14,7 @@ namespace TMV.Core.CM
     /// 运输计划
     /// </summary>
     [SugarTable("TransportPlan")]
-    public partial class TransportPlan
+    public partial class TMV_TransportPlan
     {
         [Key]
         public Guid Id { get; set; }

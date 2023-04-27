@@ -14,7 +14,7 @@ namespace TMV.Core.CM
     /// 衡管理
     /// </summary>
     [SugarTable("Scale")]
-    public partial class Scale
+    public partial class TMV_Scale
     {
         [Key]
         public int Id { get; set; }
