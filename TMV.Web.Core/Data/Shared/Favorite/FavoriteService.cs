@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TMV.Web.Core.Data.Shared.Favorite
+﻿namespace TMV.Web.Core.Data.Shared.Favorite
 {
     public static class FavoriteService
     {

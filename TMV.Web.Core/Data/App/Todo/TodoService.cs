@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TMV.Web.Core.Data.App.Todo.Dto;
+﻿using TMV.Web.Core.Data.App.Todo.Dto;
 
 namespace TMV.Web.Core.Data.App.Todo
 {
