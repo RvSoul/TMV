@@ -18,6 +18,7 @@
     <MCol Md=8 Sm=12 Class="fill-lighten-1 block-center">
         <TMV.Web.Pages.Authentication.Components.Login HideLogo Elevation="0" Width="500"
             CreateAccountRoute="pages/authentication/register-v2"
+                                                       OnLogin="@Login"
             ForgotPasswordRoute="pages/authentication/forgot-password-v2">
         </TMV.Web.Pages.Authentication.Components.Login>
     </MCol>
@@ -33,6 +34,8 @@
 
     public void Login(MouseEventArgs args)
     {
+        Console.WriteLine(Navigation.BaseUri);
+
         Navigation.NavigateTo(Navigation.BaseUri);
     }
 }

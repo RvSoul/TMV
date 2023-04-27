@@ -1,5 +1,4 @@
-﻿using System;
-using TMV.Web.Core.Data.App.User.Dto;
+﻿using TMV.Web.Core.Data.App.User.Dto;
 
 namespace TMV.Web.Core.Data.App.Invoice.Dto
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TMV.Web.Core.Data.Base
+﻿namespace TMV.Web.Core.Data.Base
 {
     public class PagingData<TEntity> where TEntity : class
     {

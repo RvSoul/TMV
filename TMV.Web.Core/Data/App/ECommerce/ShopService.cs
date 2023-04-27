@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TMV.Web.Core.Data.App.ECommerce.Dto;
+﻿using TMV.Web.Core.Data.App.ECommerce.Dto;
 
 namespace TMV.Web.Core.Data.App.ECommerce
 {

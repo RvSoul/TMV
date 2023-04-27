@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TMV.Web.Core.Data.Dashboard.ECommerce.Dto;
+﻿using TMV.Web.Core.Data.Dashboard.ECommerce.Dto;
 
 namespace TMV.Web.Core.Data.Dashboard.ECommerce
 {

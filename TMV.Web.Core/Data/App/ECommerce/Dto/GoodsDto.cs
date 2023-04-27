@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TMV.Web.Core.Data.App.ECommerce.Dto
+﻿namespace TMV.Web.Core.Data.App.ECommerce.Dto
 {
     public class GoodsDto
     {

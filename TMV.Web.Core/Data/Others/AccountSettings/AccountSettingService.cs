@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TMV.Web.Core.Data.Others.AccountSettings.Dto;
+﻿using TMV.Web.Core.Data.Others.AccountSettings.Dto;
 
 namespace TMV.Web.Core.Data.Others.AccountSettings
 {
