@@ -4,5 +4,48 @@
         <name>TMV.Web.Core</name>
     </assembly>
     <members>
+        <member name="T:TMV.Web.Core.Const.ClaimConst">
+            <summary>
+            授权用户常量
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.Const.ClaimConst.Account">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.Const.ClaimConst.IsOpenApi">
+            <summary>
+            OpenApi
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.Const.ClaimConst.IsSuperAdmin">
+            <summary>
+            账号类型
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.Const.ClaimConst.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.Const.ClaimConst.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.Const.ClaimConst.VerificatId">
+            <summary>
+            验证Id
+            </summary>
+        </member>
+        <member name="M:TMV.Web.Core.Handle.BlazorAuthorizeHandler.PipelineAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,Microsoft.AspNetCore.Http.DefaultHttpContext)">
+            <summary>
+            授权判断逻辑，授权通过返回 true，否则返回 false
+            </summary>
+            <param name="context"></param>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

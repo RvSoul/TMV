@@ -339,6 +339,41 @@
             用户类型-1.管理，2.值班
             </summary>
         </member>
+        <member name="T:TMV.Core.Const.ClaimConst">
+            <summary>
+            授权用户常量
+            </summary>
+        </member>
+        <member name="F:TMV.Core.Const.ClaimConst.Account">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="F:TMV.Core.Const.ClaimConst.IsOpenApi">
+            <summary>
+            OpenApi
+            </summary>
+        </member>
+        <member name="F:TMV.Core.Const.ClaimConst.IsSuperAdmin">
+            <summary>
+            账号类型
+            </summary>
+        </member>
+        <member name="F:TMV.Core.Const.ClaimConst.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="F:TMV.Core.Const.ClaimConst.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="F:TMV.Core.Const.ClaimConst.VerificatId">
+            <summary>
+            验证Id
+            </summary>
+        </member>
         <member name="T:TMV.Core.DbContext">
             <summary>
             数据库上下文对象

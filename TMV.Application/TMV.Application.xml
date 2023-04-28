@@ -4,6 +4,20 @@
         <name>TMV.Application</name>
     </assembly>
     <members>
+        <member name="M:TMV.Application.AuthService.AuthService.Login(System.String,System.String)">
+            <summary>
+            登录
+            </summary>
+            <param name="userName"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.AuthService.AuthService.LoginOut">
+            <summary>
+            退出
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TMV.Application.Car.CarService.GetCarList(TMV.DTO.Car.Request_Car)">
             <summary>
             获取车辆列表

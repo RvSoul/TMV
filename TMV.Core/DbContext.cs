@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMV.Core.CM;
 
 namespace TMV.Core
@@ -31,6 +33,7 @@ namespace TMV.Core
                     db.Aop.OnLogExecuting = (sql, pars) =>
                     {
                         //Console.WriteLine(sql);//输出sql
+                        Console.WriteLine($"当前SQL语句：【{sql}】，参数：【{string.Join(",", pars.Select(t => t.Value))}】");
                     };
                 });
 

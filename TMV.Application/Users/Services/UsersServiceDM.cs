@@ -11,6 +11,11 @@ using TMV.DTO.ModelData;
 using System.Linq.Expressions;
 using Furion.LinqBuilder;
 using System.Xml.Linq;
+using Mapster;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using TMV.Core.Const;
 
 namespace TMV.Application.Users.Services
 {
@@ -21,24 +26,6 @@ namespace TMV.Application.Users.Services
         {
             c = db;
         }
-        #region 登录
-        public string Login(string userName, string password, out string message)
-        { 
-            var data = c.Queryable<TMV_Users>().Where(w=>w.Name==userName&&w.Name==password).First();
-
-            if (data != null)
-            {
-                message = "登录成功。";
-                return data.Id.ToString();
-            }
-            else
-            {
-                message = "登录失败，用户名或密码错误。";
-                return "";
-            }
-        }
-        #endregion
-
         public List<UsersDTO> GetUsersList(Request_Users dto, out int count)
         {
             Expression<Func<TMV_Users, bool>> expr = n => true;
@@ -100,7 +87,11 @@ namespace TMV.Application.Users.Services
             }
         }
 
-
+        public UsersDTO GetUset(string id)
+        {
+            return c.Queryable<TMV_Users>().First(x => x.Id == id).Adapt<UsersDTO>();
+            
+        }
         public bool UpUsers(UsersModel model)
         {
             var data = c.Queryable<TMV_Users>().InSingle(model.Id);

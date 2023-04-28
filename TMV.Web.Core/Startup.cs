@@ -1,10 +1,12 @@
 ﻿using Furion;
 using Furion.VirtualFileServer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TMV.Core;
+using TMV.Web.Core.Components;
 
 namespace TMV.Web.Core
 {
@@ -12,8 +14,12 @@ namespace TMV.Web.Core
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            // 允许跨域
+            services.AddCorsAccessor();
             services.AddConsoleFormatter();
             services.AddControllers().AddInjectWithUnifyResult();
+            //认证组件
+            services.AddComponent<AuthComponent>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSqlsugarSetup(App.Configuration);
@@ -27,7 +33,6 @@ namespace TMV.Web.Core
             }).AddI18nForServer("wwwroot/i18n");
             services.AddHttpContextAccessor();
             services.AddGlobalForServer();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,7 +46,9 @@ namespace TMV.Web.Core
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            app.UseCors();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

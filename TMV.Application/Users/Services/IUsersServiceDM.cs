@@ -10,13 +10,12 @@ namespace TMV.Application.Users.Services
 {
     public interface IUsersServiceDM
     {
-        string Login(string userName, string password, out string message);
-
         List<UsersDTO> GetUsersList(Request_Users dto, out int count);
         bool AddUsers(UsersModel model);
 
         bool UpUsers(UsersModel model);
 
         bool DeUsers(int id);
+        UsersDTO GetUset(string id);
     }
 }
