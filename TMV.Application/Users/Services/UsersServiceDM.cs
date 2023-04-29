@@ -74,7 +74,7 @@ namespace TMV.Application.Users.Services
             }
         }
 
-        public bool DeUsers(int id)
+        public bool DeUsers(Guid id)
         {
             var result = c.Deleteable<TMV_Users>().In(id).ExecuteCommand();
             if (result > 0)
@@ -87,7 +87,7 @@ namespace TMV.Application.Users.Services
             }
         }
 
-        public UsersDTO GetUset(string id)
+        public UsersDTO GetUset(Guid id)
         {
             return c.Queryable<TMV_Users>().First(x => x.Id == id).Adapt<UsersDTO>();
             

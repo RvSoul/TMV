@@ -15,7 +15,7 @@ namespace TMV.Application.Tr.Services
 
         bool UpTransportationRecords(TransportationRecordsModel model);
 
-        bool DeTransportationRecords(string id);
+        bool DeTransportationRecords(Guid id);
         bool GetDataInfo(AuthorizationDTO dto);
     }
 }

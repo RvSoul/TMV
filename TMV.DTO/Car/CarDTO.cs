@@ -20,7 +20,7 @@ namespace TMV.DTO.Car
     }
     public class CarModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
     }
     public class CarDTO

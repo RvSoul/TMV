@@ -17,7 +17,7 @@ namespace TMV.Core.CM
     public partial class  TMV_Car
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 车牌号

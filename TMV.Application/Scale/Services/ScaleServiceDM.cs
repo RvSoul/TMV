@@ -35,7 +35,7 @@ namespace TMV.Application.Scale.Services
             }
         }
 
-        public bool QtScale(int id)
+        public bool QtScale(Guid id)
         {
             var result = c.Deleteable<TMV_Scale>().In(id).ExecuteCommand();
             if (result > 0)

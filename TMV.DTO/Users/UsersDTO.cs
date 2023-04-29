@@ -21,7 +21,7 @@ namespace TMV.DTO.Users
     }
     public class UsersModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         /// <summary>
         /// 用户名称
         /// </summary>
@@ -38,7 +38,7 @@ namespace TMV.DTO.Users
 
     public class UsersDTO
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Pwd { get; set; }
         public int Type { get; set; }

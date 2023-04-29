@@ -23,7 +23,7 @@ namespace TMV.Core.CM
         /// 衡Id
         /// </summary>
         [DefaultValue("衡Id")]
-        public int ScaleId { get; set; }
+        public Guid ScaleId { get; set; }
 
         /// <summary>
         /// 运输Id

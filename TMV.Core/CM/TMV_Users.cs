@@ -17,7 +17,7 @@ namespace TMV.Core.CM
     public class TMV_Users
     {
         [Key]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 用户名称

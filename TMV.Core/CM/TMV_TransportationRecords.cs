@@ -23,7 +23,7 @@ namespace TMV.Core.CM
         /// 车辆Id
         /// </summary>
         [DefaultValue("车辆Id")]
-        public int CarId { get; set; }
+        public Guid CarId { get; set; }
 
         /// <summary>
         /// 矿号Id

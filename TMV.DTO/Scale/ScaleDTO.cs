@@ -15,7 +15,7 @@ namespace TMV.DTO.Scale
 
     public class ScaleModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
     public class ScaleDTO
     {

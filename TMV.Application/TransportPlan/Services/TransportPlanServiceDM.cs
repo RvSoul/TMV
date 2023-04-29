@@ -37,7 +37,7 @@ namespace TMV.Application.TransportPlan.Services
             }
         }
 
-        public bool DeTransportPlan(int id)
+        public bool DeTransportPlan(Guid id)
         {
             var result = c.Deleteable<TMV_TransportPlan>().In(id).ExecuteCommand();
             if (result > 0)

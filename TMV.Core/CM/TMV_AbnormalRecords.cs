@@ -29,7 +29,7 @@ namespace TMV.Core.CM
         /// 用户id
         /// </summary>
         [DefaultValue("用户id")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// 异常原因

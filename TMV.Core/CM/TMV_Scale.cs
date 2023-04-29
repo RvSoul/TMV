@@ -17,7 +17,7 @@ namespace TMV.Core.CM
     public partial class TMV_Scale
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 衡名称

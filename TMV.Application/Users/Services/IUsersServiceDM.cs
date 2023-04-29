@@ -15,7 +15,7 @@ namespace TMV.Application.Users.Services
 
         bool UpUsers(UsersModel model);
 
-        bool DeUsers(int id);
-        UsersDTO GetUset(string id);
+        bool DeUsers(Guid id);
+        UsersDTO GetUset(Guid id);
     }
 }
