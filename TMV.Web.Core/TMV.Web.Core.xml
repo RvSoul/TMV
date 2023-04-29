@@ -4,6 +4,74 @@
         <name>TMV.Web.Core</name>
     </assembly>
     <members>
+        <member name="T:TMV.Web.Core.AjaxServer.AjaxOption">
+            <summary>
+            Ajax配置类
+            </summary>
+        </member>
+        <member name="P:TMV.Web.Core.AjaxServer.AjaxOption.Data">
+            <summary>
+            获取/设置 要上传的参数类
+            </summary>
+        </member>
+        <member name="P:TMV.Web.Core.AjaxServer.AjaxOption.Method">
+            <summary>
+            获取/设置 传输方式，默认为POST
+            </summary>
+        </member>
+        <member name="P:TMV.Web.Core.AjaxServer.AjaxOption.Url">
+            <summary>
+            获取/设置 请求的URL
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:TMV.Web.Core.AjaxServer.AjaxService" -->
+        <member name="P:TMV.Web.Core.AjaxServer.AjaxService.Cache">
+            <summary>
+            获得 回调委托缓存集合
+            </summary>
+        </member>
+        <member name="P:TMV.Web.Core.AjaxServer.AjaxService.GotoCache">
+            <summary>
+            获得 跳转其他页面的回调委托缓存集合
+            </summary>
+        </member>
+        <member name="M:TMV.Web.Core.AjaxServer.AjaxService.GetMessageAsync(TMV.Web.Core.AjaxServer.AjaxOption)">
+            <summary>
+            调用Ajax方法发送请求
+            </summary>
+            <param name="option"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Web.Core.AjaxServer.AjaxService.GotoAsync(System.String)">
+            <summary>
+            调用 Goto 方法跳转其他页面
+            </summary>
+            <param name="url"></param>
+        </member>
+        <member name="M:TMV.Web.Core.AjaxServer.AjaxService.Register(Microsoft.AspNetCore.Components.IComponent,System.Func{TMV.Web.Core.AjaxServer.AjaxOption,System.Threading.Tasks.Task{System.String}})">
+            <summary>
+            注册服务
+            </summary>
+            <param name="key"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:TMV.Web.Core.AjaxServer.AjaxService.RegisterGoto(Microsoft.AspNetCore.Components.IComponent,System.Func{System.String,System.Threading.Tasks.Task})">
+            <summary>
+            注册服务
+            </summary>
+            <param name="key"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:TMV.Web.Core.AjaxServer.AjaxService.UnRegister(Microsoft.AspNetCore.Components.IComponent)">
+            <summary>
+            注销事件
+            </summary>
+        </member>
+        <member name="M:TMV.Web.Core.AjaxServer.AjaxService.UnRegisterGoto(Microsoft.AspNetCore.Components.IComponent)">
+            <summary>
+            注销事件
+            </summary>
+        </member>
         <member name="T:TMV.Web.Core.Const.ClaimConst">
             <summary>
             授权用户常量

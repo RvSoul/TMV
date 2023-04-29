@@ -48,17 +48,24 @@
 
 @code {
     [Inject]
+    public AjaxService AjaxService { get; set; }
+    [Inject]
     public NavigationManager Navigation { get; set; } = default!;
+    private LoginInputDTO loginMode=new();
     private bool _show;
     private string LoginName { get; set; }
     private string PassWord { get; set; }
     public async void OnLogin(MouseEventArgs args)
     {
-        var login =await usersServiceDM.Login(LoginName, PassWord);
-        await PopupService.ToastAsync(login.Msg, AlertTypes.Success);
-        if (!string.IsNullOrWhiteSpace(login.UserId))
+        loginMode.Account = LoginName;
+        loginMode.Password = PassWord;
+        var ajaxOption = new AjaxOption { Url = Navigation.BaseUri + "api/auth/login", Data = loginMode };
+        var str = await AjaxService.GetMessageAsync(ajaxOption);
+        if (str.IsSuccessStatusCode)
         {
+            await PopupService.ToastAsync("登录成功", AlertTypes.Success);
             Navigation.NavigateTo(Navigation.BaseUri);
         }
+        await PopupService.ToastAsync("登录失败", AlertTypes.Error);
     }
 }

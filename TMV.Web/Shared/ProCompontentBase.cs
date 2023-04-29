@@ -24,12 +24,12 @@ namespace TMV.Web
         }
         protected async override Task OnInitializedAsync()
         {
-            var authenticationState = await authenticationStateTask;
+            //var authenticationState = await authenticationStateTask;
 
-            if (!authenticationState.User.Identity.IsAuthenticated)
-            {
-                Navigation.NavigateTo($"{Navigation.BaseUri}pages/authentication/login-v2");
-            }
+            //if (!authenticationState.User.Identity.IsAuthenticated)
+            //{
+            //    Navigation.NavigateTo($"{Navigation.BaseUri}pages/authentication/login-v2");
+            //}
 
             // rest of the code
         }

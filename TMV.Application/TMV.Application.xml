@@ -4,12 +4,11 @@
         <name>TMV.Application</name>
     </assembly>
     <members>
-        <member name="M:TMV.Application.AuthService.AuthService.Login(System.String,System.String)">
+        <member name="M:TMV.Application.AuthService.AuthService.Login(TMV.DTO.Authorization.LoginInputDTO)">
             <summary>
             登录
             </summary>
-            <param name="userName"></param>
-            <param name="password"></param>
+            <param name="loginInputDTO"></param>
             <returns></returns>
         </member>
         <member name="M:TMV.Application.AuthService.AuthService.LoginOut">
