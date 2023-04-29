@@ -16,7 +16,7 @@ namespace TMV.Core.CM
     [SugarTable("AbnormalRecords")]
     public partial class TMV_AbnormalRecords
     {
-        [Key]
+        [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
 
         /// <summary>

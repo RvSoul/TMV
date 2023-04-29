@@ -16,7 +16,7 @@ namespace TMV.Core.CM
     [SugarTable("ScalageRecords")]
     public partial class TMV_ScalageRecords
     {
-        [Key]
+        [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace TMV.Core.CM
     [SugarTable("Scale")]
     public partial class TMV_Scale
     {
-        [Key]
+        [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
 
         /// <summary>

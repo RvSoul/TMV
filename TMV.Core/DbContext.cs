@@ -20,10 +20,11 @@ namespace TMV.Core
             var connectionConfigs = App.GetConfig<List<ConnectionConfig>>("ConnectionConfigs");
             //如果多个数数据库传 List<ConnectionConfig>
             var configConnection = new ConnectionConfig()
-            {
-                DbType = SqlSugar.DbType.SqlServer,
+            { 
                 ConnectionString = connectionConfigs[0].ConnectionString,
-                IsAutoCloseConnection = true,
+                DbType = DbType.SqlServer,//设置数据库类型
+                IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息 
             };
 
             SqlSugarScope sqlSugar = new SqlSugarScope(configConnection,

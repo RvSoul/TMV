@@ -16,7 +16,7 @@ namespace TMV.Core.CM
     [SugarTable("Car")]
     public partial class  TMV_Car
     {
-        [Key]
+        [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace TMV.Core.CM
         /// <summary>
         /// 车辆类型
         /// </summary> 
-        public string Type { get; set; }
+        public int Type { get; set; }
         /// <summary>
         /// 车厢长
         /// </summary> 
@@ -61,7 +61,7 @@ namespace TMV.Core.CM
         /// <summary>
         /// 额定载重量
         /// </summary> 
-        public string RatedWeight { get; set; }
+        public int RatedWeight { get; set; }
         /// <summary>
         /// 行驶证号
         /// </summary> 
@@ -73,11 +73,11 @@ namespace TMV.Core.CM
         /// <summary>
         /// 空水空油重量
         /// </summary> 
-        public string EmptyWeight { get; set; }
+        public int EmptyWeight { get; set; }
         /// <summary>
         /// 满水满油重量
         /// </summary> 
-        public string FullWeight { get; set; }
+        public int FullWeight { get; set; }
         /// <summary>
         /// 驾驶员名称
         /// </summary> 
@@ -85,11 +85,11 @@ namespace TMV.Core.CM
         /// <summary>
         /// 性别
         /// </summary> 
-        public string Sex { get; set; }
+        public int Sex { get; set; }
         /// <summary>
         /// 年龄
         /// </summary> 
-        public string Age { get; set; }
+        public int Age { get; set; }
         /// <summary>
         /// 籍贯
         /// </summary> 
