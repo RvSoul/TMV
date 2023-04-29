@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using TMV.Core.Const;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TMV.Application.Users.Services
 {
@@ -31,39 +32,28 @@ namespace TMV.Application.Users.Services
             Expression<Func<TMV_Users, bool>> expr = n => true;
             if (!dto.Name.IsNullOrEmpty())
             {
-                expr = expr.And(n => n.Name == dto.Name);
+                expr = expr.And2(n => n.Name == dto.Name);
             }
-
-            Expression<Func<TMV_Users, bool>> expr2 = n => true;
-            if (!dto.Name.IsNullOrEmpty())
-            {
-                expr2 = expr2.And2(n => n.Name == dto.Name);
-            }
-
-            Expression<Func<TMV_Users, bool>> expr3 = AutoAssemble.Splice<TMV_Users, Request_Users>(dto);
-
+             
 
             count = c.Queryable<TMV_Users>().Where(expr).Count();
             var query = c.Queryable<TMV_Users>().Where(expr).OrderByDescending(px => px.AddTime).Skip((dto.PageIndex - 1) * dto.PageSize).Take(dto.PageSize).ToList();
 
             return GetMapperDTO.GetDTOList<TMV_Users, UsersDTO>(query);
         }
-        public List<UsersDTO> GetUsersList2(Request_Users dto, out int count)
-        {
-            Expression<Func<TMV_Users, bool>> expr = AutoAssemble.Splice<TMV_Users, Request_Users>(dto);
+  
 
-
-            count = c.Queryable<TMV_Users>().Where(w => w.Name == dto.Name).Count();
-            var query = c.Queryable<TMV_Users>().Where(w => w.Name == dto.Name).OrderByDescending(px => px.AddTime).Skip((dto.PageIndex - 1) * dto.PageSize).Take(dto.PageSize).ToList();
-
-            return GetMapperDTO.GetDTOList<TMV_Users, UsersDTO>(query);
-        }
  
         public bool AddUsers(UsersModel model)
         {
-            TMV_Users pt = GetMapperDTO.SetModel<TMV_Users, UsersModel>(model);
-            pt.AddTime = DateTime.Now;
-            var result = c.Insertable(pt).ExecuteCommand();
+            TMV_Users data = GetMapperDTO.SetModel<TMV_Users, UsersModel>(model);
+            data.Id = Guid.NewGuid();
+            data.Name = model.Name;
+            data.Pwd = model.Pwd;
+            data.Type = model.Type;
+
+            data.AddTime = DateTime.Now;
+            var result = c.Insertable(data).ExecuteCommand();
             if (result > 0)
             {
                 return true;
@@ -95,6 +85,10 @@ namespace TMV.Application.Users.Services
         public bool UpUsers(UsersModel model)
         {
             var data = c.Queryable<TMV_Users>().InSingle(model.Id);
+            data.Name = model.Name;
+            data.Pwd = model.Pwd;
+            data.Type = model.Type;
+
 
             var result = c.Updateable(data).ExecuteCommand();
             if (result > 0)
