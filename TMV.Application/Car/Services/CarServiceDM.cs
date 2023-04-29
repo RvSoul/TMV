@@ -34,7 +34,7 @@ namespace TMV.Application.Car.Services
             }
         }
 
-        public bool DeCar(int id)
+        public bool DeCar(Guid id)
         {
             var result = c.Deleteable<TMV_Car>().In(id).ExecuteCommand();
             if (result > 0)

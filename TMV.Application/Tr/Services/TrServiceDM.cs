@@ -15,7 +15,7 @@ namespace TMV.Application.Tr.Services
             throw new NotImplementedException();
         }
 
-        public bool DeTransportationRecords(string id)
+        public bool DeTransportationRecords(Guid id)
         {
             throw new NotImplementedException();
         }

@@ -15,6 +15,6 @@ namespace TMV.Application.Car.Services
 
         bool UpCar(CarModel model);
 
-        bool DeCar(int id);
+        bool DeCar(Guid id);
     }
 }

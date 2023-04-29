@@ -56,7 +56,7 @@ namespace TMV.Application.TransportPlan
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet("DeTransportPlan")]
-        public ResultEntity<bool> DeTransportPlan(int Id)
+        public ResultEntity<bool> DeTransportPlan(Guid Id)
         {
             return new ResultEntityUtil<bool>().Success(dm.DeTransportPlan(Id));
         }

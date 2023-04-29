@@ -56,7 +56,7 @@ namespace TMV.Application.Scale
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet("DeScale")]
-        public ResultEntity<bool> DeScale(int Id)
+        public ResultEntity<bool> DeScale(Guid Id)
         {
             return new ResultEntityUtil<bool>().Success(dm.QtScale(Id));
         }

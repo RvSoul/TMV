@@ -14,6 +14,6 @@ namespace TMV.Application.Scale.Services
 
         bool UpScale(ScaleModel model);
 
-        bool QtScale(int id);
+        bool QtScale(Guid id);
     }
 }

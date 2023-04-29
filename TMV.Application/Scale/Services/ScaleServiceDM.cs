@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using TMV.Application.Scale;
 using TMV.Core.CM;
 using TMV.DTO.Scale;
-using TMV.DTO.ModelData;
-using TMV.DTO.Scale;
+using TMV.DTO.ModelData; 
 
 namespace TMV.Application.Scale.Services
 {
@@ -22,9 +21,15 @@ namespace TMV.Application.Scale.Services
 
         public bool AddScale(ScaleModel model)
         {
-            TMV_Scale pt = GetMapperDTO.SetModel<TMV_Scale, ScaleModel>(model);
+            TMV_Scale data = new TMV_Scale();
+            data.Id=Guid.NewGuid();
+            data.Name=model.Name;
+            data.Type=model.Type;
+            data.State = 1;
+            data.UpTime=DateTime.Now;
+              
 
-            var result = c.Insertable(pt).ExecuteCommand();
+            var result = c.Insertable(data).ExecuteCommand();
             if (result > 0)
             {
                 return true;
@@ -35,9 +40,23 @@ namespace TMV.Application.Scale.Services
             }
         }
 
-        public bool QtScale(int id)
+        public bool QtScale(Guid id)
         {
-            var result = c.Deleteable<TMV_Scale>().In(id).ExecuteCommand();
+
+            var data = c.Queryable<TMV_Scale>().InSingle(id);
+                //c.Queryable<TMV_Scale>().InSingle(id);
+            if (data.State==1)
+            {
+                data.State = 2;
+            }
+            else
+            {
+                data.State = 1;
+            }
+            data.UpTime = DateTime.Now;
+
+            var result = c.Updateable(data).ExecuteCommand();
+
             if (result > 0)
             {
                 return true;
@@ -62,6 +81,8 @@ namespace TMV.Application.Scale.Services
         public bool UpScale(ScaleModel model)
         {
             var data = c.Queryable<TMV_Scale>().InSingle(model.Id);
+            data.Name = model.Name;
+            data.Type = model.Type;
 
             var result = c.Updateable(data).ExecuteCommand();
             if (result > 0)

@@ -55,7 +55,7 @@ namespace TMV.Web.Core.Handle
         {
             //这里鉴别密码是否改变
             var userId = context.User.Claims.FirstOrDefault(it => it.Type == ClaimConst.UserId).Value;
-            var user = _usersService.GetUset(userId);
+            var user = _usersService.GetUset(Guid.Parse(userId) );
             if (user == null) { return false; }
             return true;
         }

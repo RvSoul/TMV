@@ -16,14 +16,14 @@ namespace TMV.Core.CM
     [SugarTable("ScalageRecords")]
     public partial class TMV_ScalageRecords
     {
-        [Key]
+        [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
 
         /// <summary>
         /// 衡Id
         /// </summary>
         [DefaultValue("衡Id")]
-        public int ScaleId { get; set; }
+        public Guid ScaleId { get; set; }
 
         /// <summary>
         /// 运输Id

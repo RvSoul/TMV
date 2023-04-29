@@ -16,7 +16,7 @@ namespace TMV.Core.CM
     [SugarTable("AbnormalRecords")]
     public partial class TMV_AbnormalRecords
     {
-        [Key]
+        [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace TMV.Core.CM
         /// 用户id
         /// </summary>
         [DefaultValue("用户id")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// 异常原因

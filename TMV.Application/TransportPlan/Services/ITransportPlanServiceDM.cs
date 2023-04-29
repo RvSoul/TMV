@@ -14,6 +14,6 @@ namespace TMV.Application.TransportPlan.Services
 
         bool UpTransportPlan(TransportPlanModel model);
 
-        bool DeTransportPlan(int id);
+        bool DeTransportPlan(Guid id);
     }
 }

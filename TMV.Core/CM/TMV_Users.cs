@@ -16,8 +16,8 @@ namespace TMV.Core.CM
     [SugarTable("Users")]
     public class TMV_Users
     {
-        [Key]
-        public string Id { get; set; }
+        [SugarColumn(IsPrimaryKey = true)]
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 用户名称

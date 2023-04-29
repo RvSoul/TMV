@@ -56,7 +56,7 @@ namespace TMV.Application.Car
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet("DeCar")]
-        public ResultEntity<bool> DeCar(int Id)
+        public ResultEntity<bool> DeCar(Guid Id)
         {
             return new ResultEntityUtil<bool>().Success(dm.DeCar(Id));
         }

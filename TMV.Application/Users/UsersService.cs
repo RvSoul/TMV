@@ -58,7 +58,7 @@ namespace TMV.Application.Users
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet("DeUsers")]
-        public ResultEntity<bool> DeUsers(int Id)
+        public ResultEntity<bool> DeUsers(Guid Id)
         {
             return new ResultEntityUtil<bool>().Success(dm.DeUsers(Id));
         }

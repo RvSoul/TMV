@@ -36,7 +36,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.Car.CarService.DeCar(System.Int32)">
+        <member name="M:TMV.Application.Car.CarService.DeCar(System.Guid)">
             <summary>
             删除车辆
             </summary>
@@ -62,7 +62,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.Scale.ScaleService.DeScale(System.Int32)">
+        <member name="M:TMV.Application.Scale.ScaleService.DeScale(System.Guid)">
             <summary>
             启用弃用衡
             </summary>
@@ -88,7 +88,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.TransportPlan.TransportPlanService.DeTransportPlan(System.Int32)">
+        <member name="M:TMV.Application.TransportPlan.TransportPlanService.DeTransportPlan(System.Guid)">
             <summary>
             删除运输计划
             </summary>
@@ -114,7 +114,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.Users.UsersService.DeUsers(System.Int32)">
+        <member name="M:TMV.Application.Users.UsersService.DeUsers(System.Guid)">
             <summary>
             删除用户
             </summary>
