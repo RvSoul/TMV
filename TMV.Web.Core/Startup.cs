@@ -1,11 +1,10 @@
 ﻿using Furion;
-using Furion.VirtualFileServer;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TMV.Core;
+using TMV.Web.Core.AjaxServer;
 using TMV.Web.Core.Components;
 
 namespace TMV.Web.Core
@@ -33,6 +32,8 @@ namespace TMV.Web.Core
             }).AddI18nForServer("wwwroot/i18n");
             services.AddHttpContextAccessor();
             services.AddGlobalForServer();
+            services.AddRemoteRequest();
+            services.AddScoped<AjaxService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

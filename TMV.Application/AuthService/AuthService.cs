@@ -13,10 +13,14 @@ using Microsoft.AspNetCore.Identity;
 using TMV.Application.Users;
 using SqlSugar;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.ComponentModel;
+using TMV.DTO.Authorization;
 
 namespace TMV.Application.AuthService
 {
-    public class AuthService:IAuthService,ITransient
+    [ApiDescriptionSettings("授权")]
+    [LoggingMonitor]
+    public class AuthService: IDynamicApiController,IAuthService, ITransient
     {
         ISqlSugarClient  _sqlSugarClient;
         public AuthService(ISqlSugarClient sqlSugarClient) 
@@ -26,12 +30,14 @@ namespace TMV.Application.AuthService
         /// <summary>
         /// 登录
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
+        /// <param name="loginInputDTO"></param>
         /// <returns></returns>
-        public async Task<LoginOutDto> Login(string userName, string password)
+        [AllowAnonymous]
+        [HttpPost("login")]
+        [Description("登录")]
+        public async Task<LoginOutDto> Login(LoginInputDTO loginInputDTO)
         {
-            var data = _sqlSugarClient.Queryable<TMV_Users>().Where(w => w.Name == userName && w.Pwd == password).First();
+            var data = _sqlSugarClient.Queryable<TMV_Users>().Where(w => w.Name == loginInputDTO.Account && w.Pwd == loginInputDTO.Password).First();
             if (data != null)
             {
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -47,7 +53,7 @@ namespace TMV.Application.AuthService
                     IsPersistent = true,
                     ExpiresUtc = diffTime,
                 });
-                return new LoginOutDto() { UserId = data.Id.ToString(),Msg= "登录成功" };
+                return new LoginOutDto() { UserId = data.Id.ToString(),Name= data.Name,Type= data.Type, Msg= "登录成功" };
             }
             else
             {
@@ -60,8 +66,8 @@ namespace TMV.Application.AuthService
         /// <returns></returns>
         public async Task LoginOut()
         {
-              await App.HttpContext?.SignOutAsync();
-              App.HttpContext?.SignoutToSwagger();
+              await App.HttpContext?.SignOutAsync("cookies");
+              //App.HttpContext?.SignoutToSwagger();
               await Task.CompletedTask;
         }
     }

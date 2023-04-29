@@ -9,6 +9,8 @@ namespace TMV.DTO.Users
     public class LoginOutDto
     {
         public string UserId { get; set; }
+        public string Name { get; set; }
+        public int Type { get; set; }
         public string Msg { get; set; }
     }
 }
