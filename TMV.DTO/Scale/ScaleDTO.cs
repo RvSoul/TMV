@@ -26,7 +26,11 @@ namespace TMV.DTO.Scale
         /// 衡类型-1.重，2.轻,3.混合
         /// </summary> 
         public int Type { get; set; }
-         
+        /// <summary>
+        /// 衡状态-1.启用，2.停用
+        /// </summary>
+        public int State { get; set; }
+
     }
     public class ScaleDTO
     {

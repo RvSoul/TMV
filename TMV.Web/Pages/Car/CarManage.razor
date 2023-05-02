@@ -224,7 +224,6 @@
  </MCard>
                 @code {
     private int _editedIndex = -1;
-    private bool show1;
     public class RoleItem
     {
         public string Label { get; set; }
@@ -292,7 +291,7 @@
     {
         var dto = new Request_Car();
         if (!string.IsNullOrWhiteSpace(carPage.PlateNumber)) dto.PlateNumber = carPage.PlateNumber;
-        if (!string.IsNullOrWhiteSpace(carPage.Type)) dto.Type = carPage.Type;
+        //if (!string.IsNullOrWhiteSpace(carPage.Type)) dto.Type = carPage.Type;
         if (!string.IsNullOrWhiteSpace(carPage.ExerciseCode)) dto.ExerciseCode = carPage.ExerciseCode;
         if (!string.IsNullOrWhiteSpace(carPage.DriverName)) dto.DriverName = carPage.DriverName;
         var rest = _carServiceDM.GetCarList(dto);

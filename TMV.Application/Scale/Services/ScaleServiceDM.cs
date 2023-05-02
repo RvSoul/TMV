@@ -77,7 +77,7 @@ namespace TMV.Application.Scale.Services
 
             var li = c.Queryable<TMV_Scale>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
             var list = li.Adapt<List<ScaleDTO>>();
-            return new ResultPageEntity<ScaleDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count }; 
+            return new ResultPageEntity<ScaleDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total }; 
 
         }
 
