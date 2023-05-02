@@ -29,7 +29,7 @@ namespace TMV.Web.Core
                     theme.Themes.Light.Primary = "#4318FF";
                     theme.Themes.Light.Accent = "#4318FF";
                 });
-            }).AddI18nForServer("wwwroot/i18n");
+            });
             services.AddHttpContextAccessor();
             services.AddGlobalForServer();
             services.AddRemoteRequest();

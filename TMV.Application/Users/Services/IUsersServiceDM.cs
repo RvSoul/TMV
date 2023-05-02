@@ -10,12 +10,12 @@ namespace TMV.Application.Users.Services
 {
     public interface IUsersServiceDM
     {
-        List<UsersDTO> GetUsersList(Request_Users dto, out int count);
-        bool AddUsers(UsersModel model);
+        ResultPageEntity<UsersDTO> GetUsersList(Request_Users dto);
+        ResultEntity<bool> AddUsers(UsersModel model);
 
-        bool UpUsers(UsersModel model);
+        ResultEntity<bool> UpUsers(UsersModel model);
 
-        bool DeUsers(Guid id);
+        ResultEntity<bool> DeUsers(Guid id);
         UsersDTO GetUset(Guid id);
     }
 }

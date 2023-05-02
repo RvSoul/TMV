@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using TMV.Application.Scale;
 using TMV.Core.CM;
 using TMV.DTO.Scale;
-using TMV.DTO.ModelData; 
+using TMV.DTO.ModelData;
+using TMV.DTO;
+using TMV.DTO.Users;
 
 namespace TMV.Application.Scale.Services
 {
@@ -19,33 +21,33 @@ namespace TMV.Application.Scale.Services
             c = db;
         }
 
-        public bool AddScale(ScaleModel model)
+        public ResultEntity<bool> AddScale(ScaleModel model)
         {
             TMV_Scale data = new TMV_Scale();
-            data.Id=Guid.NewGuid();
-            data.Name=model.Name;
-            data.Type=model.Type;
+            data.Id = Guid.NewGuid();
+            data.Name = model.Name;
+            data.Type = model.Type;
             data.State = 1;
-            data.UpTime=DateTime.Now;
-              
+            data.UpTime = DateTime.Now;
+
 
             var result = c.Insertable(data).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
-        public bool QtScale(Guid id)
+        public ResultEntity<bool> QtScale(Guid id)
         {
 
             var data = c.Queryable<TMV_Scale>().InSingle(id);
-                //c.Queryable<TMV_Scale>().InSingle(id);
-            if (data.State==1)
+            //c.Queryable<TMV_Scale>().InSingle(id);
+            if (data.State == 1)
             {
                 data.State = 2;
             }
@@ -59,15 +61,15 @@ namespace TMV.Application.Scale.Services
 
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
-        public List<ScaleDTO> GetScaleList(Request_Scale dto, out int count)
+        public ResultEntity<List<ScaleDTO>> GetScaleList(Request_Scale dto, out int count)
         {
             int total = 0;
             Expression<Func<TMV_Scale, bool>> expr = AutoAssemble.Splice<TMV_Scale, Request_Scale>(dto);
@@ -75,10 +77,11 @@ namespace TMV.Application.Scale.Services
             var li = c.Queryable<TMV_Scale>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
             count = total;
 
-            return GetMapperDTO.GetDTOList<TMV_Scale, ScaleDTO>(li);
+            return new ResultEntityUtil<List<ScaleDTO>>().Success(GetMapperDTO.GetDTOList<TMV_Scale, ScaleDTO>(li), dto.PageIndex, dto.PageSize, count);
+
         }
 
-        public bool UpScale(ScaleModel model)
+        public ResultEntity<bool> UpScale(ScaleModel model)
         {
             var data = c.Queryable<TMV_Scale>().InSingle(model.Id);
             data.Name = model.Name;
@@ -87,11 +90,11 @@ namespace TMV.Application.Scale.Services
             var result = c.Updateable(data).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
     }

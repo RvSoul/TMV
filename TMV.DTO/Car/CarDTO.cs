@@ -16,6 +16,9 @@ namespace TMV.DTO.Car
         [SelectField("and", "like", "string")]
         [DefaultValue("车牌号")]
         public string PlateNumber { get; set; }
+        public string Type { get; set; }
+        public string ExerciseCode { get; set; }
+        public string DriverName { get; set; }
 
     }
     public class CarModel

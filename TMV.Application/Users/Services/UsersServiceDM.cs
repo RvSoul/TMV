@@ -27,24 +27,20 @@ namespace TMV.Application.Users.Services
         {
             c = db;
         }
-        public List<UsersDTO> GetUsersList(Request_Users dto, out int count)
+        public ResultPageEntity<UsersDTO> GetUsersList(Request_Users dto)
         {
             Expression<Func<TMV_Users, bool>> expr = n => true;
             if (!dto.Name.IsNullOrEmpty())
             {
                 expr = expr.And2(n => n.Name == dto.Name);
             }
-             
-
-            count = c.Queryable<TMV_Users>().Where(expr).Count();
-            var query = c.Queryable<TMV_Users>().Where(expr).OrderByDescending(px => px.AddTime).Skip((dto.PageIndex - 1) * dto.PageSize).Take(dto.PageSize).ToList();
-
-            return GetMapperDTO.GetDTOList<TMV_Users, UsersDTO>(query);
+            int count =0;
+            var query = c.Queryable<TMV_Users>().Where(expr).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize,ref count);
+            var list = query.Adapt<List<UsersDTO>>();
+            return new ResultPageEntity<UsersDTO>() { Data= list, PageIndex= dto.PageIndex ,PageSize= dto.PageSize ,Count= count };
         }
-  
-
  
-        public bool AddUsers(UsersModel model)
+        public ResultEntity<bool> AddUsers(UsersModel model)
         {
             TMV_Users data = GetMapperDTO.SetModel<TMV_Users, UsersModel>(model);
             data.Id = Guid.NewGuid();
@@ -56,24 +52,25 @@ namespace TMV.Application.Users.Services
             var result = c.Insertable(data).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
+                
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
-        public bool DeUsers(Guid id)
+        public ResultEntity<bool> DeUsers(Guid id)
         {
             var result = c.Deleteable<TMV_Users>().In(id).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
@@ -82,7 +79,7 @@ namespace TMV.Application.Users.Services
             return c.Queryable<TMV_Users>().First(x => x.Id == id).Adapt<UsersDTO>();
             
         }
-        public bool UpUsers(UsersModel model)
+        public ResultEntity<bool> UpUsers(UsersModel model)
         {
             var data = c.Queryable<TMV_Users>().InSingle(model.Id);
             data.Name = model.Name;
@@ -93,11 +90,11 @@ namespace TMV.Application.Users.Services
             var result = c.Updateable(data).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
     }

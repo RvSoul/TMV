@@ -26,9 +26,9 @@ namespace TMV.Application.Users
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetUsersList")]
-        public ResultEntity<List<UsersDTO>> GetUsersList([FromQuery] Request_Users dto)
+        public ResultPageEntity<UsersDTO> GetUsersList([FromQuery] Request_Users dto)
         {
-            return new ResultEntityUtil<List<UsersDTO>>().Success(dm.GetUsersList(dto, out int count), count);
+            return  dm.GetUsersList(dto) ;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace TMV.Application.Users
         [HttpGet("AddUsers")]
         public ResultEntity<bool> AddUsers([FromQuery] UsersModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.AddUsers(model));
+            return  dm.AddUsers(model);
         }
         /// <summary>
         /// 修改用户
@@ -48,7 +48,7 @@ namespace TMV.Application.Users
         [HttpGet("UpUsers")]
         public ResultEntity<bool> UpUsers([FromQuery] UsersModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.UpUsers(model));
+            return dm.UpUsers(model);
         }
 
 
@@ -60,7 +60,7 @@ namespace TMV.Application.Users
         [HttpGet("DeUsers")]
         public ResultEntity<bool> DeUsers(Guid Id)
         {
-            return new ResultEntityUtil<bool>().Success(dm.DeUsers(Id));
+            return dm.DeUsers(Id);
         }
         #endregion
     }

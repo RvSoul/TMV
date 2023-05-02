@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using TMV.DTO.Car;
 using TMV.DTO.ModelData;
 using TMV.Core.CM;
-using TMV.DTO.Users; 
+using TMV.DTO.Users;
+using TMV.DTO;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TMV.Application.Car.Services
 {
@@ -19,11 +21,11 @@ namespace TMV.Application.Car.Services
             c = db;
         }
 
-        public bool AddCar(CarModel model)
+        public ResultEntity<bool> AddCar(CarModel model)
         {
             TMV_Car data = new TMV_Car();
             data.Id = Guid.NewGuid();
-            data.PlateNumber=model.PlateNumber;
+            data.PlateNumber = model.PlateNumber;
             data.Type = model.Type;
             data.SizeC = model.SizeC;
             data.SizeK = model.SizeK;
@@ -43,45 +45,43 @@ namespace TMV.Application.Car.Services
             data.NativePlace = model.NativePlace;
             data.DrivingCode = model.DrivingCode;
             data.AddName = model.AddName;
-            data.AddTime=DateTime.Now;
+            data.AddTime = DateTime.Now;
 
             var result = c.Insertable(data).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
-        public bool DeCar(Guid id)
+        public ResultEntity<bool> DeCar(Guid id)
         {
-            var result = c.Deleteable<TMV_TransportPlan>().In(id).ExecuteCommand();
-             
+            var result = c.Deleteable<TMV_Car>().In(id).ExecuteCommand();
+
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
-        public List<CarDTO> GetCarList(Request_Car dto, out int count)
+        public ResultPageEntity<CarDTO> GetCarList(Request_Car dto)
         {
             int total = 0;
             Expression<Func<TMV_Car, bool>> expr = AutoAssemble.Splice<TMV_Car, Request_Car>(dto);
-
-            var li = c.Queryable<TMV_Car>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
-            count = total;
-
-            return GetMapperDTO.GetDTOList<TMV_Car, CarDTO>(li);
+            var query = c.Queryable<TMV_Car>().Where(expr).WhereIF(!string.IsNullOrWhiteSpace(dto.Type),x=>x.Type==Convert.ToInt32(dto.Type)).ToPageList(dto.PageIndex, dto.PageSize, ref total);
+            var list = query.Adapt<List<CarDTO>>();
+            return new ResultPageEntity<CarDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };
         }
 
-        public bool UpCar(CarModel model)
+        public ResultEntity<bool> UpCar(CarModel model)
         {
             var data = c.Queryable<TMV_Car>().InSingle(model.Id);
             data.PlateNumber = model.PlateNumber;
@@ -103,16 +103,16 @@ namespace TMV.Application.Car.Services
             data.Age = model.Age;
             data.NativePlace = model.NativePlace;
             data.DrivingCode = model.DrivingCode;
-            data.AddName = model.AddName; 
+            data.AddName = model.AddName;
 
             var result = c.Updateable(data).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
     }

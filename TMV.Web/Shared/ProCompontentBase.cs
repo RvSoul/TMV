@@ -7,6 +7,12 @@ namespace TMV.Web
     {
         private I18n? _languageProvider;
         [Inject]
+        public IPopupService PopupService
+        {
+            get;
+            set;
+        }
+        [Inject]
         NavigationManager Navigation { get; set; } = default!;
         [CascadingParameter]
         private Task<AuthenticationState> authenticationStateTask { get; set; }

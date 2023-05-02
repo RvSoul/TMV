@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMV.DTO;
 using TMV.DTO.Car;
 
 namespace TMV.Application.Car.Services
 {
     public interface ICarServiceDM
     {
-        bool AddCar(CarModel model);
+        ResultEntity<bool> AddCar(CarModel model);
 
-        List<CarDTO> GetCarList(Request_Car dto, out int count);
+        ResultPageEntity<CarDTO> GetCarList(Request_Car dto);
 
-        bool UpCar(CarModel model);
+        ResultEntity<bool> UpCar(CarModel model);
 
-        bool DeCar(Guid id);
+        ResultEntity<bool> DeCar(Guid id);
     }
 }

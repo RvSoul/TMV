@@ -48,6 +48,16 @@ namespace TMV.DTO
                 Msg = message
             };
         }
+        public ResultEntity<T> Success(T data, int count,int PageIndex,int PageSize, string message = "操作成功")
+        {
+            return new ResultEntity<T>
+            {
+                Data = data,
+                IsSuccess = true,
+                Count = count,
+                Msg = message
+            };
+        }
 
         /// <summary>
         /// 返回成功的响应实体

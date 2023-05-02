@@ -26,7 +26,7 @@ namespace TMV.Application.Scale
         [HttpGet("GetScaleList")]
         public ResultEntity<List<ScaleDTO>> GetScaleList([FromQuery] Request_Scale dto)
         {
-            return new ResultEntityUtil<List<ScaleDTO>>().Success(dm.GetScaleList(dto, out int count), count);
+            return dm.GetScaleList(dto, out int count);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace TMV.Application.Scale
         [HttpGet("AddScale")]
         public ResultEntity<bool> AddScale([FromQuery] ScaleModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.AddScale(model));
+            return dm.AddScale(model);
         }
         /// <summary>
         /// 修改衡
@@ -46,7 +46,7 @@ namespace TMV.Application.Scale
         [HttpGet("UpScale")]
         public ResultEntity<bool> UpScale([FromQuery] ScaleModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.UpScale(model));
+            return dm.UpScale(model);
         }
 
 
@@ -58,7 +58,7 @@ namespace TMV.Application.Scale
         [HttpGet("DeScale")]
         public ResultEntity<bool> DeScale(Guid Id)
         {
-            return new ResultEntityUtil<bool>().Success(dm.QtScale(Id));
+            return dm.QtScale(Id);
         }
         #endregion
     }

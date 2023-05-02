@@ -10,6 +10,7 @@ using TMV.Core.CM;
 using TMV.DTO.TransportPlan;
 using TMV.DTO.ModelData;
 using TMV.DTO.TransportPlan;
+using TMV.DTO;
 
 namespace TMV.Application.TransportPlan.Services
 {
@@ -22,35 +23,35 @@ namespace TMV.Application.TransportPlan.Services
             c = db;
         }
 
-        public bool AddTransportPlan(TransportPlanModel model)
+        public ResultEntity<bool> AddTransportPlan(TransportPlanModel model)
         {
             TMV_TransportPlan pt = GetMapperDTO.SetModel<TMV_TransportPlan, TransportPlanModel>(model); 
 
             var result = c.Insertable(pt).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
-        public bool DeTransportPlan(Guid id)
+        public ResultEntity<bool> DeTransportPlan(Guid id)
         {
             var result = c.Deleteable<TMV_TransportPlan>().In(id).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true); 
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
 
-        public List<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto, out int count)
+        public ResultEntity<List<TransportPlanDTO>> GetTransportPlanList(Request_TransportPlan dto, out int count)
         {
             int total = 0;
             Expression<Func<TMV_TransportPlan, bool>> expr = AutoAssemble.Splice<TMV_TransportPlan, Request_TransportPlan>(dto);
@@ -58,21 +59,22 @@ namespace TMV.Application.TransportPlan.Services
             var li = c.Queryable<TMV_TransportPlan>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
             count = total;
 
-            return GetMapperDTO.GetDTOList<TMV_TransportPlan, TransportPlanDTO>(li);
+            return new ResultEntityUtil<List<TransportPlanDTO>>().Success(GetMapperDTO.GetDTOList<TMV_TransportPlan, TransportPlanDTO>(li), dto.PageIndex, dto.PageSize, count);
+             
         }
 
-        public bool UpTransportPlan(TransportPlanModel model)
+        public ResultEntity<bool> UpTransportPlan(TransportPlanModel model)
         {
             var data = c.Queryable<TMV_TransportPlan>().InSingle(model.Id);
 
             var result = c.Updateable(data).ExecuteCommand();
             if (result > 0)
             {
-                return true;
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
-                return false;
+                return new ResultEntityUtil<bool>().Success(false); 
             }
         }
     }

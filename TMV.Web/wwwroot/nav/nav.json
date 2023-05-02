@@ -1,118 +1,44 @@
 [
   {
     "Id": 1,
-    "Title": "Dashboard",
-    "Icon": "mdi-trending-up",
-    "Children": [
-      {
-        "Id": 2,
-        "Title": "eCommerce",
-        "Icon": "mdi-circle",
-        "Href": "dashboard/ecommerce"
-      },
-      {
-        "Id": 3,
-        "Hide": true,
-        "Title": "Analytics",
-        "Icon": "mdi-circle",
-        "Href": "dashboard/analytics"
-      }
-    ]
+    "Title": "主页",
+    "Icon": "mdi-trending-up"
   },
   {
     "Id": 4,
-    "Title": "eCommerce",
-    "Icon": "mdi-cart-outline",
+    "Title": "车辆建档",
+    "Icon": "mdi-car-back",
     "Children": [
       {
         "Id": 5,
-        "Title": "Shop",
+        "Title": "车辆管理",
         "Icon": "mdi-circle",
-        "Href": "app/ecommerce/shop"
-      },
-      {
-        "Id": 6,
-        "Title": "Details",
-        "Icon": "mdi-circle",
-        "Href": "app/ecommerce/details",
-        "Target": "Self"
-      },
-      {
-        "Id": 7,
-        "Title": "Order",
-        "Icon": "mdi-circle",
-        "Href": "app/ecommerce/order"
+        "Href": "car/carmanage"
       }
     ]
   },
   {
     "Id": 8,
-    "Title": "Todo",
+    "Title": "物流订单",
     "Icon": "mdi-calendar-check-outline",
     "Href": "app/todo"
   },
   {
-    "Id": 9,
-    "Title": "Invoice",
-    "Icon": "mdi-content-paste",
-    "Hide": true,
-    "Children": [
-      {
-        "Id": 10,
-        "Title": "List",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/list"
-      },
-      {
-        "Id": 11,
-        "Title": "Preview",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/preview"
-      },
-      {
-        "Id": 12,
-        "Title": "Edit",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/edit"
-      },
-      {
-        "Id": 13,
-        "Title": "Add",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/add"
-      }
-    ]
-  },
-  {
-    "Id": 14,
-    "Title": "User",
-    "Icon": "mdi-account-outline",
+    "Id": 8,
+    "Title": "衡管理",
+    "Icon": "mdi-calendar-check-outline",
     "Children": [
       {
         "Id": 15,
-        "Title": "List",
+        "Title": "衡列表",
         "Icon": "mdi-circle",
-        "Href": "app/user/list"
-      },
-      {
-        "Id": 16,
-        "Title": "View",
-        "Icon": "mdi-circle",
-        "Href": "app/user/view",
-        "Target": "Self"
-      },
-      {
-        "Id": 17,
-        "Title": "Edit",
-        "Icon": "mdi-circle",
-        "Href": "app/user/edit",
-        "Target": "Self"
+        "Href": "scale/scalemanage"
       }
     ]
   },
   {
     "Id": 18,
-    "Title": "Auth",
+    "Title": "预制管理",
     "Icon": "mdi-file-outline",
     "Children": [
       {
@@ -173,7 +99,7 @@
   },
   {
     "Id": 27,
-    "Title": "Others",
+    "Title": "告警管理",
     "Icon": "mdi-dots-horizontal",
     "Children": [
       {
@@ -200,6 +126,51 @@
         "Title": "404",
         "Icon": "mdi-circle",
         "Href": "pages/others/404"
+      }
+    ]
+  },
+  {
+    "Id": 14,
+    "Title": "用户管理",
+    "Icon": "mdi-account-outline",
+    "Children": [
+      {
+        "Id": 15,
+        "Title": "用户列表",
+        "Icon": "mdi-circle",
+        "Href": "user/listmanage"
+      }
+    ]
+  },
+  {
+    "Id": 9,
+    "Title": "系统设置",
+    "Icon": "mdi-content-paste",
+    "Hide": true,
+    "Children": [
+      {
+        "Id": 10,
+        "Title": "List",
+        "Icon": "mdi-circle",
+        "Href": "app/invoice/list"
+      },
+      {
+        "Id": 11,
+        "Title": "Preview",
+        "Icon": "mdi-circle",
+        "Href": "app/invoice/preview"
+      },
+      {
+        "Id": 12,
+        "Title": "Edit",
+        "Icon": "mdi-circle",
+        "Href": "app/invoice/edit"
+      },
+      {
+        "Id": 13,
+        "Title": "Add",
+        "Icon": "mdi-circle",
+        "Href": "app/invoice/add"
       }
     ]
   }

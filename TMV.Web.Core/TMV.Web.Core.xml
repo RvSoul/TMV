@@ -42,12 +42,6 @@
             <param name="option"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Web.Core.AjaxServer.AjaxService.GotoAsync(System.String)">
-            <summary>
-            调用 Goto 方法跳转其他页面
-            </summary>
-            <param name="url"></param>
-        </member>
         <member name="M:TMV.Web.Core.AjaxServer.AjaxService.Register(Microsoft.AspNetCore.Components.IComponent,System.Func{TMV.Web.Core.AjaxServer.AjaxOption,System.Threading.Tasks.Task{System.String}})">
             <summary>
             注册服务

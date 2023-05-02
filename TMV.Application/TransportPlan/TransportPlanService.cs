@@ -26,7 +26,7 @@ namespace TMV.Application.TransportPlan
         [HttpGet("GetTransportPlanList")]
         public ResultEntity<List<TransportPlanDTO>> GetTransportPlanList([FromQuery] Request_TransportPlan dto)
         {
-            return new ResultEntityUtil<List<TransportPlanDTO>>().Success(dm.GetTransportPlanList(dto, out int count), count);
+            return  dm.GetTransportPlanList(dto, out int count) ;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace TMV.Application.TransportPlan
         [HttpGet("AddTransportPlan")]
         public ResultEntity<bool> AddTransportPlan([FromQuery] TransportPlanModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.AddTransportPlan(model));
+            return  dm.AddTransportPlan(model) ;
         }
         /// <summary>
         /// 修改运输计划
@@ -46,7 +46,7 @@ namespace TMV.Application.TransportPlan
         [HttpGet("UpTransportPlan")]
         public ResultEntity<bool> UpTransportPlan([FromQuery] TransportPlanModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.UpTransportPlan(model));
+            return  dm.UpTransportPlan(model);
         }
 
 
@@ -58,7 +58,7 @@ namespace TMV.Application.TransportPlan
         [HttpGet("DeTransportPlan")]
         public ResultEntity<bool> DeTransportPlan(Guid Id)
         {
-            return new ResultEntityUtil<bool>().Success(dm.DeTransportPlan(Id));
+            return  dm.DeTransportPlan(Id);
         }
         #endregion
     }

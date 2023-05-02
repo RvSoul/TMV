@@ -24,9 +24,9 @@ namespace TMV.Application.Car
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetCarList")]
-        public ResultEntity<List<CarDTO>> GetCarList([FromQuery] Request_Car dto)
+        public ResultPageEntity<CarDTO> GetCarList([FromQuery] Request_Car dto)
         {
-            return new ResultEntityUtil<List<CarDTO>>().Success(dm.GetCarList(dto, out int count), count);
+            return dm.GetCarList(dto);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace TMV.Application.Car
         [HttpGet("AddCar")]
         public ResultEntity<bool> AddCar([FromQuery] CarModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.AddCar(model));
+            return dm.AddCar(model);
         }
         /// <summary>
         /// 修改车辆
@@ -46,7 +46,7 @@ namespace TMV.Application.Car
         [HttpGet("UpCar")]
         public ResultEntity<bool> UpCar([FromQuery] CarModel model)
         {
-            return new ResultEntityUtil<bool>().Success(dm.UpCar(model));
+            return dm.UpCar(model);
         }
 
 
@@ -58,7 +58,7 @@ namespace TMV.Application.Car
         [HttpGet("DeCar")]
         public ResultEntity<bool> DeCar(Guid Id)
         {
-            return new ResultEntityUtil<bool>().Success(dm.DeCar(Id));
+            return dm.DeCar(Id);
         }
         #endregion
     }
