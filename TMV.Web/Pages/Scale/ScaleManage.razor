@@ -10,23 +10,10 @@
     <MCardText Class="pa-6">
         <MRow>
             <MCol Md=6 Sm=12 Class="d-flex block-center">
-                <span class="text-btn neutral-lighten-1--text">显示:</span>
-                <MSelect @bind-Value="userPage.PageSize"
-                         Color="primary"
-                         Style="max-width:120px;"
-                         Dense
-                         Class="mx-6"
-                         HideDetails="@("auto")"
-                         Outlined
-                         Items="@_pageSize"
-                         ItemText="u => u.ToString()"
-                         ItemValue="u => u">
-                    OnChange="Initialize()"
-                </MSelect>
-                <span class="text-btn">跳转</span>
+                
                 </MCol>
                 <MCol Md=6 Sm=12 Class="d-flex block-center">
-                <MTextField @bind-Value="userPage.Search" Color="primary" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="Search">
+                <MTextField @bind-Value="scalePage.Search" Color="primary" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="Search">
                     <PrependInnerContent>
                         <MIcon Size=16 Class="mr-2 neutral-lighten-1--text">mdi-magnify</MIcon>
                     </PrependInnerContent>
@@ -37,40 +24,52 @@
                 </MCol>
                 </MRow>
                 </MCardText>
-                <MDataTable Headers="_headers" Items=" userPage.Datas" TItem="UsersDTO" ItemsPerPage="userPage.PageSize" HideDefaultFooter Class="elevation-1">
+    <MDataTable Headers="_headers" Items=" scalePage.Datas" TItem="ScaleDTO" ItemsPerPage="scalePage.PageSize" Class="elevation-1">
         <HeaderColContent Context="header">
             <span class="text-subtitle">@header.Text</span>
         </HeaderColContent>
         <ItemColContent>
             @switch (context.Header.Value)
             {
-                case nameof(UsersDTO.Name):
-                    <span>@context.Item.Name</span>
-                    break;
-                case (nameof(UsersDTO.Pwd)):
-                    <span>***************</span>
-                    break;
-
-                case nameof(UsersDTO.Type):
-                    string statusColor = "info";
-                    <MChip Color="@($"{statusColor}-lighten-5")" TextColor="@(statusColor)" Ripple="false">
+                case nameof(ScaleDTO.Type):
+                   
                         @if (context.Item.Type == 1)
                         {
-                            <span>管理员</span>
+                            <span>重衡</span>
                         }
                         @if (context.Item.Type == 2)
                         {
-                            <span>值班员</span>
+                            <span>轻衡</span>
                         }
                         @if (context.Item.Type == 3)
                         {
-                            <span>维护员</span>
+                            <span>混合衡</span>
                         }
-                    </MChip>
+                    break;
+                case nameof(ScaleDTO.State):
+                   
+                   
+                        @if (context.Item.State == 1)
+                        {
+                            <span>启用</span>
+                        }
+                    @if (context.Item.State == 2)
+                        {
+                            <span>停用</span>
+                        }
                     break;
                 case "actions":
-                    <MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
-                    <MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
+                    <a Class="mr-2" @onclick="()=>EditItem(context.Item)">修改</a>
+                    <a @onclick="async()=>await DeleteItem(context.Item)">
+                        @if (context.Item.State == 1)
+                        {
+                            <span>停用</span>
+                        }
+                        @if (context.Item.State == 2)
+                        {
+                            <span>启用</span>
+                        }
+                        </a>
                     break;
                 default:
                     @context.Value
@@ -79,15 +78,7 @@
 
         </ItemColContent>
     </MDataTable>
-    <MCardText>
-        <div class="d-flex">
-            <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">显示 @((userPage.PageIndex - 1) * userPage.PageSize + 1) 至 @(userPage.PageIndex * userPage.PageSize) 和 @userPage.CurrentCount 跳转</div>
-            @if (userPage.PageCount > 0)
-            {
-                <MPagination @bind-Value="userPage.PageIndex" Color="primary" Circle Length=@userPage.PageCount></MPagination>
-            }
-        </div>
-    </MCardText>
+
     <MDialog @bind-Value="_visible"
              MaxWidth="800">
         <MCard>
@@ -102,17 +93,11 @@
                               Sm="6"
                               Md="4">
                             <MTextField @bind-Value="_editedItem.Name" Clearable
-                                        Label="用户名"></MTextField>
+                                        Label="衡名称"></MTextField>
                             </MCol>
                             <MCol Cols="12"
                               Sm="6"
                               Md="4">
-                            <MTextField @bind-Value="_editedItem.Pwd" AppendIcon="@(show1 ? "mdi-eye" : "mdi-eye-off")" Counter="true" Name="input-10-1" Type="@(show1 ? "text" : "password")" OnAppendClick="() => show1 = !show1" Label="密码"></MTextField>
-                            </MCol>
-                            <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                            @*<MTextField @bind-Value="_editedItem.Type"  Label="角色"></MTextField>*@
                             <MSelect @bind-Value="selectvalue"
                                      Items="rooleItem"
                                      ItemText="u => u.Label"
@@ -122,7 +107,10 @@
                                      TValue="string"
                                      OnSelectedItemUpdate="item=>selectItem=item"
                                      OnChange="item=>OnBillChange(item)"
-                                     Label="角色"></MSelect>
+                                     Label="类型"></MSelect>
+                            </MCol>
+                            <MCol Cols="12" Sm="6" Md="4">
+                            <MSwitch @bind-Value="swstatus" TrueValue="1" FalseValue="0" Label="是否启用"> </MSwitch>
                             </MCol>
                             </MRow>
                             </MContainer>
@@ -146,7 +134,6 @@
                 </MCard>
 @code {
     private int _editedIndex = -1;
-    private bool show1;
     public class RoleItem
     {
         public string Label { get; set; }
@@ -157,15 +144,16 @@
             Value = value;
         }
     }
+    public bool swstatus = true;
     public string selectvalue { get; set; }
     public RoleItem selectItem { get; set; }
     [Parameter]
     public string Name { get; set; }
     List<RoleItem> rooleItem = new()
         {
-            new RoleItem("管理员", "1"),
-            new RoleItem("值班员", "2"),
-            new RoleItem("维护员", "3")
+            new RoleItem("重衡", "1"),
+            new RoleItem("轻衡", "2"),
+            new RoleItem("混合衡", "3")
         };
 
     public string FormTitle
@@ -212,8 +200,11 @@
         var result = _scaleServiceDM.QtScale(usersDTO.Id);
         if (result.IsSuccess)
         {
-            await PopupService.ToastAsync("删除成功", AlertTypes.Success);
-            scalePage.Datas.RemoveAt(scalePage.Datas.FindIndex(u => u.Id == usersDTO.Id));
+            await PopupService.ToastAsync("更新成功", AlertTypes.Success);
+            scalePage.Datas.ForEach(x => {
+                if (x.State == 1) x.State = 2;
+                if (x.State == 2) x.State = 1;
+            });
         }
         else
         {
@@ -235,11 +226,11 @@
         {
             var item = scalePage.Datas.Any(x => x.Id == _editedItem.Id);
             if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-            resultEntity = _scaleServiceDM.UpUsers(new UsersModel() { Id = _editedItem.Id, Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
+            resultEntity = _scaleServiceDM.UpScale(new ScaleModel() { Id = _editedItem.Id, Name = _editedItem.Name, State = _editedItem.State, Type = _editedItem.Type });
         }
         else
         {
-            resultEntity = _scaleServiceDM.AddUsers(new UsersModel() { Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
+            resultEntity = _scaleServiceDM.AddScale(new ScaleModel() { Name = _editedItem.Name, Type = _editedItem.Type, State = _editedItem.State });
 
         }
         if (resultEntity.IsSuccess)
