@@ -1,9 +1,11 @@
 ﻿@page "/scale/scalemanage"
-@using TMV.DTO.Users;
+@using TMV.Application.Scale.Services;
+@using TMV.DTO.Scale;
 @using TMV.DTO;
+@using TMV.Web.Pages.Scale.ViewModel;
 @inherits ProCompontentBase
 @inject NavigationManager Nav
-@inject IUsersServiceDM _usersServiceDM
+@inject IScaleServiceDM _scaleServiceDM
 <MCard Class="mt-6">
     <MCardText Class="pa-6">
         <MRow>
@@ -142,7 +144,7 @@
                 </MCard>
                 </MDialog>
                 </MCard>
-                @code {
+@code {
     private int _editedIndex = -1;
     private bool show1;
     public class RoleItem
@@ -173,48 +175,45 @@
             return _editedIndex == -1 ? "新增" : "编辑";
         }
     }
-    private UsersDTO _editedItem = new UsersDTO
+    private ScaleDTO _editedItem = new ScaleDTO();
+
+    List<DataTableHeader<ScaleDTO>> _headers = new()
         {
-            Name = "",
-            Pwd = "",
-            Type = 1
-        };
-    List<DataTableHeader<UsersDTO>> _headers = new()
-        {
-            new() { Text = "用户名", Value = nameof(UsersDTO.Name), CellClass = "" },
-            new() { Text = "密码", Value = nameof(UsersDTO.Pwd) },
-            new() { Text = "角色", Value = nameof(UsersDTO.Type) },
+            new() { Text = "衡名称", Value = nameof(ScaleDTO.Name), CellClass = "" },
+            new() { Text = "类型", Value = nameof(ScaleDTO.Type) },
+            new() { Text = "状态", Value = nameof(ScaleDTO.State) },
+            new() { Text = "启用停用时间", Value = nameof(ScaleDTO.UpTime) },
             new() { Text = "操作", Value = "actions" }
         };
     bool _visible = false;
     public List<int> _pageSize = new() { 10, 20, 50 };
-    public UserPage userPage = new();
+    public ScalePage scalePage = new();
     protected override void OnInitialized()
     {
         Initialize();
     }
     public void Initialize()
     {
-        var dto = new Request_Users();
-        if (!string.IsNullOrWhiteSpace(userPage.Search)) dto.Name = userPage.Search;
-        var rest = _usersServiceDM.GetUsersList(dto);
-        var result = new UserPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-        userPage = result;
+        var dto = new Request_Scale();
+        if (!string.IsNullOrWhiteSpace(scalePage.Search)) dto.Name = scalePage.Search;
+        var rest = _scaleServiceDM.GetScaleList(dto);
+        var result = new ScalePage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+        scalePage = result;
     }
-    public void EditItem(UsersDTO usersDTO)
+    public void EditItem(ScaleDTO usersDTO)
     {
         _editedItem = usersDTO;
         _visible = true;
         _editedIndex = 1;
         selectvalue = usersDTO.Type.ToString();
     }
-    public async Task DeleteItem(UsersDTO usersDTO)
+    public async Task DeleteItem(ScaleDTO usersDTO)
     {
-        var result = _usersServiceDM.DeUsers(usersDTO.Id);
+        var result = _scaleServiceDM.QtScale(usersDTO.Id);
         if (result.IsSuccess)
         {
             await PopupService.ToastAsync("删除成功", AlertTypes.Success);
-            userPage.Datas.RemoveAt(userPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
+            scalePage.Datas.RemoveAt(scalePage.Datas.FindIndex(u => u.Id == usersDTO.Id));
         }
         else
         {
@@ -224,7 +223,7 @@
     public void Close()
     {
         _visible = false;
-        _editedItem = new UsersDTO();
+        _editedItem = new ScaleDTO();
         _editedIndex = -1;
         selectvalue = "";
     }
@@ -234,19 +233,19 @@
         ResultEntity<bool> resultEntity = new();
         if (_editedIndex > -1)
         {
-            var item = userPage.Datas.Any(x => x.Id == _editedItem.Id);
+            var item = scalePage.Datas.Any(x => x.Id == _editedItem.Id);
             if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-            resultEntity = _usersServiceDM.UpUsers(new UsersModel() { Id = _editedItem.Id, Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
+            resultEntity = _scaleServiceDM.UpUsers(new UsersModel() { Id = _editedItem.Id, Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
         }
         else
         {
-            resultEntity = _usersServiceDM.AddUsers(new UsersModel() { Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
+            resultEntity = _scaleServiceDM.AddUsers(new UsersModel() { Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
 
         }
         if (resultEntity.IsSuccess)
         {
             await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-            if (_editedIndex == -1) userPage.Datas.Add(_editedItem);
+            if (_editedIndex == -1) scalePage.Datas.Add(_editedItem);
         }
         else
         {

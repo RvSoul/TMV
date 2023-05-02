@@ -10,7 +10,7 @@ namespace TMV.Application.Scale.Services
 {
     public interface IScaleServiceDM
     {
-        ResultPageEntity<ScaleDTO> GetScaleList(Request_Scale dto, out int count);
+        ResultPageEntity<ScaleDTO> GetScaleList(Request_Scale dto);
         ResultEntity<bool> AddScale(ScaleModel model);
 
         ResultEntity<bool> UpScale(ScaleModel model);

@@ -24,9 +24,9 @@ namespace TMV.Application.Scale
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetScaleList")]
-        public ResultEntity<List<ScaleDTO>> GetScaleList([FromQuery] Request_Scale dto)
+        public ResultPageEntity<ScaleDTO> GetScaleList([FromQuery] Request_Scale dto)
         {
-            return dm.GetScaleList(dto, out int count);
+            return dm.GetScaleList(dto);
         }
 
         /// <summary>

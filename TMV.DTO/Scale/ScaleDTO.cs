@@ -10,7 +10,7 @@ namespace TMV.DTO.Scale
 {
     public class Request_Scale : ModelDTO
     {
-
+        public string Name { get; set; }
     }
 
     public class ScaleModel

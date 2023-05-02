@@ -70,13 +70,12 @@ namespace TMV.Application.Scale.Services
             }
         }
 
-        public ResultPageEntity<ScaleDTO> GetScaleList(Request_Scale dto, out int count)
+        public ResultPageEntity<ScaleDTO> GetScaleList(Request_Scale dto)
         {
             int total = 0;
             Expression<Func<TMV_Scale, bool>> expr = AutoAssemble.Splice<TMV_Scale, Request_Scale>(dto);
 
             var li = c.Queryable<TMV_Scale>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
-            count = total;
             var list = li.Adapt<List<ScaleDTO>>();
             return new ResultPageEntity<ScaleDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count }; 
 
