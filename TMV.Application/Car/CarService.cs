@@ -7,6 +7,7 @@ using TMV.Application.Car.Services;
 using TMV.DTO.Car;
 using TMV.DTO;
 using SqlSugar;
+using Npoi.Mapper;
 
 namespace TMV.Application.Car
 {
@@ -60,6 +61,52 @@ namespace TMV.Application.Car
         {
             return dm.DeCar(Id);
         }
+
+        [HttpPost, NonUnify]
+        public async Task<ResultEntity<bool>> UploadFileAsync(List<IFormFile> files)
+        {
+            var file = files.FirstOrDefault();
+            if (file is null || file.Length == 0L)
+            {
+                throw new FileNotFoundException($"抱歉，未找到您要上传的文件信息。");
+            }
+
+            using (var ms = file.OpenReadStream())
+            {
+                var mapper = new Mapper(ms);
+                mapper
+                    .Map<CarModel>("车牌号", t => t.PlateNumber)
+                    .Map<CarModel>("车型", t => t.Type)
+                    .Map<CarModel>("车厢长", t => t.SizeC)
+                    .Map<CarModel>("车厢宽", t => t.SizeK)
+                    .Map<CarModel>("车厢高", t => t.SizeG)
+                    .Map<CarModel>("测量人员", t => t.Surveyor)
+                    .Map<CarModel>("拉筋一", t => t.TieBar1)
+                    .Map<CarModel>("拉筋二", t => t.TieBar2)
+                    .Map<CarModel>("拉筋三", t => t.TieBar3)
+                    .Map<CarModel>("水箱油箱为空时的标准皮重", t => t.EmptyWeight)
+                    .Map<CarModel>("水箱油箱加满时的标准皮重", t => t.FullWeight)
+                    .Map<CarModel>("额定载总重量", t => t.RatedWeight)
+                    .Map<CarModel>("行驶证号", t => t.ExerciseCode)
+                    .Map<CarModel>("电子标签编号", t => t.TAgCode)
+                    .Map<CarModel>("驾驶员姓名", t => t.DriverName)
+                    .Map<CarModel>("性别", t => t.Sex)
+                    .Map<CarModel>("年龄", t => t.Age)
+                    .Map<CarModel>("籍贯", t => t.NativePlace)
+                    .Map<CarModel>("驾驶证号", t => t.DrivingCode)
+                    .Map<CarModel>("建档人", t => t.AddName)
+                    .Map<CarModel>("建档时间", t => t.AddTime);
+                var objs1 = mapper.Take<CarModel>();
+
+
+            }
+
+
+
+            // 在动态 API 直接返回对象即可，无需 OK 和 IActionResult
+            return new ResultEntity<bool>();
+        }
+
         #endregion
     }
 }

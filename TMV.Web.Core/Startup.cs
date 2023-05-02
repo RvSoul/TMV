@@ -34,6 +34,16 @@ namespace TMV.Web.Core
             services.AddGlobalForServer();
             services.AddRemoteRequest();
             services.AddScoped<AjaxService>();
+
+            // 日志配置信息 begin
+            services.AddFileLogging("SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
+            {
+                options.FileNameRule = fileName =>
+                {
+                    return string.Format(fileName, DateTime.UtcNow);
+                };
+            });
+            // end
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

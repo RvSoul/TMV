@@ -108,7 +108,10 @@ namespace TMV.DTO.Car
         /// 建档人
         /// </summary> 
         public string AddName { get; set; }
-
+        /// <summary>
+        /// 建档时间
+        /// </summary> 
+        public DateTime AddTime { get; set; }
     }
     public class CarDTO
     {
