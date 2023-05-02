@@ -10,6 +10,7 @@ using TMV.Core.CM;
 using TMV.DTO.Users;
 using TMV.DTO;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Furion.LinqBuilder;
 
 namespace TMV.Application.Car.Services
 {
@@ -19,6 +20,36 @@ namespace TMV.Application.Car.Services
         public CarServiceDM(ISqlSugarClient db)
         {
             c = db;
+        }
+
+        public ResultPageEntity<CarDTO> GetCarList(Request_Car dto)
+        {
+            Expression<Func<TMV_Car, bool>> expr = n => true;
+            if (!dto.PlateNumber.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.PlateNumber == dto.PlateNumber);
+            }
+            if (dto.Type != null)
+            {
+                expr = expr.And2(n => n.Type == dto.Type);
+            }
+
+            if (!dto.ExerciseCode.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.ExerciseCode == dto.ExerciseCode);
+            }
+
+            if (!dto.DriverName.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.DriverName == dto.DriverName);
+            }
+
+            int total = 0;
+
+            var query = c.Queryable<TMV_Car>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
+
+            var list = query.Adapt<List<CarDTO>>();
+            return new ResultPageEntity<CarDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };
         }
 
         public ResultEntity<bool> AddCar(CarModel model)
@@ -72,14 +103,7 @@ namespace TMV.Application.Car.Services
             }
         }
 
-        public ResultPageEntity<CarDTO> GetCarList(Request_Car dto)
-        {
-            int total = 0;
-            Expression<Func<TMV_Car, bool>> expr = AutoAssemble.Splice<TMV_Car, Request_Car>(dto);
-            var query = c.Queryable<TMV_Car>().Where(expr).WhereIF(!string.IsNullOrWhiteSpace(dto.Type),x=>x.Type==Convert.ToInt32(dto.Type)).ToPageList(dto.PageIndex, dto.PageSize, ref total);
-            var list = query.Adapt<List<CarDTO>>();
-            return new ResultPageEntity<CarDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };
-        }
+
 
         public ResultEntity<bool> UpCar(CarModel model)
         {

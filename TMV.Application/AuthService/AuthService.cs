@@ -15,6 +15,7 @@ using SqlSugar;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.ComponentModel;
 using TMV.DTO.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace TMV.Application.AuthService
 {
@@ -22,11 +23,19 @@ namespace TMV.Application.AuthService
     [LoggingMonitor]
     public class AuthService: IDynamicApiController,IAuthService, ITransient
     {
-        ISqlSugarClient  _sqlSugarClient;
-        public AuthService(ISqlSugarClient sqlSugarClient) 
+        private readonly ILogger<AuthService> _logger;
+
+        ISqlSugarClient _sqlSugarClient;
+        public AuthService(ISqlSugarClient sqlSugarClient, ILogger<AuthService> logger) 
         {
             _sqlSugarClient=sqlSugarClient;
+            _logger = logger;
         }
+
+
+       
+        
+
         /// <summary>
         /// 登录
         /// </summary>
@@ -69,6 +78,17 @@ namespace TMV.Application.AuthService
               await App.HttpContext?.SignOutAsync("cookies");
               //App.HttpContext?.SignoutToSwagger();
               await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 衡传送数据接口
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public async Task SetDataInfo(string data)
+        {
+            _logger.LogInformation(data);
+           await Task.CompletedTask;
         }
     }
 }

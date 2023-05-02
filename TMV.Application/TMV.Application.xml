@@ -17,6 +17,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:TMV.Application.AuthService.AuthService.SetDataInfo(System.String)">
+            <summary>
+            衡传送数据接口
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:TMV.Application.Car.CarService.GetCarList(TMV.DTO.Car.Request_Car)">
             <summary>
             获取车辆列表

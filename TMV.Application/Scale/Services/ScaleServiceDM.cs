@@ -10,6 +10,7 @@ using TMV.DTO.Scale;
 using TMV.DTO.ModelData;
 using TMV.DTO;
 using TMV.DTO.Users;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TMV.Application.Scale.Services
 {
@@ -69,15 +70,15 @@ namespace TMV.Application.Scale.Services
             }
         }
 
-        public ResultEntity<List<ScaleDTO>> GetScaleList(Request_Scale dto, out int count)
+        public ResultPageEntity<ScaleDTO> GetScaleList(Request_Scale dto, out int count)
         {
             int total = 0;
             Expression<Func<TMV_Scale, bool>> expr = AutoAssemble.Splice<TMV_Scale, Request_Scale>(dto);
 
             var li = c.Queryable<TMV_Scale>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
             count = total;
-
-            return new ResultEntityUtil<List<ScaleDTO>>().Success(GetMapperDTO.GetDTOList<TMV_Scale, ScaleDTO>(li), dto.PageIndex, dto.PageSize, count);
+            var list = li.Adapt<List<ScaleDTO>>();
+            return new ResultPageEntity<ScaleDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count }; 
 
         }
 

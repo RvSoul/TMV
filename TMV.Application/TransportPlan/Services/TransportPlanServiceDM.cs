@@ -11,6 +11,7 @@ using TMV.DTO.TransportPlan;
 using TMV.DTO.ModelData;
 using TMV.DTO.TransportPlan;
 using TMV.DTO;
+using TMV.DTO.Scale;
 
 namespace TMV.Application.TransportPlan.Services
 {
@@ -51,7 +52,7 @@ namespace TMV.Application.TransportPlan.Services
             }
         }
 
-        public ResultEntity<List<TransportPlanDTO>> GetTransportPlanList(Request_TransportPlan dto, out int count)
+        public ResultPageEntity<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto, out int count)
         {
             int total = 0;
             Expression<Func<TMV_TransportPlan, bool>> expr = AutoAssemble.Splice<TMV_TransportPlan, Request_TransportPlan>(dto);
@@ -59,7 +60,9 @@ namespace TMV.Application.TransportPlan.Services
             var li = c.Queryable<TMV_TransportPlan>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
             count = total;
 
-            return new ResultEntityUtil<List<TransportPlanDTO>>().Success(GetMapperDTO.GetDTOList<TMV_TransportPlan, TransportPlanDTO>(li), dto.PageIndex, dto.PageSize, count);
+            var list = li.Adapt<List<TransportPlanDTO>>();
+            return new ResultPageEntity<TransportPlanDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
+             
              
         }
 

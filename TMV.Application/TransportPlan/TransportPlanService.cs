@@ -24,7 +24,7 @@ namespace TMV.Application.TransportPlan
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetTransportPlanList")]
-        public ResultEntity<List<TransportPlanDTO>> GetTransportPlanList([FromQuery] Request_TransportPlan dto)
+        public ResultPageEntity<TransportPlanDTO> GetTransportPlanList([FromQuery] Request_TransportPlan dto)
         {
             return  dm.GetTransportPlanList(dto, out int count) ;
         }

@@ -10,7 +10,7 @@ namespace TMV.Application.TransportPlan.Services
 {
     public interface ITransportPlanServiceDM
     {
-        ResultEntity<List<TransportPlanDTO>> GetTransportPlanList(Request_TransportPlan dto, out int count);
+        ResultPageEntity<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto, out int count);
         ResultEntity<bool> AddTransportPlan(TransportPlanModel model);
 
         ResultEntity<bool> UpTransportPlan(TransportPlanModel model);
