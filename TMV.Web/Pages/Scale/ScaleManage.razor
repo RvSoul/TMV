@@ -47,8 +47,6 @@
                         }
                     break;
                 case nameof(ScaleDTO.State):
-                   
-                   
                         @if (context.Item.State == 1)
                         {
                             <span>启用</span>
@@ -201,10 +199,11 @@
         if (result.IsSuccess)
         {
             await PopupService.ToastAsync("更新成功", AlertTypes.Success);
-            scalePage.Datas.ForEach(x => {
-                if (x.State == 1) x.State = 2;
-                if (x.State == 2) x.State = 1;
-            });
+            var index= scalePage.Datas.FindIndex(x => x.Id == usersDTO.Id);
+            if (index != -1)
+            {
+                scalePage.Datas[index].State = scalePage.Datas[index].State == 1 ? 2 : 1;
+            };
         }
         else
         {

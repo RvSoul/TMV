@@ -38,62 +38,20 @@
   },
   {
     "Id": 18,
-    "Title": "预制管理",
+    "Title": "预制计划",
     "Icon": "mdi-file-outline",
     "Children": [
       {
         "Id": 19,
-        "Title": "Login v1",
+        "Title": "进煤计划预制",
         "Icon": "mdi-circle",
-        "Href": "pages/authentication/login-v1"
+        "Href": "plan/carplan"
       },
       {
         "Id": 20,
-        "Title": "Login v2",
+        "Title": "过衡信息预制",
         "Icon": "mdi-circle",
-        "Href": "pages/authentication/login-v2"
-      },
-      {
-        "Id": 21,
-        "Hide": true,
-        "Title": "Register v1",
-        "Icon": "mdi-circle",
-        "Href": "pages/authentication/register-v1"
-      },
-      {
-        "Id": 22,
-        "Hide": true,
-        "Title": "Register v2",
-        "Icon": "mdi-circle",
-        "Href": "pages/authentication/register-v2"
-      },
-      {
-        "Id": 23,
-        "Hide": true,
-        "Title": "Forgot Password v1",
-        "Icon": "mdi-circle",
-        "Href": "pages/authentication/forgot-password-v1"
-      },
-      {
-        "Id": 24,
-        "Hide": true,
-        "Title": "Forgot Password v2",
-        "Icon": "mdi-circle",
-        "Href": "pages/authentication/forgot-password-v2"
-      },
-      {
-        "Id": 25,
-        "Hide": true,
-        "Title": "Reset Password v1",
-        "Icon": "mdi-circle",
-        "Href": "pages/authentication/reset-password-v1"
-      },
-      {
-        "Id": 26,
-        "Hide": true,
-        "Title": "Reset Password v2",
-        "Icon": "mdi-circle",
-        "Href": "pages/authentication/reset-password-v2"
+        "Href": "plan/weighplan"
       }
     ]
   },
