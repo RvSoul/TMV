@@ -8,6 +8,7 @@ using TMV.DTO.Car;
 using TMV.DTO;
 using SqlSugar;
 using Npoi.Mapper;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace TMV.Application.Car
 {
@@ -73,7 +74,7 @@ namespace TMV.Application.Car
 
             using (var ms = file.OpenReadStream())
             {
-                var mapper = new Mapper(ms);
+                var mapper = new Mapper(ms) { UseDefaultValueAttribute = false };
                 mapper
                     .Map<CarModel>("车牌号", t => t.PlateNumber)
                     .Map<CarModel>("车型", t => t.Type)
@@ -98,13 +99,11 @@ namespace TMV.Application.Car
                     .Map<CarModel>("建档时间", t => t.AddTime);
                 var objs1 = mapper.Take<CarModel>();
 
+                //if (objs1.Any()) return await dm.ImportCar(objs1.Select(t => t.Value).ToList());
+                //else throw new ArgumentException(nameof(objs1));
+                return null;
 
             }
-
-
-
-            // 在动态 API 直接返回对象即可，无需 OK 和 IActionResult
-            return new ResultEntity<bool>();
         }
 
         #endregion

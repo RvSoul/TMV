@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Npoi.Mapper;
+using NPOI.SS.Formula.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +19,7 @@ namespace TMV.Application.Car.Services
         ResultEntity<bool> UpCar(CarModel model);
 
         ResultEntity<bool> DeCar(Guid id);
+
+        Task<ResultEntity<bool>> ImportCar(List<CarModel> li);
     }
 }

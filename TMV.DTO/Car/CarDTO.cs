@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace TMV.DTO.Car
         /// <summary>
         /// 车牌号
         /// </summary>
-        [DefaultValue("车牌号")]
+        [Column("车牌号")]
         public string PlateNumber { get; set; }
 
 

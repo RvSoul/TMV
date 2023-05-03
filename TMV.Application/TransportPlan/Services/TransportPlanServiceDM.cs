@@ -52,18 +52,15 @@ namespace TMV.Application.TransportPlan.Services
             }
         }
 
-        public ResultPageEntity<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto, out int count)
+        public ResultPageEntity<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto)
         {
             int total = 0;
             Expression<Func<TMV_TransportPlan, bool>> expr = AutoAssemble.Splice<TMV_TransportPlan, Request_TransportPlan>(dto);
 
             var li = c.Queryable<TMV_TransportPlan>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
-            count = total;
 
             var list = li.Adapt<List<TransportPlanDTO>>();
-            return new ResultPageEntity<TransportPlanDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
-             
-             
+            return new ResultPageEntity<TransportPlanDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };
         }
 
         public ResultEntity<bool> UpTransportPlan(TransportPlanModel model)
