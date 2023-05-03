@@ -97,5 +97,6 @@ namespace TMV.DTO.Tr
         /// 是否上传-1.未上传，2.已上传
         /// </summary> 
         public int IsUpload { get; set; }
+        public List<ScalageRecordsDTO> ScalageRecordsData { get; set; }
     }
 }

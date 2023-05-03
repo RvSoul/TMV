@@ -69,6 +69,10 @@ namespace TMV.DTO.TransportPlan
         /// 采样方式-1.人采，2.机采
         /// </summary>
         public int Sampling { get; set; }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime AddTime { get; set; }
     }
     public class TransportPlanDTO
     {

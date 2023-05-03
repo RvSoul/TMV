@@ -2,25 +2,8 @@
   {
     "Id": 1,
     "Title": "主页",
-    "Icon": "mdi-trending-up"
-  },
-  {
-    "Id": 4,
-    "Title": "车辆建档",
-    "Icon": "mdi-car-back",
-    "Href": "car/carmanage"
-  },
-  {
-    "Id": 8,
-    "Title": "物流订单",
-    "Icon": "mdi-calendar-check-outline",
-    "Href": "app/todo"
-  },
-  {
-    "Id": 8,
-    "Title": "衡管理",
-    "Icon": "mdi-calendar-check-outline",
-    "Href": "scale/scalemanage"
+    "Icon": "mdi-trending-up",
+    "Href": "dashboard/ecommerce"
   },
   {
     "Id": 18,
@@ -29,36 +12,29 @@
     "Href": "plan/carplan"
   },
   {
+    "Id": 8,
+    "Title": "物流订单",
+    "Icon": "mdi-calendar-check-outline",
+    "Href": "transportationrecords/index"
+  },
+  {
     "Id": 27,
-    "Title": "告警管理",
-    "Icon": "mdi-dots-horizontal",
-    "Children": [
-      {
-        "Id": 28,
-        "Hide": true,
-        "Title": "Account Settings",
-        "Icon": "mdi-circle",
-        "Href": "pages/others/account-settings"
-      },
-      {
-        "Id": 29,
-        "Title": "500",
-        "Icon": "mdi-circle",
-        "Href": "pages/others/500"
-      },
-      {
-        "Id": 30,
-        "Title": "401",
-        "Icon": "mdi-circle",
-        "Href": "pages/others/401"
-      },
-      {
-        "Id": 31,
-        "Title": "404",
-        "Icon": "mdi-circle",
-        "Href": "pages/others/404"
-      }
-    ]
+    "Title": "异常记录",
+    "Icon": "mdi-bell-alert-outline",
+    "Href": "abnormalrRecords/inrdex"
+  },
+  {
+    "Id": 4,
+    "Title": "车辆建档",
+    "Icon": "mdi-car-back",
+    "Href": "car/carmanage"
+  },
+
+  {
+    "Id": 8,
+    "Title": "衡管理",
+    "Icon": "mdi-calendar-check-outline",
+    "Href": "scale/scalemanage"
   },
   {
     "Id": 14,
@@ -69,32 +45,7 @@
   {
     "Id": 9,
     "Title": "系统设置",
-    "Icon": "mdi-content-paste",
-    "Children": [
-      {
-        "Id": 10,
-        "Title": "List",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/list"
-      },
-      {
-        "Id": 11,
-        "Title": "Preview",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/preview"
-      },
-      {
-        "Id": 12,
-        "Title": "Edit",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/edit"
-      },
-      {
-        "Id": 13,
-        "Title": "Add",
-        "Icon": "mdi-circle",
-        "Href": "app/invoice/add"
-      }
-    ]
+    "Icon": "mdi-application-cog-outline",
+    "Href": "sysseting/inrdex"
   }
 ]

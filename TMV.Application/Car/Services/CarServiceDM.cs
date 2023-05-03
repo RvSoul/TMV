@@ -31,9 +31,9 @@ namespace TMV.Application.Car.Services
             {
                 expr = expr.And2(n => n.PlateNumber == dto.PlateNumber);
             }
-            if (dto.Type != null)
+            if (!dto.Type.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.Type == dto.Type);
+                expr = expr.And2(n => n.Type == Convert.ToInt32(dto.Type));
             }
 
             if (!dto.ExerciseCode.IsNullOrEmpty())

@@ -47,6 +47,6 @@ namespace TMV.Core.CM
         /// 处理时间
         /// </summary>
         [DefaultValue("处理时间")]
-        public DateTime DisposalTime { get; set; }
+        public DateTime? DisposalTime { get; set; }
     }
 }

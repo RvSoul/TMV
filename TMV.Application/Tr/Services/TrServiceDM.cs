@@ -83,9 +83,21 @@ namespace TMV.Application.Tr.Services
             }
 
             int count = 0;
-            var query = c.Queryable<TMV_TransportationRecords>().Where(expr).OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
-            var list = query.Adapt<List<TransportationRecordsDTO>>();
-            return new ResultPageEntity<TransportationRecordsDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
+            var query = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x=>new TransportationRecordsDTO()
+            {
+                Id=x.Id.SelectAll(),
+            })
+                .Mapper(x =>
+                {
+                    x.ScalageRecordsData = c.Queryable<TMV_ScalageRecords,TMV_Scale>((a,b)=>a.ScaleId==b.Id).Where((a,b) =>a.TId == x.Id).Select((a, b) => new ScalageRecordsDTO() { Id = a.Id, ScaleId = a.ScaleId, ScaleName=b.Name,ScaleType=b.Type, Weigh = a.Weigh, AddTime = a.AddTime }).ToList();
+                })
+                .OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+            //var list = query.Adapt<List<TransportationRecordsDTO>>();
+            //list.ForEach(x =>
+            //{
+            //    x.ScalageRecordsData=c.Queryable<TMV_ScalageRecords>().Where(p=>p.TId==x.Id).Select(f=>new ScalageRecordsDTO() { Id=f.Id,ScaleId=f.ScaleId,Weigh=f.Weigh,AddTime=f.AddTime}).ToList();
+            //});
+            return new ResultPageEntity<TransportationRecordsDTO>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
 
         public ResultEntity<bool> UpTransportationRecords(TransportationRecordsModel model)
@@ -230,6 +242,27 @@ namespace TMV.Application.Tr.Services
                 #endregion
             }
             return new ResultEntityUtil<bool>().Success(true);
+        }
+
+
+        public ResultPageEntity<ScalageRecordsDTO> GetScalageRecordsList(Request_ScalageRecordsDTO dto)
+        {
+
+            Expression<Func<TMV_ScalageRecords, bool>> expr = n => true;
+
+            if (dto.ScaleId != null)
+            {
+                expr = expr.And2(w => w.ScaleId == Guid.Parse(dto.ScaleId));
+            }
+            if (dto.TId != null)
+            {
+                expr = expr.And2(w => w.TId == Guid.Parse(dto.TId));
+            }
+
+            int count = 0;
+            var query = c.Queryable<TMV_ScalageRecords>().Where(expr).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+            var list = query.Adapt<List<ScalageRecordsDTO>>();
+            return new ResultPageEntity<ScalageRecordsDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
     }
 }

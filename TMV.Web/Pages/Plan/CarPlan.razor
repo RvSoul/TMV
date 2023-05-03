@@ -74,6 +74,16 @@
         <ItemColContent>
             @switch (context.Header.Value)
             {
+                case (nameof(TransportPlanDTO.Sampling)):
+                    if (context.Item.Sampling == 1)
+                    {
+                        <span>人采</span>
+                    }
+                    if (context.Item.Sampling == 2)
+                    {
+                        <span>机采</span>
+                    }
+                    break;
                 case "actions":
                     <MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
                     <MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
@@ -85,15 +95,6 @@
 
         </ItemColContent>
     </MDataTable>
-    @*    <MCardText>
-    <div class="d-flex">
-    <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">显示 @((tpPage.PageIndex - 1) * tpPage.PageSize + 1) 至 @(tpPage.PageIndex * tpPage.PageSize) 和 @tpPage.CurrentCount 跳转</div>
-    @if (tpPage.PageCount > 0)
-    {
-    <MPagination @bind-Value="tpPage.PageIndex" Color="primary" Circle Length=@tpPage.PageCount></MPagination>
-    }
-    </div>
-    </MCardText>*@
     <MDialog @bind-Value="_visible"
              MaxWidth="800">
         <MCard>
@@ -145,24 +146,37 @@
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
                             @*<MTextField @bind-Value="_editedItem.ArrivalTime" Name="input-10-1" Type="text" Clearable Label="到货日期"></MTextField>*@
-                            <MMenu @bind-Value="_menu1"
+                            <MMenu @bind-Value="_menu"
                                    CloseOnContentClick="false"
                                    Transition="scale-transition"
                                    OffsetY
-                                   MaxWidth="290"
                                    MinWidth="@("auto")">
                                 <ActivatorContent>
-                                    <MTextField @bind-Value="_editedItem.ArrivalTime"
+                                    <MTextField @bind-Value="_date"
                                                 Label="到货日期"
-                                                PersistentHint
                                                 PrependIcon="mdi-calendar"
-                                                @attributes="context.Attrs">
-                                    </MTextField>
+                                                    Readonly
+                                                @attributes="context.Attrs"></MTextField>
                                 </ActivatorContent>
                                 <ChildContent>
-                                    <MDatePicker @bind-Value="_date" OnInput="()=>_menu1=false" NoTitle></MDatePicker>
-                                </ChildContent>
-                            </MMenu>
+                                    <MDatePicker @bind-Value="_date"
+                                                      NoTitle
+                                                
+                                                      Scrollable>
+                                        <MSpacer></MSpacer>
+                                        <MButton Text
+                                                 Color="primary"
+                                                 OnClick="MenuCancel">
+                                            取消
+                                        </MButton>
+                                        <MButton Text
+                                                 Color="primary"
+                                                 OnClick="MenuOK">
+                                            确定
+                                        </MButton>
+                                        </MDatePicker>
+                                    </ChildContent>
+                                    </MMenu>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
                             <MTextField @bind-Value="_editedItem.MineCode" Name="input-10-1" Type="text" Clearable Label="矿号"></MTextField>
@@ -188,22 +202,23 @@
         </MCard>
     </MDialog>
 </MCard>
-@code {
+                @code {
     private int _editedIndex = -1;
 
-    DateTime _date = DateTime.Now;
-    public bool _menu1;
-    private DateTime Date
+    private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
+    private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
+    public bool _menu;
+    public void MenuOK()
     {
-        get
-        {
-            return _date;
-        }
-        set
-        {
-            _date = value;
-            _editedItem.ArrivalTime = Convert.ToDateTime(FormateDate(_date));
-        }
+        _prevDate = _date;
+        _editedItem.ArrivalTime = Convert.ToDateTime(_prevDate.Year + "-" + _prevDate.Month+"-"+_prevDate.Day);
+        _menu = false;
+    }
+
+    public void MenuCancel()
+    {
+        _date = _prevDate;
+        _menu = false;
     }
     public static string FormateDate(DateTime date)
     {
@@ -261,6 +276,7 @@
     public TransportPlanPage tpPage = new();
     protected override void OnInitialized()
     {
+        _editedItem.ArrivalTime = DateTime.Now;
         Initialize();
     }
     public void Initialize()
@@ -279,6 +295,7 @@
         _editedItem = usersDTO;
         _visible = true;
         _editedIndex = 1;
+        _date = DateOnly.FromDateTime(_editedItem.ArrivalTime);
         // selectvalue = usersDTO.Type.ToString();
     }
     public async Task DeleteItem(TransportPlanDTO usersDTO)
