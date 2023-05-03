@@ -8,14 +8,7 @@
     "Id": 4,
     "Title": "车辆建档",
     "Icon": "mdi-car-back",
-    "Children": [
-      {
-        "Id": 5,
-        "Title": "车辆管理",
-        "Icon": "mdi-circle",
-        "Href": "car/carmanage"
-      }
-    ]
+    "Href": "car/carmanage"
   },
   {
     "Id": 8,
@@ -27,33 +20,13 @@
     "Id": 8,
     "Title": "衡管理",
     "Icon": "mdi-calendar-check-outline",
-    "Children": [
-      {
-        "Id": 15,
-        "Title": "衡列表",
-        "Icon": "mdi-circle",
-        "Href": "scale/scalemanage"
-      }
-    ]
+    "Href": "scale/scalemanage"
   },
   {
     "Id": 18,
-    "Title": "预制计划",
+    "Title": "进煤计划预制",
     "Icon": "mdi-file-outline",
-    "Children": [
-      {
-        "Id": 19,
-        "Title": "进煤计划预制",
-        "Icon": "mdi-circle",
-        "Href": "plan/carplan"
-      },
-      {
-        "Id": 20,
-        "Title": "过衡信息预制",
-        "Icon": "mdi-circle",
-        "Href": "plan/weighplan"
-      }
-    ]
+    "Href": "plan/carplan"
   },
   {
     "Id": 27,
@@ -91,20 +64,12 @@
     "Id": 14,
     "Title": "用户管理",
     "Icon": "mdi-account-outline",
-    "Children": [
-      {
-        "Id": 15,
-        "Title": "用户列表",
-        "Icon": "mdi-circle",
-        "Href": "user/listmanage"
-      }
-    ]
+    "Href": "user/listmanage"
   },
   {
     "Id": 9,
     "Title": "系统设置",
     "Icon": "mdi-content-paste",
-    "Hide": true,
     "Children": [
       {
         "Id": 10,

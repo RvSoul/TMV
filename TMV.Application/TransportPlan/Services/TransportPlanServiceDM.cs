@@ -77,7 +77,7 @@ namespace TMV.Application.TransportPlan.Services
                 return new ResultEntityUtil<bool>().Failure("矿号已经存在");
             }
 
-            var data = c.Queryable<TMV_TransportPlan>().InSingle(model.Id);
+            var data = model.Adapt<TMV_TransportPlan>();
 
             var result = c.Updateable(data).ExecuteCommand();
             if (result > 0)

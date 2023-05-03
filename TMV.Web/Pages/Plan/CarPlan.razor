@@ -144,7 +144,25 @@
                             <MTextField @bind-Value="_editedItem.Carrier" Name="input-10-1" Type="text" Clearable Label="承运单位"></MTextField>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.ArrivalTime" Name="input-10-1" Type="text" Clearable Label="到货日期"></MTextField>
+                            @*<MTextField @bind-Value="_editedItem.ArrivalTime" Name="input-10-1" Type="text" Clearable Label="到货日期"></MTextField>*@
+                            <MMenu @bind-Value="_menu1"
+                                   CloseOnContentClick="false"
+                                   Transition="scale-transition"
+                                   OffsetY
+                                   MaxWidth="290"
+                                   MinWidth="@("auto")">
+                                <ActivatorContent>
+                                    <MTextField @bind-Value="_editedItem.ArrivalTime"
+                                                Label="到货日期"
+                                                PersistentHint
+                                                PrependIcon="mdi-calendar"
+                                                @attributes="context.Attrs">
+                                    </MTextField>
+                                </ActivatorContent>
+                                <ChildContent>
+                                    <MDatePicker @bind-Value="_date" OnInput="()=>_menu1=false" NoTitle></MDatePicker>
+                                </ChildContent>
+                            </MMenu>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
                             <MTextField @bind-Value="_editedItem.MineCode" Name="input-10-1" Type="text" Clearable Label="矿号"></MTextField>
@@ -170,8 +188,27 @@
         </MCard>
     </MDialog>
 </MCard>
-                @code {
+@code {
     private int _editedIndex = -1;
+
+    DateTime _date = DateTime.Now;
+    public bool _menu1;
+    private DateTime Date
+    {
+        get
+        {
+            return _date;
+        }
+        set
+        {
+            _date = value;
+            _editedItem.ArrivalTime = Convert.ToDateTime(FormateDate(_date));
+        }
+    }
+    public static string FormateDate(DateTime date)
+    {
+        return date.ToString("yyyy-MM-dd");
+    }
     public class RoleItem
     {
         public string Label { get; set; }
@@ -264,7 +301,6 @@
         _editedIndex = -1;
         selectvalue = "";
     }
-
     public async Task Save()
     {
         ResultEntity<bool> resultEntity = new();
