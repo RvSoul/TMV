@@ -24,6 +24,12 @@ namespace TMV.Application.Scale.Services
 
         public ResultEntity<bool> AddScale(ScaleModel model)
         {
+            TMV_Scale tp = c.Queryable<TMV_Scale>().Where(w => w.Name == model.Name).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("衡名称已经存在");
+            }
+
             TMV_Scale data = new TMV_Scale();
             data.Id = Guid.NewGuid();
             data.Name = model.Name;
@@ -77,12 +83,18 @@ namespace TMV.Application.Scale.Services
 
             var li = c.Queryable<TMV_Scale>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
             var list = li.Adapt<List<ScaleDTO>>();
-            return new ResultPageEntity<ScaleDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total }; 
+            return new ResultPageEntity<ScaleDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };
 
         }
 
         public ResultEntity<bool> UpScale(ScaleModel model)
         {
+            TMV_Scale tp = c.Queryable<TMV_Scale>().Where(w => w.Name == model.Name && w.Id != model.Id).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("衡名称已经存在");
+            }
+
             var data = c.Queryable<TMV_Scale>().InSingle(model.Id);
             data.Name = model.Name;
             data.Type = model.Type;

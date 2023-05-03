@@ -56,6 +56,12 @@ namespace TMV.Application.Car.Services
 
         public ResultEntity<bool> AddCar(CarModel model)
         {
+            TMV_Car tp = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == model.PlateNumber).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("车牌号已经存在");
+            }
+
             TMV_Car data = new TMV_Car();
             data.Id = Guid.NewGuid();
             data.PlateNumber = model.PlateNumber;
@@ -109,6 +115,12 @@ namespace TMV.Application.Car.Services
 
         public ResultEntity<bool> UpCar(CarModel model)
         {
+            TMV_Car tp = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == model.PlateNumber && w.Id != model.Id).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("车牌号已经存在");
+            }
+
             var data = c.Queryable<TMV_Car>().InSingle(model.Id);
             data.PlateNumber = model.PlateNumber;
             data.Type = model.Type;
@@ -149,7 +161,7 @@ namespace TMV.Application.Car.Services
             {
                 if (li.Where(w => w.PlateNumber == item.PlateNumber).Count() > 0)
                 {
-                    return new ResultEntityUtil<bool>().Success(false, "车牌号重复");
+                    return new ResultEntityUtil<bool>().Success(false, "车牌号：" + item.PlateNumber + "已经存在");
                 }
             }
             List<TMV_Car> datali = new List<TMV_Car>();

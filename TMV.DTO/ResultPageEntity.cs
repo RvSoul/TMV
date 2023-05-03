@@ -50,6 +50,7 @@ namespace TMV.DTO
                 Msg = message
             };
         }
+
         public ResultPageEntity<T> Success(List<T> data, int count, int PageIndex, int PageSize, string message = "操作成功")
         {
             return new ResultPageEntity<T>

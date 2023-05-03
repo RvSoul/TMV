@@ -10,24 +10,92 @@ namespace TMV.DTO.Tr
 {
     public class Request_TransportationRecords : ModelDTO
     {
-        [DefaultValue("状态")]
-        public TransportationRecordsState? State { get; set; }
+        /// <summary>
+        /// 车牌号
+        /// </summary> 
+        public string PlateNumber { get; set; }
+
+        /// <summary>
+        /// 矿号
+        /// </summary> 
+        public string MineCode { get; set; }
+
+        /// <summary>
+        /// 状态-1.正常，2.告警
+        /// </summary>
+        public string State { get; set; }
+        /// <summary>
+        /// 衡名称
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 开始时间
+        /// </summary> 
+        public string STime { get; set; }
+
+        /// <summary>
+        /// 结束时间
+        /// </summary> 
+        public string ETime { get; set; }
 
     }
-    public enum TransportationRecordsState
-    {
-        [DefaultValue("正常")]
-        正常 = 1,
-        [DefaultValue("告警")]
-        告警 = 2 
-    }
+  
     public class TransportationRecordsModel
     {
-         
+
 
     }
 
     public class TransportationRecordsDTO
-    { 
+    {
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// 车辆Id
+        /// </summary> 
+        public Guid CarId { get; set; }
+
+        /// <summary>
+        /// 矿号Id
+        /// </summary> 
+        public Guid CollieryId { get; set; }
+
+        /// <summary>
+        /// 毛量
+        /// </summary> 
+        public int RoughWeight { get; set; }
+
+        /// <summary>
+        /// 皮重
+        /// </summary> 
+        public int? TareWeight { get; set; }
+
+        /// <summary>
+        /// 净重
+        /// </summary> 
+        public int? NetWeight { get; set; }
+
+        /// <summary>
+        /// 进厂时间
+        /// </summary> 
+        public DateTime STime { get; set; }
+
+        /// <summary>
+        /// 出厂时间
+        /// </summary> 
+        public DateTime? ETime { get; set; }
+
+
+        /// <summary>
+        /// 状态-1.正常，2.告警
+        /// </summary> 
+        public int State { get; set; }
+
+
+        /// <summary>
+        /// 是否上传-1.未上传，2.已上传
+        /// </summary> 
+        public int IsUpload { get; set; }
     }
 }

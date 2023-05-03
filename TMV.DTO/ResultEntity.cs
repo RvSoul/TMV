@@ -48,7 +48,8 @@ namespace TMV.DTO
                 Msg = message
             };
         }
-  
+
+       
 
         /// <summary>
         /// 返回成功的响应实体

@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TMV.Core.CM;
+using TMV.DTO;
 using TMV.DTO.Authorization;
 using TMV.DTO.Tr;
+using TMV.DTO.ModelData;
+using Furion.LinqBuilder;
+using TMV.DTO.Users;
+using AutoMapper.Internal;
 
 namespace TMV.Application.Tr.Services
 {
@@ -17,33 +23,96 @@ namespace TMV.Application.Tr.Services
             c = db;
         }
 
-        public bool AddTransportationRecords(TransportationRecordsModel model)
+        public ResultEntity<bool> AddTransportationRecords(TransportationRecordsModel model)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeTransportationRecords(Guid id)
+        public ResultEntity<bool> DeTransportationRecords(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public bool GetDataInfo(AuthorizationDTO dto)
+        public ResultPageEntity<TransportationRecordsDTO> GetTransportationRecordsList(Request_TransportationRecords dto)
         {
 
+            Expression<Func<TMV_TransportationRecords, bool>> expr = n => true;
+            if (!dto.Name.IsNullOrEmpty())
+            {
+                TMV_Scale scale = c.Queryable<TMV_Scale>().Where(w => w.Name == dto.Name.ToString()).First();
+                if (scale == null)
+                {
+                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
+                }
+
+                List<TMV_ScalageRecords> srli = c.Queryable<TMV_ScalageRecords>().Where(w => w.ScaleId == scale.Id).ToList();
+                if (srli.Count() == 0)
+                {
+                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
+                }
+                List<Guid> li = srli.Select(s => s.TId).ToList();
+                expr = expr.And2(n => li.Contains(n.Id));
+            }
+            if (!dto.PlateNumber.IsNullOrEmpty())
+            {
+                TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
+                if (car == null)
+                {
+                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
+                }
+
+                expr = expr.And2(n => n.CarId == car.Id);
+            }
+            if (!dto.MineCode.IsNullOrEmpty())
+            {
+                TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.MineCode && w.AddTime.Date == DateTime.Now.Date).First();
+                if (tp == null)
+                {
+                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
+                }
+
+                expr = expr.And2(n => n.CollieryId == tp.Id);
+            }
+            if (dto.STime != null)
+            {
+                expr = expr.And2(w => w.STime.Date >= DateTime.Parse(dto.STime).Date);
+            }
+            if (dto.ETime != null)
+            {
+                expr = expr.And2(w => w.STime.Date <= DateTime.Parse(dto.ETime).Date);
+            }
+
+            int count = 0;
+            var query = c.Queryable<TMV_TransportationRecords>().Where(expr).OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+            var list = query.Adapt<List<TransportationRecordsDTO>>();
+            return new ResultPageEntity<TransportationRecordsDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
+        }
+
+        public ResultEntity<bool> UpTransportationRecords(TransportationRecordsModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ResultEntity<bool> GetDataInfo(AuthorizationDTO dto)
+        {
+            if (dto.State == 0)
+            {
+                return new ResultEntityUtil<bool>().Success(true, "连接成功！");
+            }
             TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
             if (car == null)
             {
-                throw new Exception("车牌号不存在！");
+                return new ResultEntityUtil<bool>().Failure("车牌号不存在！");
             }
             TMV_Scale scale = c.Queryable<TMV_Scale>().Where(w => w.Name == dto.ClassName.ToString()).First();
             if (scale == null)
             {
-                throw new Exception("衡不存在！");
+                return new ResultEntityUtil<bool>().Failure("衡不存在！");
             }
             TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.CollieryCode && w.AddTime.Date == DateTime.Now.Date).First();
             if (tp == null)
             {
-                throw new Exception("运输计划不存在！");
+                return new ResultEntityUtil<bool>().Failure("运输计划不存在！");
             }
 
             int scaleNum = c.Queryable<TMV_Scale>().Where(w => w.Type == 1 && w.State == 1).Count();
@@ -60,7 +129,7 @@ namespace TMV.Application.Tr.Services
                     if (scale.Type == 1)
                     {
                         #region 重衡
-                        throw new Exception("有上一趟数据/未轻衡称重/重衡：异常还是重新称重！");
+                        return new ResultEntityUtil<bool>().Failure("有上一趟数据/未轻衡称重/重衡：异常还是重新称重！");
                         #endregion
                     }
                     else
@@ -73,7 +142,7 @@ namespace TMV.Application.Tr.Services
                         sr.Weigh = dto.Weight;
                         sr.AddTime = DateTime.Now;
                         c.Insertable(sr).ExecuteCommand();
-                        
+
                         #endregion
                     }
                     #endregion
@@ -84,13 +153,13 @@ namespace TMV.Application.Tr.Services
                     if (scale.Type == 1)
                     {
                         #region 重衡
-                        throw new Exception("有上一趟数据/已轻衡称重/重衡：异常！");
+                        return new ResultEntityUtil<bool>().Failure("有上一趟数据/已轻衡称重/重衡：异常！");
                         #endregion
                     }
                     else
                     {
                         #region 轻衡
-                        throw new Exception("有上一趟数据/已轻衡称重/轻衡：异常还是重新称重！");
+                        return new ResultEntityUtil<bool>().Failure("有上一趟数据/已轻衡称重/轻衡：异常还是重新称重！");
                         #endregion
                     }
                     #endregion
@@ -126,7 +195,7 @@ namespace TMV.Application.Tr.Services
                         ar.Id = Guid.NewGuid();
                         ar.TId = tr.Id;
                         ar.AbnormalCause = "入口光幕阻挡";
-                        
+
                         c.Insertable(ar).ExecuteCommand();
                     }
                     if (dto.outX == 1)
@@ -148,29 +217,19 @@ namespace TMV.Application.Tr.Services
                         c.Insertable(ar).ExecuteCommand();
                     }
                     c.Insertable(tr).ExecuteCommand();
-                    c.Insertable(sr).ExecuteCommand(); 
+                    c.Insertable(sr).ExecuteCommand();
                     #endregion
                 }
                 else
                 {
                     #region 轻衡
-                    throw new Exception("没有有上一趟数据/轻衡：异常！");
+                    return new ResultEntityUtil<bool>().Failure("没有有上一趟数据/轻衡：异常！");
+
                     #endregion
                 }
                 #endregion
             }
-
-            return true;
-        }
-
-        public List<TransportationRecordsDTO> GetTransportationRecordsList(Request_TransportationRecords dto, out int count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool UpTransportationRecords(TransportationRecordsModel model)
-        {
-            throw new NotImplementedException();
+            return new ResultEntityUtil<bool>().Success(true);
         }
     }
 }

@@ -15,7 +15,7 @@ using TMV.DTO.Scale;
 
 namespace TMV.Application.TransportPlan.Services
 {
-    
+
     public class TransportPlanServiceDM : ITransportPlanServiceDM, IDynamicApiController, ITransient
     {
         ISqlSugarClient c;
@@ -26,7 +26,13 @@ namespace TMV.Application.TransportPlan.Services
 
         public ResultEntity<bool> AddTransportPlan(TransportPlanModel model)
         {
-            TMV_TransportPlan pt = GetMapperDTO.SetModel<TMV_TransportPlan, TransportPlanModel>(model); 
+            TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == model.MineCode && w.AddTime.Date == DateTime.Now.Date).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("矿号已经存在");
+            }
+
+            TMV_TransportPlan pt = GetMapperDTO.SetModel<TMV_TransportPlan, TransportPlanModel>(model);
 
             var result = c.Insertable(pt).ExecuteCommand();
             if (result > 0)
@@ -44,7 +50,7 @@ namespace TMV.Application.TransportPlan.Services
             var result = c.Deleteable<TMV_TransportPlan>().In(id).ExecuteCommand();
             if (result > 0)
             {
-                return new ResultEntityUtil<bool>().Success(true); 
+                return new ResultEntityUtil<bool>().Success(true);
             }
             else
             {
@@ -65,6 +71,12 @@ namespace TMV.Application.TransportPlan.Services
 
         public ResultEntity<bool> UpTransportPlan(TransportPlanModel model)
         {
+            TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == model.MineCode && w.AddTime.Date == DateTime.Now.Date && w.Id != model.Id).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("矿号已经存在");
+            }
+
             var data = c.Queryable<TMV_TransportPlan>().InSingle(model.Id);
 
             var result = c.Updateable(data).ExecuteCommand();
@@ -74,7 +86,7 @@ namespace TMV.Application.TransportPlan.Services
             }
             else
             {
-                return new ResultEntityUtil<bool>().Success(false); 
+                return new ResultEntityUtil<bool>().Success(false);
             }
         }
     }

@@ -34,14 +34,20 @@ namespace TMV.Application.Users.Services
             {
                 expr = expr.And2(n => n.Name == dto.Name);
             }
-            int count =0;
-            var query = c.Queryable<TMV_Users>().Where(expr).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize,ref count);
+            int count = 0;
+            var query = c.Queryable<TMV_Users>().Where(expr).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             var list = query.Adapt<List<UsersDTO>>();
-            return new ResultPageEntity<UsersDTO>() { Data= list, PageIndex= dto.PageIndex ,PageSize= dto.PageSize ,Count= count };
+            return new ResultPageEntity<UsersDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
- 
+
         public ResultEntity<bool> AddUsers(UsersModel model)
         {
+            TMV_Users tp = c.Queryable<TMV_Users>().Where(w => w.Name == model.Name).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("用户名称已经存在");
+            }
+
             TMV_Users data = GetMapperDTO.SetModel<TMV_Users, UsersModel>(model);
             data.Id = Guid.NewGuid();
             data.Name = model.Name;
@@ -53,7 +59,7 @@ namespace TMV.Application.Users.Services
             if (result > 0)
             {
                 return new ResultEntityUtil<bool>().Success(true);
-                
+
             }
             else
             {
@@ -77,10 +83,16 @@ namespace TMV.Application.Users.Services
         public UsersDTO GetUset(Guid id)
         {
             return c.Queryable<TMV_Users>().First(x => x.Id == id).Adapt<UsersDTO>();
-            
+
         }
         public ResultEntity<bool> UpUsers(UsersModel model)
         {
+            TMV_Users tp = c.Queryable<TMV_Users>().Where(w => w.Name == model.Name && w.Id != model.Id).First();
+            if (tp != null)
+            {
+                return new ResultEntityUtil<bool>().Failure("用户名称已经存在");
+            }
+
             var data = c.Queryable<TMV_Users>().InSingle(model.Id);
             data.Name = model.Name;
             data.Pwd = model.Pwd;
