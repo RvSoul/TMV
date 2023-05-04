@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using TMV.Core;
 using TMV.Web.Core.AjaxServer;
 using TMV.Web.Core.Components;
+using TMV.Web.Core.SocketServer;
 
 namespace TMV.Web.Core
 {
@@ -34,7 +35,6 @@ namespace TMV.Web.Core
             services.AddGlobalForServer();
             services.AddRemoteRequest();
             services.AddScoped<AjaxService>();
-
             // 日志配置信息 begin
             services.AddFileLogging("SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
             {
@@ -66,7 +66,7 @@ namespace TMV.Web.Core
             app.UseRouting();
 
             app.UseInject();
-
+            app.SocketServereMildd();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

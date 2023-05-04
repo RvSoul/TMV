@@ -38,7 +38,7 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 衡类型
         /// </summary> 
-        public int ScaleType { get; set; }
+        public string ScaleType { get; set; }
 
         /// <summary>
         /// 运输Id

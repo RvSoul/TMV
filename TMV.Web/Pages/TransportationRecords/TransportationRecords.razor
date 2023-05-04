@@ -59,29 +59,6 @@
                 <HeaderColContent Context="headers">
                     <span class="text-subtitle">@headers.Text</span>
                 </HeaderColContent>
-                 @*<ItemColContent>
-                @switch (context.Header.Value)
-                {
-                    case nameof(ScalageRecordsDTO.ScaleType):
-                        @if (context.Item.ScaleType == 1)
-                            {
-                                <span>重衡</span>
-                            }
-                            @if (context.Item.ScaleType == 2)
-                            {
-                                <span>轻衡</span>
-                            }
-                             @if (context.Item.ScaleType == 3)
-                            {
-                                <span>混合衡</span>
-                            }
-                        break;
-                    default:
-                        @context.Value
-                        break;
-                }
-
-        </ItemColContent>*@
              </MDataTable>
              </td>
         </ExpandedItemContent>
@@ -181,7 +158,7 @@
                 </MCard>
                 </MDialog>
  </MCard>
-                @code {
+ @code {
     private int _editedIndex = -1;
     private bool _singleExpand=false;
     private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
@@ -191,10 +168,6 @@
     public List<int> _pageSize = new() { 10, 20, 50 };
     public TransportationRecordsPage tpPage = new();
     public TransportationRecordsDTO _editedItem = new();
-    public static string FormateDate(DateTime date)
-    {
-        return date.ToString("yyyy-MM-dd");
-    }
     public class RoleItem
     {
         public string Label { get; set; }
@@ -223,8 +196,9 @@
     List<DataTableHeader<TransportationRecordsDTO>> _headers = new()
     {
             new (){ Text="",Value="data-table-expand"},
-            new() { Text = "车牌号", Value = nameof(TransportationRecordsDTO.CarId), CellClass = "" },
-            new() { Text = "矿号", Value = nameof(TransportationRecordsDTO.CollieryId) },
+            new() { Text = "物流单号", Value = nameof(TransportationRecordsDTO.Code), CellClass = "" },
+            new() { Text = "车牌号", Value = nameof(TransportationRecordsDTO.PlateNumber) },
+            new() { Text = "矿号", Value = nameof(TransportationRecordsDTO.MineCode) },
             new() { Text = "毛量", Value = nameof(TransportationRecordsDTO.RoughWeight) },
             new() { Text = "皮重", Value = nameof(TransportationRecordsDTO.TareWeight) },
             new() { Text = "净重", Value = nameof(TransportationRecordsDTO.NetWeight) },
@@ -246,7 +220,6 @@
     };
     protected override void OnInitialized()
     {
-        //_editedItem.ArrivalTime = DateTime.Now;
         Initialize();
     }
     public void Initialize()

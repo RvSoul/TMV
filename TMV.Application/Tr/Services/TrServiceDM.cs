@@ -155,8 +155,15 @@ namespace TMV.Application.Tr.Services
                      Weigh = xx.Weigh,
                  }).Mapper(xx =>
                  {
-                     xx.ScaleName = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Name;
-                     xx.ScaleType = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Type;
+                     var sa = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First();
+                     if (sa != null)
+                     {
+                         xx.ScaleName = sa.Name;
+                         if (sa.Type == 1)xx.ScaleType = "重衡";
+                         if (sa.Type == 2) xx.ScaleType = "轻衡";
+                         if (sa.Type == 3) xx.ScaleType = "混合衡";
+
+                     }
                  }).ToList();
                 x.MineCode = c.Queryable<TMV_TransportPlan>().Where(w => w.Id == x.CollieryId).First().MineCode;
                 x.PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber;

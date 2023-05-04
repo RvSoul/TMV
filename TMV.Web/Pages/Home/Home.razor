@@ -1,0 +1,170 @@
+﻿@page "/home/home"
+@using TMV.Application.AbnormalRecords.Services;
+@using TMV.Application.Tr.Services;
+@using TMV.DTO.AbnormalRecords;
+@using TMV.DTO.Tr;
+@using TMV.Web.Pages.AbnormalRecords.ViewModel;
+@using TMV.Web.Pages.TransportationRecords.ViewModel;
+@inherits ProCompontentBase
+@inject ITrServiceDM _trRecodeServiceDM
+@inject IArServiceDM _arServiceDM
+<MRow>
+    <MCol Md=8 Sm=12>
+        
+                <MCard Class="max-height" Style="border-radius:20px 0px 0px 20px !important;">
+            <MCardTitle> <MIcon Large Left>mdi-audio-video</MIcon> <span class="text-h6 font-weight-light">今日运输订单记录</span></MCardTitle>
+                    <MDataTable Headers="_headers" Items=" tpPage.Datas" Width="@("120%")" HideDefaultFooter Class="table-border-none pt-2">
+                            <HeaderColContent Context="header">
+                                <span class="text-subtitle">@header.Text</span>
+                            </HeaderColContent>
+                        </MDataTable>
+                   
+                </MCard>
+            
+        </MCol>
+        <MCol Md=4 Sm=12>
+        <MCard>
+            <MCardText Class="pb-0">
+                <div class="block-between mb-4">
+                    <h6>Statistics</h6>
+                    <span class="text-btn neutral-lighten-2--text">Updated 1 month ago</span>
+                </div>
+                <MRow NoGutters>
+                    <MCol Md=6 Sm=12 Class="py-12">
+                        <div class="d-flex block-center">
+                            <MAvatar Size=56 Color="fill-lighten-1">
+                                <MIcon Color="sample-green" Size=27>mdi-trending-up</MIcon>
+                            </MAvatar>
+                            <div class="ml-3">
+                                <div class="text-btn neutral-lighten-4--text">Sales</div>
+                                <h6>8.504K</h6>
+                            </div>
+                        </div>
+                    </MCol>
+                    <MCol Md=6 Sm=12 Class="py-12">
+                        <div class="d-flex block-center">
+                            <MAvatar Size=56 Color="fill-lighten-1">
+                                <MIcon Color="dark-yellow" Size=25>far fa-user</MIcon>
+                            </MAvatar>
+                            <div class="ml-3">
+                                <div class="text-btn neutral-lighten-4--text">User</div>
+                                <h6>$35040</h6>
+                            </div>
+                        </div>
+                    </MCol>
+                    <MCol Md=6 Sm=12 Class="py-12">
+                        <div class="d-flex block-center">
+                            <MAvatar Size=56 Color="fill-lighten-1">
+                                <MIcon Color="error" Size=27>mdi-cube-outline</MIcon>
+                            </MAvatar>
+                            <div class="ml-3">
+                                <div class="text-btn neutral-lighten-4--text">Products</div>
+                                <h6>323.5K</h6>
+                            </div>
+                        </div>
+                    </MCol>
+                    <MCol Md=6 Sm=12 Class="py-12">
+                        <div class="d-flex block-center">
+                            <MAvatar Size=56 Color="fill-lighten-1">
+                                <MIcon Color="primary" Size=27>mdi-currency-usd</MIcon>
+                            </MAvatar>
+                            <div class="ml-3">
+                                <div class="text-btn neutral-lighten-4--text">Revenue</div>
+                                <h6>$35040</h6>
+                            </div>
+                        </div>
+                    </MCol>
+                </MRow>
+            </MCardText>
+        </MCard>
+    </MCol>
+</MRow>
+
+<MRow>
+    <MCol Md=8 Sm=12>
+        <MCard Class="max-height">
+            <MCardTitle><MIcon Large Left>mdi-bell-ring</MIcon> <span class="text-h6 font-weight-light">运输告警记录</span></MCardTitle>
+            <MDataTable Headers="_saheaders" Items="abRePage.Datas" HideDefaultFooter Class="table-border-none pt-2">
+                <HeaderColContent Context="header">
+                    <span class="text-caption neutral-lighten-2--text ml-2">@header.Text</span>
+                </HeaderColContent>
+            </MDataTable>
+        </MCard>
+    </MCol>
+    <MCol Md=4 Sm=12>
+        <MCard Class="max-height">
+            <MCardText Class="pt-6">
+                <img class="rounded-2 max-width" height=186 src="/img/eCommerce/rectangle.png" />
+                <div class="d-flex my-4">
+                    <MAvatar Size=48 Color="fill-lighten-1">
+                        <MIcon Color="primary" Size=20>far fa-calendar-check</MIcon>
+                    </MAvatar>
+                    <div class="ml-4">
+                        <div class="text-subtitle">Sat，May 25，2021</div>
+                        <span class="text-caption">10:AM to 6:PM</span>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <MAvatar Size=48 Color="fill-lighten-1">
+                        <MIcon Color="sample-green" Size=25>mdi-map-marker-outline</MIcon>
+                    </MAvatar>
+                    <div class="ml-4">
+                        <div class="text-subtitle">Central Park </div>
+                        <span class="text-caption">Manhattan,New york City</span>
+                    </div>
+                </div>
+            </MCardText>
+        </MCard>
+    </MCol>
+</MRow>
+
+
+@code {
+    public TransportationRecordsPage tpPage = new();
+    public AbnormalRecordsPage abRePage = new();
+    List<DataTableHeader<TransportationRecordsDTO>> _headers = new()
+    {
+        new() { Text = "物流单号", Value = nameof(TransportationRecordsDTO.Code), CellClass = "" },
+            new() { Text = "车牌号", Value = nameof(TransportationRecordsDTO.PlateNumber)},
+            new() { Text = "矿号", Value = nameof(TransportationRecordsDTO.MineCode) },
+            new() { Text = "毛量", Value = nameof(TransportationRecordsDTO.RoughWeight) },
+            new() { Text = "皮重", Value = nameof(TransportationRecordsDTO.TareWeight) },
+            new() { Text = "净重", Value = nameof(TransportationRecordsDTO.NetWeight) },
+            new() { Text = "进厂时间", Value = nameof(TransportationRecordsDTO.STime) },
+            new() { Text = "出厂时间", Value = nameof(TransportationRecordsDTO.ETime) },
+            new() { Text = "状态", Value = nameof(TransportationRecordsDTO.State) }
+    };
+    List<DataTableHeader<AbnormalRecordsDTO>> _saheaders = new()
+    {
+         new() { Text = "运输编号", Value = nameof(AbnormalRecordsDTO.Code), CellClass = "" },
+         new() { Text = "异常原因", Value = nameof(AbnormalRecordsDTO.AbnormalCause) }
+           
+    };
+    protected override void OnInitialized()
+    {
+        Initialize();
+        AbReInitialize();
+    }
+    public void Initialize()
+    {
+        var dto = new Request_TransportationRecords();
+        // if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
+        //if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
+        //if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
+        //if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
+        var rest = _trRecodeServiceDM.GetTransportationRecordsList(dto);
+        var result = new TransportationRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+        tpPage = result;
+    }
+    public void AbReInitialize()
+    {
+        var dto = new Request_AbnormalRecords();
+        // if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
+        //if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
+        //if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
+        //if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
+        var rest = _arServiceDM.GetAbnormalRecordsList(dto);
+        var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+        abRePage = result;
+    }
+}
