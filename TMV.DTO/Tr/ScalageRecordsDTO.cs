@@ -28,26 +28,30 @@ namespace TMV.DTO.Tr
         /// </summary>
         [DefaultValue("衡Id")]
         public Guid ScaleId { get; set; }
-        [DefaultValue("衡名称")]
+
+        /// <summary>
+        /// 衡名称
+        /// </summary> 
         public string ScaleName { get; set; }
-        [DefaultValue("衡类型")]
+
+
+        /// <summary>
+        /// 衡类型
+        /// </summary> 
         public int ScaleType { get; set; }
 
         /// <summary>
         /// 运输Id
-        /// </summary>
-        [DefaultValue("运输Id")]
+        /// </summary> 
         public Guid TId { get; set; }
         /// <summary>
         /// 重量
-        /// </summary>
-        [DefaultValue("重量")]
+        /// </summary> 
         public int Weigh { get; set; }
 
         /// <summary>
         /// 称重时间
-        /// </summary>
-        [DefaultValue("称重时间")]
+        /// </summary> 
         public DateTime AddTime { get; set; }
     }
 }

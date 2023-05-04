@@ -11,6 +11,10 @@ namespace TMV.DTO.Tr
     public class Request_TransportationRecords : ModelDTO
     {
         /// <summary>
+        /// 单号
+        /// </summary>
+        public string Code { get; set; }
+        /// <summary>
         /// 车牌号
         /// </summary> 
         public string PlateNumber { get; set; }
@@ -50,16 +54,27 @@ namespace TMV.DTO.Tr
     public class TransportationRecordsDTO
     {
         public Guid Id { get; set; }
-
+        /// <summary>
+        /// 单号
+        /// </summary>
+        public string Code { get; set; }
         /// <summary>
         /// 车辆Id
         /// </summary> 
         public Guid CarId { get; set; }
+        /// <summary>
+        /// 车牌号
+        /// </summary> 
+        public string PlateNumber { get; set; }
 
         /// <summary>
-        /// 矿号Id
+        /// 运输计划Id
         /// </summary> 
         public Guid CollieryId { get; set; }
+        /// <summary>
+        /// 矿号
+        /// </summary> 
+        public string MineCode { get; set; }
 
         /// <summary>
         /// 毛量
@@ -97,6 +112,9 @@ namespace TMV.DTO.Tr
         /// 是否上传-1.未上传，2.已上传
         /// </summary> 
         public int IsUpload { get; set; }
+        /// <summary>
+        /// 称重记录
+        /// </summary>
         public List<ScalageRecordsDTO> ScalageRecordsData { get; set; }
     }
 }

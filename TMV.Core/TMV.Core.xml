@@ -34,6 +34,11 @@
             处理时间
             </summary>
         </member>
+        <member name="P:TMV.Core.CM.TMV_AbnormalRecords.AddTime">
+            <summary>
+            添加时间
+            </summary> 
+        </member>
         <member name="T:TMV.Core.CM.TMV_Car">
             <summary>
             车辆信息
@@ -199,6 +204,11 @@
             物流订单
             </summary>
         </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.Code">
+            <summary>
+            单号
+            </summary>
+        </member>
         <member name="P:TMV.Core.CM.TMV_TransportationRecords.CarId">
             <summary>
             车辆Id
@@ -206,7 +216,7 @@
         </member>
         <member name="P:TMV.Core.CM.TMV_TransportationRecords.CollieryId">
             <summary>
-            矿号Id
+            运输计划Id
             </summary>
         </member>
         <member name="P:TMV.Core.CM.TMV_TransportationRecords.RoughWeight">

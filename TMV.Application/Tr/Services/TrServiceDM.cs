@@ -73,30 +73,96 @@ namespace TMV.Application.Tr.Services
 
                 expr = expr.And2(n => n.CollieryId == tp.Id);
             }
-            if (dto.STime != null)
+            if (!dto.STime.IsNullOrEmpty())
             {
                 expr = expr.And2(w => w.STime.Date >= DateTime.Parse(dto.STime).Date);
             }
-            if (dto.ETime != null)
+            if (!dto.ETime.IsNullOrEmpty())
             {
                 expr = expr.And2(w => w.STime.Date <= DateTime.Parse(dto.ETime).Date);
             }
+            if (!dto.Code.IsNullOrEmpty())
+            {
+                expr = expr.And2(w => w.Code.Contains(dto.Code));
+            }
 
             int count = 0;
-            var query = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x=>new TransportationRecordsDTO()
-            {
-                Id=x.Id.SelectAll(),
-            })
-                .Mapper(x =>
-                {
-                    x.ScalageRecordsData = c.Queryable<TMV_ScalageRecords,TMV_Scale>((a,b)=>a.ScaleId==b.Id).Where((a,b) =>a.TId == x.Id).Select((a, b) => new ScalageRecordsDTO() { Id = a.Id, ScaleId = a.ScaleId, ScaleName=b.Name,ScaleType=b.Type, Weigh = a.Weigh, AddTime = a.AddTime }).ToList();
-                })
-                .OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+            //var query = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x => new TransportationRecordsDTO()
+            //{
+            //    Id = x.Id.SelectAll(), 
+            //}).Mapper(x =>
+            //    {
+            //        x.ScalageRecordsData = c.Queryable<TMV_ScalageRecords, TMV_Scale>((a, b) => a.ScaleId == b.Id).Where((a, b) => a.TId == x.Id).Select((a, b) => new ScalageRecordsDTO() { Id = a.Id, ScaleId = a.ScaleId, ScaleName = b.Name, ScaleType = b.Type, Weigh = a.Weigh, AddTime = a.AddTime }).ToList();
+            //    })
+            //    .OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             //var list = query.Adapt<List<TransportationRecordsDTO>>();
             //list.ForEach(x =>
             //{
             //    x.ScalageRecordsData=c.Queryable<TMV_ScalageRecords>().Where(p=>p.TId==x.Id).Select(f=>new ScalageRecordsDTO() { Id=f.Id,ScaleId=f.ScaleId,Weigh=f.Weigh,AddTime=f.AddTime}).ToList();
             //});
+            //var query1 = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x => new TransportationRecordsDTO()
+            //{
+            //    Id = x.Id,
+            //    CarId = x.CarId,
+            //    CollieryId = x.CollieryId,
+            //    ETime = x.ETime,
+            //    IsUpload = x.IsUpload,
+            //    NetWeight = x.NetWeight,
+            //    RoughWeight = x.RoughWeight,
+            //    State = x.State,
+            //    STime = x.STime,
+            //    TareWeight = x.TareWeight,
+            //    MineCode = c.Queryable<TMV_TransportPlan>().Where(w => w.Id == x.CollieryId).First().MineCode,
+            //    PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber,
+            //    ScalageRecordsData = c.Queryable<TMV_ScalageRecords>().Where(w => w.TId == x.Id).Select(
+            //         xx => new ScalageRecordsDTO()
+            //         {
+            //             AddTime = xx.AddTime,
+            //             Id = x.Id,
+            //             ScaleId = xx.ScaleId,
+            //             TId = xx.TId,
+            //             Weigh = xx.Weigh,
+            //             ScaleName = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Name,
+            //             ScaleType = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Type
+
+            //         }).ToList()
+
+
+            //}).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+
+            var query = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x => new TransportationRecordsDTO()
+            {
+                Id = x.Id,
+                CarId = x.CarId,
+                CollieryId = x.CollieryId,
+                ETime = x.ETime,
+                IsUpload = x.IsUpload,
+                NetWeight = x.NetWeight,
+                RoughWeight = x.RoughWeight,
+                State = x.State,
+                STime = x.STime,
+                TareWeight = x.TareWeight,
+                Code = x.Code,
+            }).Mapper(x =>
+            {
+                x.ScalageRecordsData = c.Queryable<TMV_ScalageRecords>().Where(w => w.TId == x.Id).Select(
+                 xx => new ScalageRecordsDTO()
+                 {
+                     AddTime = xx.AddTime,
+                     Id = xx.Id,
+                     ScaleId = xx.ScaleId,
+                     TId = xx.TId,
+                     Weigh = xx.Weigh,
+                 }).Mapper(xx =>
+                 {
+                     xx.ScaleName = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Name;
+                     xx.ScaleType = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Type;
+                 }).ToList();
+                x.MineCode = c.Queryable<TMV_TransportPlan>().Where(w => w.Id == x.CollieryId).First().MineCode;
+                x.PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber;
+
+            })
+                .OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             return new ResultPageEntity<TransportationRecordsDTO>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
 
@@ -186,6 +252,14 @@ namespace TMV.Application.Tr.Services
                     #region 重衡
                     TMV_TransportationRecords tr = new TMV_TransportationRecords();
                     tr.Id = Guid.NewGuid();
+
+                    string ycode = "";
+                    do
+                    {
+                        ycode = "DT" + DateTime.Now.ToString("yyMMddHHmmssfff");
+                    } while (c.Queryable<TMV_TransportationRecords>().Where(n => n.Code == ycode).First() != null);
+                    tr.Code = ycode;
+
                     tr.CarId = car.Id;
                     tr.CollieryId = tp.Id;
                     tr.RoughWeight = dto.Weight;
@@ -207,7 +281,7 @@ namespace TMV.Application.Tr.Services
                         ar.Id = Guid.NewGuid();
                         ar.TId = tr.Id;
                         ar.AbnormalCause = "入口光幕阻挡";
-
+                        ar.AddTime = DateTime.Now;
                         c.Insertable(ar).ExecuteCommand();
                     }
                     if (dto.outX == 1)
@@ -217,6 +291,7 @@ namespace TMV.Application.Tr.Services
                         ar.Id = Guid.NewGuid();
                         ar.TId = tr.Id;
                         ar.AbnormalCause = "出口光幕阻挡";
+                        ar.AddTime = DateTime.Now;
                         c.Insertable(ar).ExecuteCommand();
                     }
                     if (dto.Error != 0)
@@ -226,6 +301,7 @@ namespace TMV.Application.Tr.Services
                         ar.Id = Guid.NewGuid();
                         ar.TId = tr.Id;
                         ar.AbnormalCause = "错误码错误";
+                        ar.AddTime = DateTime.Now;
                         c.Insertable(ar).ExecuteCommand();
                     }
                     c.Insertable(tr).ExecuteCommand();
