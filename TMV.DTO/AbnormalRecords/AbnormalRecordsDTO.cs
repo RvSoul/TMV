@@ -25,10 +25,12 @@ namespace TMV.DTO.AbnormalRecords
         /// 状态-1.正常，2.告警
         /// </summary>
         public string State { get; set; }
+
         /// <summary>
         /// 衡名称
         /// </summary>
-        public string Name { get; set; }
+        //public string Name { get; set; }
+
         /// <summary>
         /// 用户名称
         /// </summary>
@@ -60,13 +62,13 @@ namespace TMV.DTO.AbnormalRecords
     {
         public Guid Id { get; set; }
 
-         
+
 
         /// <summary>
         /// 异常处理方式
         /// </summary>
         public string Disposal { get; set; }
-         
+
     }
     public class AbnormalRecordsDTO
     {
@@ -81,7 +83,13 @@ namespace TMV.DTO.AbnormalRecords
         /// 用户id
         /// </summary>
         public Guid UserId { get; set; }
+        /// <summary>
+        /// 用户名称
+        /// </summary>
         public string UserName { get; set; }
+        /// <summary>
+        /// 异常原因
+        /// </summary>
         public string AbnormalCause { get; set; }
 
         /// <summary>

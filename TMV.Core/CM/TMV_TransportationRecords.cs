@@ -20,15 +20,19 @@ namespace TMV.Core.CM
         public Guid Id { get; set; }
 
         /// <summary>
+        /// 单号
+        /// </summary>
+        public string Code { get; set; }
+        /// <summary>
         /// 车辆Id
         /// </summary>
         [DefaultValue("车辆Id")]
         public Guid CarId { get; set; }
 
         /// <summary>
-        /// 矿号Id
+        /// 运输计划Id
         /// </summary>
-        [DefaultValue("矿号Id")]
+        [DefaultValue("运输计划Id")]
         public Guid CollieryId { get; set; }
 
         /// <summary>
