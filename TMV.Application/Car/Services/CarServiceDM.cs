@@ -189,7 +189,7 @@ namespace TMV.Application.Car.Services
                 data.NativePlace = model.NativePlace;
                 data.DrivingCode = model.DrivingCode;
                 data.AddName = model.AddName;
-                data.AddTime = DateTime.Now;
+                data.AddTime = model.AddTime;
 
                 datali.Add(data);
             }

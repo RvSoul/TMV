@@ -99,9 +99,9 @@ namespace TMV.Application.Car
                     .Map<CarModel>("建档时间", t => t.AddTime);
                 var objs1 = mapper.Take<CarModel>();
 
-                //if (objs1.Any()) return await dm.ImportCar(objs1.Select(t => t.Value).ToList());
-                //else throw new ArgumentException(nameof(objs1));
-                return null;
+                if (objs1.Any()) return await dm.ImportCar(objs1.Select(t => t.Value).ToList());
+                else throw new ArgumentException(nameof(objs1));
+             
 
             }
         }
