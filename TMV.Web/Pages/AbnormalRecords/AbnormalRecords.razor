@@ -11,27 +11,7 @@
         <MRow>
 
             <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.PlateNumber" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="车牌号">
-                </MTextField>
-                </MCol>
-
-                <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.MineCode"
-                            Flat Dense
-                            Color="primary"
-                            Solo
-                            HideDetails="@("auto")"
-                            BackgroundColor="fill-lighten-1"
-                            Label="矿号"
-                            Clearable>
-                </MTextField>
-            </MCol>
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.STime" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="进厂时间">
-                </MTextField>
-                </MCol>
-                <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.ETime" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="出厂时间">
+                <MTextField @bind-Value="tpPage.Code" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="物流单号">
                 </MTextField>
                 </MCol>
                 <MCol Md=2 Sm=2 Class="d-flex block-center">
@@ -153,10 +133,7 @@
     public void Initialize()
     {
         var dto = new Request_AbnormalRecords();
-        // if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
-        //if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
-        //if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
-        //if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
+        if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
         var rest = _arServiceDM.GetAbnormalRecordsList(dto);
         var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
         tpPage = result;

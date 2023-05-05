@@ -37,7 +37,7 @@
                 </MTextField>
                 </MCol>
                 <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
                     查询
                 </MButton>
                 </MCol>
@@ -225,10 +225,10 @@
     public void Initialize()
     {
         var dto = new Request_TransportationRecords();
-       // if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
-        //if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
-        //if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
-        //if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
+        if (!string.IsNullOrWhiteSpace(tpPage.PlateNumber)) dto.PlateNumber = tpPage.PlateNumber;
+        if (!string.IsNullOrWhiteSpace(tpPage.MineCode)) dto.MineCode = tpPage.MineCode;
+        if (!string.IsNullOrWhiteSpace(tpPage.STime)) dto.STime = tpPage.STime;
+        if (!string.IsNullOrWhiteSpace(tpPage.ETime)) dto.ETime = tpPage.ETime;
         var rest = _trRecodeServiceDM.GetTransportationRecordsList(dto);
         var result = new TransportationRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
         tpPage = result;
@@ -315,6 +315,10 @@
     {
         _date = _prevDate;
         _menu = false;
+    }
+    public void seach()
+    {
+        Initialize();
     }
 }
 

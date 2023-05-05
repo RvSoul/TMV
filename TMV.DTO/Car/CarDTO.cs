@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -122,12 +123,14 @@ namespace TMV.DTO.Car
         /// 车牌号
         /// </summary>
         [DefaultValue("车牌号")]
+        [Required]
         public string PlateNumber { get; set; }
 
 
         /// <summary>
         /// 车辆类型
         /// </summary> 
+        [Required]
         public int Type { get; set; }
         /// <summary>
         /// 车厢长
@@ -160,10 +163,12 @@ namespace TMV.DTO.Car
         /// <summary>
         /// 额定载重量
         /// </summary> 
+        [Required]
         public int RatedWeight { get; set; }
         /// <summary>
         /// 行驶证号
         /// </summary> 
+        [Required]
         public string ExerciseCode { get; set; }
         /// <summary>
         /// 电子标签号
@@ -172,14 +177,17 @@ namespace TMV.DTO.Car
         /// <summary>
         /// 空水空油重量
         /// </summary> 
+        [Required]
         public int EmptyWeight { get; set; }
         /// <summary>
         /// 满水满油重量
         /// </summary> 
+        [Required]
         public int FullWeight { get; set; }
         /// <summary>
         /// 驾驶员名称
         /// </summary> 
+        [Required]
         public string DriverName { get; set; }
         /// <summary>
         /// 性别
@@ -196,6 +204,7 @@ namespace TMV.DTO.Car
         /// <summary>
         /// 驾照编号
         /// </summary> 
+        [Required]
         public string DrivingCode { get; set; }
         /// <summary>
         /// 建档人

@@ -9,6 +9,8 @@ namespace TMV.Web.Pages.Plan.ViewModel
         public string CargoName { get; set; }
         public string Carrier { get; set; }
         public string Sampling { get; set; }
+        public DateTime StartAddTime { get; set; }
+        public DateTime EndAddTime { get; set; }
 
         public TransportPlanPage(List<TransportPlanDTO> datas)
         {

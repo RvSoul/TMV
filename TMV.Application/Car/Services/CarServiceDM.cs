@@ -26,29 +26,34 @@ namespace TMV.Application.Car.Services
 
         public ResultPageEntity<CarDTO> GetCarList(Request_Car dto)
         {
-            Expression<Func<TMV_Car, bool>> expr = n => true;
-            if (!dto.PlateNumber.IsNullOrEmpty())
-            {
-                expr = expr.And2(n => n.PlateNumber == dto.PlateNumber);
-            }
-            if (!dto.Type.IsNullOrEmpty())
-            {
-                expr = expr.And2(n => n.Type == Convert.ToInt32(dto.Type));
-            }
+            //Expression<Func<TMV_Car, bool>> expr = n => true;
+            //if (!dto.PlateNumber.IsNullOrEmpty())
+            //{
+            //    expr = expr.And2(n => n.PlateNumber == dto.PlateNumber);
+            //}
+            //if (!dto.Type.IsNullOrEmpty())
+            //{
+            //    expr = expr.And2(n => n.Type == Convert.ToInt32(dto.Type));
+            //}
 
-            if (!dto.ExerciseCode.IsNullOrEmpty())
-            {
-                expr = expr.And2(n => n.ExerciseCode == dto.ExerciseCode);
-            }
+            //if (!dto.ExerciseCode.IsNullOrEmpty())
+            //{
+            //    expr = expr.And2(n => n.ExerciseCode == dto.ExerciseCode);
+            //}
 
-            if (!dto.DriverName.IsNullOrEmpty())
-            {
-                expr = expr.And2(n => n.DriverName == dto.DriverName);
-            }
+            //if (!dto.DriverName.IsNullOrEmpty())
+            //{
+            //    expr = expr.And2(n => n.DriverName == dto.DriverName);
+            //}
 
             int total = 0;
 
-            var query = c.Queryable<TMV_Car>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
+            var query = c.Queryable<TMV_Car>()
+                .WhereIF(!dto.PlateNumber.IsNullOrEmpty(),x=>x.PlateNumber== dto.PlateNumber)
+                .WhereIF(!dto.Type.IsNullOrEmpty(), x => x.Type == Convert.ToInt32(dto.Type))
+                .WhereIF(!dto.ExerciseCode.IsNullOrEmpty(), x => x.ExerciseCode == dto.ExerciseCode)
+                .WhereIF(!dto.DriverName.IsNullOrEmpty(), x => x.ExerciseCode == dto.DriverName)
+                .ToPageList(dto.PageIndex, dto.PageSize, ref total);
 
             var list = query.Adapt<List<CarDTO>>();
             return new ResultPageEntity<CarDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };

@@ -4,6 +4,7 @@
 @using TMV.DTO.TransportPlan;
 @using TMV.Web.Pages.Car.ViewModel;
 @using TMV.Web.Pages.Plan.ViewModel;
+@using FluentValidation;
 @inherits ProCompontentBase
 @inject NavigationManager Nav
 @inject ITransportPlanServiceDM _tranPlanServiceDM
@@ -98,6 +99,7 @@
     <MDialog @bind-Value="_visible"
              MaxWidth="800">
         <MCard>
+            <MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
             <MCardTitle>
                 <span class="text-h5">@FormTitle</span>
             </MCardTitle>
@@ -116,79 +118,47 @@
                                      Clearable
                                      OnSelectedItemUpdate="item=>selectFitItem=item"
                                      OnChange="item=>OnBillChange(item)"
+                                         required
                                      Label="采样方式"></MSelect>
                             </MCol>
                         <MCol Cols="12"
                               Sm="6"
                               Md="4">
-                            <MTextField @bind-Value="_editedItem.Code" Clearable
+                                <MTextField @bind-Value="_editedItem.Code" Clearable required
                                         Label="编号"></MTextField>
                         </MCol>
 
                             <MCol Cols="12"
                               Sm="6"
                               Md="4">
-                            <MTextField @bind-Value="_editedItem.Tonnage" Clearable
+                                <MTextField @bind-Value="_editedItem.Tonnage" Clearable required
                                         Label="进煤吨数"></MTextField>
                             </MCol>
                        
                         <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.SendUnit" Name="input-10-1" Type="text" Clearable Label="发货单位"></MTextField>
+                            <MTextField @bind-Value="_editedItem.SendUnit" required Name="input-10-1" Type="text" Clearable Label="发货单位"></MTextField>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.ReceiptUnit" Name="input-10-1" Type="text" Clearable Label="收货单位"></MTextField>
+                            <MTextField @bind-Value="_editedItem.ReceiptUnit" required Name="input-10-1" Type="text" Clearable Label="收货单位"></MTextField>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.CargoName" Name="input-10-1" Type="text" Clearable Label="货物名称"></MTextField>
+                                <MTextField @bind-Value="_editedItem.CargoName" required Name="input-10-1" Type="text" Clearable Label="货物名称"></MTextField>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.Carrier" Name="input-10-1" Type="text" Clearable Label="承运单位"></MTextField>
+                                <MTextField @bind-Value="_editedItem.Carrier" required Name="input-10-1" Type="text" Clearable Label="承运单位"></MTextField>
+                        </MCol>
+                        
+                        <MCol Cols="12" Sm="6" Md="4">
+                                <MTextField @bind-Value="_editedItem.MineCode" required Name="input-10-1" Type="text" Clearable Label="矿号"></MTextField>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
-                            @*<MTextField @bind-Value="_editedItem.ArrivalTime" Name="input-10-1" Type="text" Clearable Label="到货日期"></MTextField>*@
-                            <MMenu @bind-Value="_menu"
-                                   CloseOnContentClick="false"
-                                   Transition="scale-transition"
-                                   OffsetY
-                                   MinWidth="@("auto")">
-                                <ActivatorContent>
-                                    <MTextField @bind-Value="_date"
-                                                Label="到货日期"
-                                                PrependIcon="mdi-calendar"
-                                                    Readonly
-                                                @attributes="context.Attrs"></MTextField>
-                                </ActivatorContent>
-                                <ChildContent>
-                                    <MDatePicker @bind-Value="_date"
-                                                      NoTitle
-                                                
-                                                      Scrollable>
-                                        <MSpacer></MSpacer>
-                                        <MButton Text
-                                                 Color="primary"
-                                                 OnClick="MenuCancel">
-                                            取消
-                                        </MButton>
-                                        <MButton Text
-                                                 Color="primary"
-                                                 OnClick="MenuOK">
-                                            确定
-                                        </MButton>
-                                        </MDatePicker>
-                                    </ChildContent>
-                                    </MMenu>
+                                <MTextField @bind-Value="_editedItem.MineName" required Name="input-10-1" Type="text" Clearable Label="矿名"></MTextField>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.MineCode" Name="input-10-1" Type="text" Clearable Label="矿号"></MTextField>
+                                <MTextField @bind-Value="_editedItem.ShipName" Name="input-10-1" Type="text" Clearable Label="船名"></MTextField>
                         </MCol>
                         <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.MineName" Name="input-10-1" Type="text" Clearable Label="矿名"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.ShipName" Name="input-10-1" Type="text" Clearable Label="船名"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.ShippingUnit" Name="input-10-1" Type="text" Clearable Label="船运单位"></MTextField>
+                            <MTextField @bind-Value="_editedItem.ShippingUnit" required Name="input-10-1" Type="text" Clearable Label="船运单位"></MTextField>
                         </MCol>
                         
                     </MRow>
@@ -197,14 +167,17 @@
             <MCardActions>
                 <MSpacer></MSpacer>
                 <MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
-                <MButton Color="blue darken-1" Text OnClick="Save">保存</MButton>
+                    <MButton Type="submit" Color="blue darken-1" Text OnClick="Save">保存</MButton>
             </MCardActions>
+            </MForm>
         </MCard>
     </MDialog>
 </MCard>
-                @code {
-    private int _editedIndex = -1;
+@code {
 
+    private int _editedIndex = -1;
+    bool _valid = false;
+    private MForm _form;
     private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
     private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
     public bool _menu;
@@ -283,9 +256,9 @@
     {
         var dto = new Request_TransportPlan();
         if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
-        //if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
-        //if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
-        //if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
+        if (!string.IsNullOrWhiteSpace(tpPage.CargoName)) dto.CargoName = tpPage.CargoName;
+        if (!string.IsNullOrWhiteSpace(tpPage.Carrier)) dto.Carrier = tpPage.Carrier;
+        if (!string.IsNullOrWhiteSpace(tpPage.Sampling)) dto.Sampling = tpPage.Sampling;
         var rest = _tranPlanServiceDM.GetTransportPlanList(dto);
         var result = new TransportPlanPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
         tpPage = result;
@@ -320,30 +293,36 @@
     }
     public async Task Save()
     {
-        ResultEntity<bool> resultEntity = new();
-        var model = _editedItem.Adapt<TransportPlanModel>();
-        if (_editedIndex > -1)
+        var bol=_form.Validate();
+        if (bol)
         {
-            var item = tpPage.Datas.Any(x => x.Id == _editedItem.Id);
-            if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-            resultEntity = _tranPlanServiceDM.UpTransportPlan(model);
-        }
-        else
-        {
-            resultEntity = _tranPlanServiceDM.AddTransportPlan(model);
+            ResultEntity<bool> resultEntity = new();
+            var model = _editedItem.Adapt<TransportPlanModel>();
+            if (_editedIndex > -1)
+            {
+                var item = tpPage.Datas.Any(x => x.Id == _editedItem.Id);
+                if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
+                resultEntity = _tranPlanServiceDM.UpTransportPlan(model);
+            }
+            else
+            {
+                resultEntity = _tranPlanServiceDM.AddTransportPlan(model);
 
+            }
+            if (resultEntity.IsSuccess)
+            {
+                _editedItem.AddTime = DateTime.Now;
+                await PopupService.ToastAsync("操作成功", AlertTypes.Success);
+                if (_editedIndex == -1) tpPage.Datas.Add(_editedItem);
+            }
+            else
+            {
+                await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
+            }
+            Close();
         }
-        if (resultEntity.IsSuccess)
-        {
-            _editedItem.AddTime = DateTime.Now;
-            await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-            if (_editedIndex == -1) tpPage.Datas.Add(_editedItem);
-        }
-        else
-        {
-            await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
-        }
-        Close();
+        
+      
     }
     public void OnBillChange(string newValue)
     {

@@ -8,34 +8,17 @@
     <MCardText Class="pa-6">
         <MRow>
             <MCol Md=6 Sm=12 Class="d-flex block-center">
-                <span class="text-btn neutral-lighten-1--text">显示:</span>
-                <MSelect @bind-Value="userPage.PageSize"
-                         Color="primary"
-                         Style="max-width:120px;"
-                         Dense
-                         Class="mx-6"
-                         HideDetails="@("auto")"
-                         Outlined
-                         Items="@_pageSize"
-                         ItemText="u => u.ToString()"
-                         ItemValue="u => u">
-                         OnChange="Initialize()"
-                </MSelect>
-                <span class="text-btn">跳转</span>
+              
             </MCol>
             <MCol Md=6 Sm=12 Class="d-flex block-center">
-                <MTextField @bind-Value="userPage.Search" Color="primary" Class="rounded-2" Clearable HideDetails="@("auto")"  Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="Search">
-                    <PrependInnerContent>
-                        <MIcon Size=16 Class="mr-2 neutral-lighten-1--text">mdi-magnify</MIcon>
-                    </PrependInnerContent>
-                </MTextField>
+               
                 <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="()=>_visible=true">
                     新增
                 </MButton>
             </MCol>
         </MRow>
     </MCardText>
-                <MDataTable Headers="_headers" Items=" userPage.Datas" TItem="UsersDTO" ItemsPerPage="userPage.PageSize" HideDefaultFooter Class="elevation-1">
+                <MDataTable Headers="_headers" Items=" userPage.Datas" TItem="UsersDTO" ItemsPerPage="userPage.PageSize" Class="elevation-1">
         <HeaderColContent Context="header">
             <span class="text-subtitle">@header.Text</span>
         </HeaderColContent>
@@ -77,15 +60,7 @@
             
             </ItemColContent>
     </MDataTable>
-    <MCardText>
-        <div class="d-flex">
-                <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">显示 @((userPage.PageIndex - 1) * userPage.PageSize + 1) 至 @(userPage.PageIndex * userPage.PageSize) 和 @userPage.CurrentCount 跳转</div>
-                @if (userPage.PageCount > 0)
-            {
-                    <MPagination @bind-Value="userPage.PageIndex" Color="primary" Circle Length=@userPage.PageCount></MPagination>
-            }
-        </div>
-    </MCardText>
+  
     <MDialog @bind-Value="_visible"
              MaxWidth="800">
         <MCard>

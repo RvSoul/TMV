@@ -54,7 +54,7 @@
                             </MCol>
 
             <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
                     查询
                 </MButton>
             </MCol>
@@ -116,6 +116,7 @@
     <MDialog @bind-Value="_visible"
              MaxWidth="800">
         <MCard>
+             <MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
             <MCardTitle>
                 <span class="text-h5" >@FormTitle</span>
             </MCardTitle>
@@ -131,7 +132,7 @@
                         <MCol Cols="12"
                               Sm="6"
                               Md="4">
-                            <MTextField @bind-Value="_editedItem.PlateNumber" Clearable 
+                                <MTextField @bind-Value="_editedItem.PlateNumber" Clearable required
                                         Label="车牌号"></MTextField>
                             </MCol>
                             
@@ -144,7 +145,7 @@
                                      ItemText="u => u.Label"
                                      ItemValue="u => u.Value"
                                      TItem="RoleItem"
-                                     
+                                         required
                                      TItemValue="string"
                                      TValue="string"
                                      OnSelectedItemUpdate="item=>selectItem=item"
@@ -161,7 +162,7 @@
                             <MTextField @bind-Value="_editedItem.SizeG"  Name="input-10-1" Type="number" Label="车厢高"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.Surveyor"  Name="input-10-1" Type="text" Label="测量人员"></MTextField>
+                                <MTextField @bind-Value="_editedItem.Surveyor" Name="input-10-1" required Type="text" Label="测量人员"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
                             <MTextField @bind-Value="_editedItem.TieBar1"  Name="input-10-1" Type="text" Label="拉筋一"></MTextField>
@@ -173,19 +174,19 @@
                             <MTextField @bind-Value="_editedItem.TieBar3"  Name="input-10-1" Type="text" Label="拉筋三"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.RatedWeight"  Name="input-10-1" Type="number" Label="额定载重量"></MTextField>
+                                <MTextField @bind-Value="_editedItem.RatedWeight" Name="input-10-1" required Type="number" Label="额定载重量"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.ExerciseCode"  Name="input-10-1" Type="text" Label="行驶证号"></MTextField>
+                                <MTextField @bind-Value="_editedItem.ExerciseCode" Name="input-10-1" required Type="text" Label="行驶证号"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
                             <MTextField @bind-Value="_editedItem.TAgCode"  Name="input-10-1" Type="text" Label="电子标签号"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.EmptyWeight"  Name="input-10-1" Type="number" Label="空水空油重量"></MTextField>
+                                <MTextField @bind-Value="_editedItem.EmptyWeight" Name="input-10-1" Type="number" required Label="空水空油重量"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.FullWeight"  Name="input-10-1" Type="number" Label="满水满油重量"></MTextField>
+                                <MTextField @bind-Value="_editedItem.FullWeight" Name="input-10-1" Type="number" required Label="满水满油重量"></MTextField>
                             </MCol>
                              </MRow>
                     <MCardTitle Class="darken-1">
@@ -194,19 +195,19 @@
                             <MRow>
                            
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.DriverName"  Name="input-10-1" Type="text" Label="驾驶员名称"></MTextField>
+                                <MTextField @bind-Value="_editedItem.DriverName" Name="input-10-1" required Type="text" Label="驾驶员名称"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
                             <MTextField @bind-Value="_editedItem.Sex"  Name="input-10-1" Type="text" Label="性别"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.Age"  Name="input-10-1" Type="number" Label="年龄"></MTextField>
+                            <MTextField @bind-Value="_editedItem.Age"  Name="input-10-1"  Type="number" Label="年龄"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
                             <MTextField @bind-Value="_editedItem.NativePlace"  Name="input-10-1" Type="text" Label="籍贯"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.DrivingCode"  Name="input-10-1" Type="text" Label="驾照编号"></MTextField>
+                                <MTextField @bind-Value="_editedItem.DrivingCode" Name="input-10-1" required Type="text" Label="驾照编号"></MTextField>
                             </MCol>
                             <MCol Cols="12" Sm="6" Md="4">
                             <MTextField @bind-Value="_editedItem.AddName"  Name="input-10-1" Type="text" Label="建档人"></MTextField>
@@ -219,11 +220,14 @@
                 <MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
                 <MButton Color="blue darken-1" Text OnClick="Save">保存</MButton>
             </MCardActions>
+            </MForm>
         </MCard>
     </MDialog>
  </MCard>
-                @code {
+                    @code {
     private int _editedIndex = -1;
+    bool _valid = false;
+    private MForm _form;
     public class RoleItem
     {
         public string Label { get; set; }
@@ -291,7 +295,7 @@
     {
         var dto = new Request_Car();
         if (!string.IsNullOrWhiteSpace(carPage.PlateNumber)) dto.PlateNumber = carPage.PlateNumber;
-        //if (!string.IsNullOrWhiteSpace(carPage.Type)) dto.Type = carPage.Type;
+        if (!string.IsNullOrWhiteSpace(carPage.Type)) dto.Type = carPage.Type;
         if (!string.IsNullOrWhiteSpace(carPage.ExerciseCode)) dto.ExerciseCode = carPage.ExerciseCode;
         if (!string.IsNullOrWhiteSpace(carPage.DriverName)) dto.DriverName = carPage.DriverName;
         var rest = _carServiceDM.GetCarList(dto);
@@ -329,29 +333,33 @@
     public async Task Save()
     {
         ResultEntity<bool> resultEntity = new();
-        var model = _editedItem.Adapt<CarModel>();
-        if (_editedIndex > -1)
+        var bol = _form.Validate();
+        if (bol)
         {
-            var item = carPage.Datas.Any(x => x.Id == _editedItem.Id);
-            if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-            resultEntity = _carServiceDM.UpCar(model);
-        }
-        else
-        {
-            resultEntity = _carServiceDM.AddCar(model);
+            var model = _editedItem.Adapt<CarModel>();
+            if (_editedIndex > -1)
+            {
+                var item = carPage.Datas.Any(x => x.Id == _editedItem.Id);
+                if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
+                resultEntity = _carServiceDM.UpCar(model);
+            }
+            else
+            {
+                resultEntity = _carServiceDM.AddCar(model);
 
+            }
+            if (resultEntity.IsSuccess)
+            {
+                _editedItem.AddTime = DateTime.Now;
+                await PopupService.ToastAsync("操作成功", AlertTypes.Success);
+                if (_editedIndex == -1) carPage.Datas.Add(_editedItem);
+            }
+            else
+            {
+                await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
+            }
+            Close();
         }
-        if (resultEntity.IsSuccess)
-        {
-            _editedItem.AddTime = DateTime.Now;
-            await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-            if (_editedIndex == -1) carPage.Datas.Add(_editedItem);
-        }
-        else
-        {
-            await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
-        }
-        Close();
     }
     public void OnBillChange(string newValue)
     {
@@ -360,6 +368,10 @@
     public void OnFiltChange(string newValue)
     {
         carPage.Search = newValue;
+        Initialize();
+    }
+    public void seach()
+    {
         Initialize();
     }
 }

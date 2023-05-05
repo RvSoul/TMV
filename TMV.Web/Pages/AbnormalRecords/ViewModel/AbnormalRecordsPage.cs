@@ -8,7 +8,7 @@ namespace TMV.Web.Pages.AbnormalRecords.ViewModel
         /// <summary>
         /// 车牌号
         /// </summary> 
-        public string PlateNumber { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// 矿号

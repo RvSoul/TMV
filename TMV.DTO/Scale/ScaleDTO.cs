@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,16 +40,19 @@ namespace TMV.DTO.Scale
         /// <summary>
         /// 衡名称
         /// </summary> 
+        [Required]
         public string Name { get; set; }
 
         /// <summary>
         /// 衡类型-1.重，2.轻,3.混合
         /// </summary> 
+        [Required]
         public int Type { get; set; }
 
         /// <summary>
         /// 衡状态-1.启用，2.停用
         /// </summary> 
+        [Required]
         public int State { get; set; }
 
         /// <summary>

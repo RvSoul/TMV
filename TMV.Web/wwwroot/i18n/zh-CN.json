@@ -29,5 +29,6 @@
   "Reset Password v2": "重置密码版本2",
   "Others": "其他",
   "Account Settings": "账户设置",
-  "Favorite": "收藏"
+  "Favorite": "收藏",
+  "The Code field is required.":"请输入编号"
 }
