@@ -19,6 +19,7 @@ namespace TMV.Web.Core.SocketServer
             OpenServerSocket();
         }
         static List<Socket> clientScoketLis = new List<Socket>();
+        [LoggingMonitor]
         private static void OpenServerSocket()
         {
             Console.WriteLine("开启socket服务");
