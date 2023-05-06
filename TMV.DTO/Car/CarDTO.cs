@@ -15,8 +15,6 @@ namespace TMV.DTO.Car
         /// <summary>
         /// 车牌号
         /// </summary>
-        [SelectField("and", "like", "string")]
-        [DefaultValue("车牌号")]
         public string PlateNumber { get; set; }
         /// <summary>
         /// 车辆类型
@@ -33,7 +31,7 @@ namespace TMV.DTO.Car
 
     }
     public class CarModel
-    { 
+    {
         public Guid Id { get; set; }
 
         /// <summary>
@@ -131,7 +129,6 @@ namespace TMV.DTO.Car
         /// <summary>
         /// 车牌号
         /// </summary>
-        [DefaultValue("车牌号")]
         [Required]
         public string PlateNumber { get; set; }
 

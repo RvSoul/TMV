@@ -15,27 +15,22 @@ namespace TMV.DTO.Authorization
         /// <summary>
         /// 下位机设备ID
         /// </summary>
-        [DefaultValue("下位机设备ID")]
         public string ID { get; set; }
         /// <summary>
         /// 流水号
         /// </summary>
-        [DefaultValue("流水号")]
         public string Sn { get; set; }
         /// <summary>
         /// 衡器名称
         /// </summary>
-        [DefaultValue("衡器名称")]
         public int ClassName { get; set; }
         /// <summary>
         /// 衡器入口光幕-0:入口光幕正常;1:阻挡
         /// </summary>
-        [DefaultValue("衡器入口光幕")]
         public int inX { get; set; }
         /// <summary>
         /// 衡器出口光幕-0:出口光幕正常;1:阻挡;
         /// </summary>
-        [DefaultValue("衡器出口光幕")]
         public int outX { get; set; }
 
         /// <summary>
@@ -79,22 +74,18 @@ namespace TMV.DTO.Authorization
         /// <summary>
         /// 衡器车辆称重出现错误
         /// </summary>
-        [DefaultValue("衡器车辆称重出现错误")]
         public int Error { get; set; }
         /// <summary>
         /// 衡器上面车牌
         /// </summary>
-        [DefaultValue("衡器上面车牌")]
         public string PlateNumber { get; set; }
         /// <summary>
         /// 衡器上面车辆运的那个矿号
         /// </summary>
-        [DefaultValue("衡器上面车辆运的那个矿号")]
         public string CollieryCode { get; set; }
         /// <summary>
         /// 衡器上面车辆运煤的重量
         /// </summary>
-        [DefaultValue("衡器上面车辆运煤的重量")]
         public int Weight { get; set; }
 
     }

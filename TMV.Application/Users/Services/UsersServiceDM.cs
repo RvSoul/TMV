@@ -34,6 +34,10 @@ namespace TMV.Application.Users.Services
             {
                 expr = expr.And2(n => n.Name == dto.Name);
             }
+            if (!dto.Type.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.Type == Convert.ToInt32(dto.Type));
+            }
             int count = 0;
             var query = c.Queryable<TMV_Users>().Where(expr).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             var list = query.Adapt<List<UsersDTO>>();

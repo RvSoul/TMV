@@ -26,7 +26,6 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 衡Id
         /// </summary>
-        [DefaultValue("衡Id")]
         public Guid ScaleId { get; set; }
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 衡类型
         /// </summary> 
-        public string ScaleType { get; set; }
+        public int ScaleType { get; set; }
 
         /// <summary>
         /// 运输Id
