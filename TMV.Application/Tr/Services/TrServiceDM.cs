@@ -10,8 +10,7 @@ using TMV.DTO.Authorization;
 using TMV.DTO.Tr;
 using TMV.DTO.ModelData;
 using Furion.LinqBuilder;
-using TMV.DTO.Users;
-using AutoMapper.Internal;
+using TMV.DTO.Users; 
 using NPOI.SS.Formula.Functions;
 
 namespace TMV.Application.Tr.Services
@@ -95,14 +94,14 @@ namespace TMV.Application.Tr.Services
                                      if (sa.Type == 1) xx.ScaleType = "重衡";
                                      if (sa.Type == 2) xx.ScaleType = "轻衡";
                                      if (sa.Type == 3) xx.ScaleType = "混合衡";
-                                     
 
-                     }
-                 }).ToList();
-                x.MineCode = c.Queryable<TMV_TransportPlan>().Where(w => w.Id == x.CollieryId).First().MineCode;
-                x.PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber;
 
-            })
+                                 }
+                             }).ToList();
+                            x.MineCode = c.Queryable<TMV_TransportPlan>().Where(w => w.Id == x.CollieryId).First().MineCode;
+                            x.PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber;
+
+                        })
                 .OrderByDescending(a => a.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             return new ResultPageEntity<TransportationRecordsDTO>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
@@ -265,7 +264,7 @@ namespace TMV.Application.Tr.Services
         public ResultPageEntity<ScalageRecordsDTO> GetScalageRecordsList(Request_ScalageRecordsDTO dto)
         {
 
-            var expr = Expressionable.Create<TMV_ScalageRecords>(); 
+            var expr = Expressionable.Create<TMV_ScalageRecords>();
 
             if (dto.ScaleId != null)
             {
@@ -292,6 +291,13 @@ namespace TMV.Application.Tr.Services
                 ).ToPageList(dto.PageIndex, dto.PageSize, ref count);
 
             return new ResultPageEntity<ScalageRecordsDTO>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
+        }
+
+
+        public ResultEntity<bool> SetDataInfo(AuthorizationDTO dto)
+        {
+
+            return new ResultEntityUtil<bool>().Success(true);
         }
     }
 }

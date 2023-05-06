@@ -14,6 +14,8 @@ using TMV.DTO;
 using TMV.DTO.Scale;
 using Furion.LinqBuilder;
 using Dm;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using TMV.DTO.Users;
 
 namespace TMV.Application.TransportPlan.Services
 {
@@ -33,8 +35,8 @@ namespace TMV.Application.TransportPlan.Services
             {
                 return new ResultEntityUtil<bool>().Failure("矿号已经存在");
             }
-
-            TMV_TransportPlan pt = GetMapperDTO.SetModel<TMV_TransportPlan, TransportPlanModel>(model);
+             
+            TMV_TransportPlan pt = model.Adapt<TMV_TransportPlan>();
 
             var result = c.Insertable(pt).ExecuteCommand();
             if (result > 0)

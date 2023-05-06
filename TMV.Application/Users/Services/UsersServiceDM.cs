@@ -29,7 +29,7 @@ namespace TMV.Application.Users.Services
         }
         public ResultPageEntity<UsersDTO> GetUsersList(Request_Users dto)
         {
-            var expr = Expressionable.Create<TMV_Users>(); 
+            var expr = Expressionable.Create<TMV_Users>();
             if (!dto.Name.IsNullOrEmpty())
             {
                 expr = expr.And(n => n.Name == dto.Name);
@@ -52,7 +52,10 @@ namespace TMV.Application.Users.Services
                 return new ResultEntityUtil<bool>().Failure("用户名称已经存在");
             }
 
-            TMV_Users data = GetMapperDTO.SetModel<TMV_Users, UsersModel>(model);
+
+            TMV_Users data = model.Adapt<TMV_Users>();
+
+
             data.Id = Guid.NewGuid();
             data.Name = model.Name;
             data.Pwd = model.Pwd;
