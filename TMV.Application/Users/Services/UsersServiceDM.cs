@@ -29,17 +29,17 @@ namespace TMV.Application.Users.Services
         }
         public ResultPageEntity<UsersDTO> GetUsersList(Request_Users dto)
         {
-            Expression<Func<TMV_Users, bool>> expr = n => true;
+            var expr = Expressionable.Create<TMV_Users>(); 
             if (!dto.Name.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.Name == dto.Name);
+                expr = expr.And(n => n.Name == dto.Name);
             }
             if (!dto.Type.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.Type == Convert.ToInt32(dto.Type));
+                expr = expr.And(n => n.Type == Convert.ToInt32(dto.Type));
             }
             int count = 0;
-            var query = c.Queryable<TMV_Users>().Where(expr).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+            var query = c.Queryable<TMV_Users>().Where(expr.ToExpression()).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             var list = query.Adapt<List<UsersDTO>>();
             return new ResultPageEntity<UsersDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }

@@ -25,26 +25,7 @@ namespace TMV.Application.Car.Services
         }
 
         public ResultPageEntity<CarDTO> GetCarList(Request_Car dto)
-        {
-            //Expression<Func<TMV_Car, bool>> expr = n => true;
-            //if (!dto.PlateNumber.IsNullOrEmpty())
-            //{
-            //    expr = expr.And2(n => n.PlateNumber == dto.PlateNumber);
-            //}
-            //if (!dto.Type.IsNullOrEmpty())
-            //{
-            //    expr = expr.And2(n => n.Type == Convert.ToInt32(dto.Type));
-            //}
-
-            //if (!dto.ExerciseCode.IsNullOrEmpty())
-            //{
-            //    expr = expr.And2(n => n.ExerciseCode == dto.ExerciseCode);
-            //}
-
-            //if (!dto.DriverName.IsNullOrEmpty())
-            //{
-            //    expr = expr.And2(n => n.DriverName == dto.DriverName);
-            //}
+        {            
 
             int total = 0;
 

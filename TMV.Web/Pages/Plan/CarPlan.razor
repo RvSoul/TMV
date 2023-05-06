@@ -56,13 +56,13 @@
                          Label="采样方式"></MSelect>
             </MCol>
 
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+            <MCol Md=3 Sm=2 Class="d-flex block-center">
+                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
                     查询
                 </MButton>
             </MCol>
 
-            <MCol Md=2 Sm=12 Class="d-flex block-center">
+            <MCol Md=1 Sm=12 Class="d-flex block-center">
                 <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
                     新增
                 </MButton>
@@ -342,7 +342,11 @@
     }
     public void OnFiltChange(string newValue)
     {
-        tpPage.Search = newValue;
+        tpPage.Sampling = newValue;
+        Initialize();
+    }
+     public void seach()
+    {
         Initialize();
     }
 }

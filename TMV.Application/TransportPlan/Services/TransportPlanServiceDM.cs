@@ -63,36 +63,36 @@ namespace TMV.Application.TransportPlan.Services
         public ResultPageEntity<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto)
         {
             int total = 0;
-            Expression<Func<TMV_TransportPlan, bool>> expr = n => true;
+            var expr = Expressionable.Create<TMV_TransportPlan>(); 
             if (!dto.Code.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.Code == dto.Code);
+                expr = expr.And(n => n.Code == dto.Code);
             }
             if (!dto.CargoName.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.CargoName == dto.CargoName);
+                expr = expr.And(n => n.CargoName == dto.CargoName);
             }
 
             if (!dto.Carrier.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.Carrier == dto.Carrier);
+                expr = expr.And(n => n.Carrier == dto.Carrier);
             }
 
             if (!dto.Sampling.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.Sampling == Convert.ToInt32(dto.Sampling));
+                expr = expr.And(n => n.Sampling == Convert.ToInt32(dto.Sampling));
             }
 
             if (!dto.StartAddTime.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.AddTime.Date >= Convert.ToDateTime(dto.StartAddTime).Date);
+                expr = expr.And(n => n.AddTime.Date >= Convert.ToDateTime(dto.StartAddTime).Date);
             }
             if (!dto.EndAddTime.IsNullOrEmpty())
             {
-                expr = expr.And2(n => n.AddTime.Date <= Convert.ToDateTime(dto.EndAddTime).Date);
+                expr = expr.And(n => n.AddTime.Date <= Convert.ToDateTime(dto.EndAddTime).Date);
             }
 
-            var li = c.Queryable<TMV_TransportPlan>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
+            var li = c.Queryable<TMV_TransportPlan>().Where(expr.ToExpression()).ToPageList(dto.PageIndex, dto.PageSize, ref total);
 
             var list = li.Adapt<List<TransportPlanDTO>>();
             return new ResultPageEntity<TransportPlanDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };

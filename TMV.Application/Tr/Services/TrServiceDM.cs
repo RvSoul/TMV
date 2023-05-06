@@ -265,20 +265,20 @@ namespace TMV.Application.Tr.Services
         public ResultPageEntity<ScalageRecordsDTO> GetScalageRecordsList(Request_ScalageRecordsDTO dto)
         {
 
-            Expression<Func<TMV_ScalageRecords, bool>> expr = n => true;
+            var expr = Expressionable.Create<TMV_ScalageRecords>(); 
 
             if (dto.ScaleId != null)
             {
-                expr = expr.And2(w => w.ScaleId == Guid.Parse(dto.ScaleId));
+                expr = expr.And(w => w.ScaleId == Guid.Parse(dto.ScaleId));
             }
             if (dto.TId != null)
             {
-                expr = expr.And2(w => w.TId == Guid.Parse(dto.TId));
+                expr = expr.And(w => w.TId == Guid.Parse(dto.TId));
             }
 
             int count = 0;
             var query = c.Queryable<TMV_ScalageRecords, TMV_Scale>((a, b) => a.ScaleId == b.Id)
-                .Where(expr).OrderByDescending(px => px.AddTime)
+                .Where(expr.ToExpression()).OrderByDescending(px => px.AddTime)
                 .Select((a, b) => new ScalageRecordsDTO()
                 {
                     AddTime = a.AddTime,

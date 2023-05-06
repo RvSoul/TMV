@@ -11,13 +11,13 @@
     <MCardText Class="pa-6">
         <MRow>
 
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
+            <MCol Md=4 Sm=2 Class="d-flex block-center">
                 <MTextField @bind-Value="scalePage.Name" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="衡名称">
                 </MTextField>
                 </MCol>
           
           
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
+            <MCol Md=4 Sm=2 Class="d-flex block-center">
                 <MSelect @bind-Value="scalePage.Type"
                          Items="rooleItem"
                          ItemText="u => u.Label"
@@ -35,13 +35,13 @@
                          Label="类型"></MSelect>
                 </MCol>
 
-                <MCol Md=2 Sm=2 Class="d-flex block-center">
+                <MCol Md=3 Sm=2 Class="d-flex block-center">
                 <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
                     查询
                 </MButton>
                 </MCol>
 
-                <MCol Md=2 Sm=12 Class="d-flex block-center">
+                <MCol Md=1 Sm=12 Class="d-flex block-center">
                 <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
                     新增
                 </MButton>
