@@ -48,7 +48,7 @@ namespace TMV.Web.Core
             services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<WebsiteAuthenticator>());
             services.AddBlazoredSessionStorage();
             // 日志配置信息 begin
-            services.AddFileLogging(App.Configuration["LogRoute"] + "SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
+            services.AddFileLogging("SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
             {
                 options.FileNameRule = fileName =>
                 {
@@ -69,7 +69,7 @@ namespace TMV.Web.Core
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            //app.SocketServereMildd();
+            app.SocketServereMildd();
             app.UseCors();
 
             app.UseHttpsRedirection();
