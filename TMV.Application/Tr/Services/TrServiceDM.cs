@@ -12,6 +12,7 @@ using TMV.DTO.ModelData;
 using Furion.LinqBuilder;
 using TMV.DTO.Users;
 using AutoMapper.Internal;
+using NPOI.SS.Formula.Functions;
 
 namespace TMV.Application.Tr.Services
 {
@@ -36,101 +37,39 @@ namespace TMV.Application.Tr.Services
         public ResultPageEntity<TransportationRecordsDTO> GetTransportationRecordsList(Request_TransportationRecords dto)
         {
 
-            Expression<Func<TMV_TransportationRecords, bool>> expr = n => true;
-            if (!dto.Name.IsNullOrEmpty())
-            {
-                TMV_Scale scale = c.Queryable<TMV_Scale>().Where(w => w.Name == dto.Name.ToString()).First();
-                if (scale == null)
-                {
-                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
-                }
 
-                List<TMV_ScalageRecords> srli = c.Queryable<TMV_ScalageRecords>().Where(w => w.ScaleId == scale.Id).ToList();
-                if (srli.Count() == 0)
-                {
-                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
-                }
-                List<Guid> li = srli.Select(s => s.TId).ToList();
-                expr = expr.And2(n => li.Contains(n.Id));
-            }
-            if (!dto.PlateNumber.IsNullOrEmpty())
-            {
-                TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
-                if (car == null)
-                {
-                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
-                }
-
-                expr = expr.And2(n => n.CarId == car.Id);
-            }
-            if (!dto.MineCode.IsNullOrEmpty())
-            {
-                TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.MineCode && w.AddTime.Date == DateTime.Now.Date).First();
-                if (tp == null)
-                {
-                    return new ResultPageEntityUtil<TransportationRecordsDTO>().Success(null, dto.PageIndex, dto.PageSize, 0);
-                }
-
-                expr = expr.And2(n => n.CollieryId == tp.Id);
-            }
+            var exp = Expressionable.Create<TMV_TransportationRecords>();
             if (!dto.STime.IsNullOrEmpty())
             {
-                expr = expr.And2(w => w.STime.Date >= DateTime.Parse(dto.STime).Date);
+                exp = exp.And(w => w.STime.Date >= DateTime.Parse(dto.STime).Date);
             }
             if (!dto.ETime.IsNullOrEmpty())
             {
-                expr = expr.And2(w => w.STime.Date <= DateTime.Parse(dto.ETime).Date);
+                exp = exp.And(w => w.STime.Date <= DateTime.Parse(dto.ETime).Date);
             }
             if (!dto.Code.IsNullOrEmpty())
             {
-                expr = expr.And2(w => w.Code.Contains(dto.Code));
+                exp = exp.And(w => w.Code.Contains(dto.Code));
+            }
+            if (!dto.State.IsNullOrEmpty())
+            {
+                exp = exp.And(w => w.State == Convert.ToInt32(dto.Code));
+            }
+            if (!dto.Name.IsNullOrEmpty())
+            {
+            }
+            if (!dto.PlateNumber.IsNullOrEmpty())
+            {
+            }
+            if (!dto.MineCode.IsNullOrEmpty())
+            {
             }
 
+
             int count = 0;
-            //var query = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x => new TransportationRecordsDTO()
-            //{
-            //    Id = x.Id.SelectAll(), 
-            //}).Mapper(x =>
-            //    {
-            //        x.ScalageRecordsData = c.Queryable<TMV_ScalageRecords, TMV_Scale>((a, b) => a.ScaleId == b.Id).Where((a, b) => a.TId == x.Id).Select((a, b) => new ScalageRecordsDTO() { Id = a.Id, ScaleId = a.ScaleId, ScaleName = b.Name, ScaleType = b.Type, Weigh = a.Weigh, AddTime = a.AddTime }).ToList();
-            //    })
-            //    .OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
-            //var list = query.Adapt<List<TransportationRecordsDTO>>();
-            //list.ForEach(x =>
-            //{
-            //    x.ScalageRecordsData=c.Queryable<TMV_ScalageRecords>().Where(p=>p.TId==x.Id).Select(f=>new ScalageRecordsDTO() { Id=f.Id,ScaleId=f.ScaleId,Weigh=f.Weigh,AddTime=f.AddTime}).ToList();
-            //});
-            //var query1 = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x => new TransportationRecordsDTO()
-            //{
-            //    Id = x.Id,
-            //    CarId = x.CarId,
-            //    CollieryId = x.CollieryId,
-            //    ETime = x.ETime,
-            //    IsUpload = x.IsUpload,
-            //    NetWeight = x.NetWeight,
-            //    RoughWeight = x.RoughWeight,
-            //    State = x.State,
-            //    STime = x.STime,
-            //    TareWeight = x.TareWeight,
-            //    MineCode = c.Queryable<TMV_TransportPlan>().Where(w => w.Id == x.CollieryId).First().MineCode,
-            //    PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber,
-            //    ScalageRecordsData = c.Queryable<TMV_ScalageRecords>().Where(w => w.TId == x.Id).Select(
-            //         xx => new ScalageRecordsDTO()
-            //         {
-            //             AddTime = xx.AddTime,
-            //             Id = x.Id,
-            //             ScaleId = xx.ScaleId,
-            //             TId = xx.TId,
-            //             Weigh = xx.Weigh,
-            //             ScaleName = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Name,
-            //             ScaleType = c.Queryable<TMV_Scale>().Where(w => w.Id == xx.ScaleId).First().Type
-
-            //         }).ToList()
 
 
-            //}).ToPageList(dto.PageIndex, dto.PageSize, ref count);
-
-            var query = c.Queryable<TMV_TransportationRecords>().Where(expr).Select(x => new TransportationRecordsDTO()
+            var query = c.Queryable<TMV_TransportationRecords>().Where(exp.ToExpression()).Select(x => new TransportationRecordsDTO()
             {
                 Id = x.Id,
                 CarId = x.CarId,
@@ -159,7 +98,7 @@ namespace TMV.Application.Tr.Services
                      if (sa != null)
                      {
                          xx.ScaleName = sa.Name;
-                         if (sa.Type == 1)xx.ScaleType = "重衡";
+                         if (sa.Type == 1) xx.ScaleType = "重衡";
                          if (sa.Type == 2) xx.ScaleType = "轻衡";
                          if (sa.Type == 3) xx.ScaleType = "混合衡";
 

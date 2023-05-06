@@ -11,7 +11,20 @@ namespace TMV.DTO.Scale
 {
     public class Request_Scale : ModelDTO
     {
+        /// <summary>
+        /// 衡名称
+        /// </summary> 
         public string Name { get; set; }
+
+        /// <summary>
+        /// 衡类型-1.重，2.轻,3.混合
+        /// </summary>  
+        public string Type { get; set; }
+
+        /// <summary>
+        /// 衡状态-1.启用，2.停用
+        /// </summary>  
+        public string State { get; set; }
     }
 
     public class ScaleModel

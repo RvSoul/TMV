@@ -12,6 +12,8 @@ using TMV.DTO.ModelData;
 using TMV.DTO.TransportPlan;
 using TMV.DTO;
 using TMV.DTO.Scale;
+using Furion.LinqBuilder;
+using Dm;
 
 namespace TMV.Application.TransportPlan.Services
 {
@@ -61,7 +63,34 @@ namespace TMV.Application.TransportPlan.Services
         public ResultPageEntity<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto)
         {
             int total = 0;
-            Expression<Func<TMV_TransportPlan, bool>> expr = AutoAssemble.Splice<TMV_TransportPlan, Request_TransportPlan>(dto);
+            Expression<Func<TMV_TransportPlan, bool>> expr = n => true;
+            if (!dto.Code.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.Code == dto.Code);
+            }
+            if (!dto.CargoName.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.CargoName == dto.CargoName);
+            }
+
+            if (!dto.Carrier.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.Carrier == dto.Carrier);
+            }
+
+            if (!dto.Sampling.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.Sampling == Convert.ToInt32(dto.Sampling));
+            }
+
+            if (!dto.StartAddTime.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.AddTime.Date >= Convert.ToDateTime(dto.StartAddTime).Date);
+            }
+            if (!dto.EndAddTime.IsNullOrEmpty())
+            {
+                expr = expr.And2(n => n.AddTime.Date <= Convert.ToDateTime(dto.EndAddTime).Date);
+            }
 
             var li = c.Queryable<TMV_TransportPlan>().Where(expr).ToPageList(dto.PageIndex, dto.PageSize, ref total);
 

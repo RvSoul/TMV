@@ -11,11 +11,26 @@ namespace TMV.DTO.TransportPlan
         /// 编号
         /// </summary>
         public string Code { get; set; }
+        /// <summary>
+        /// 货物名称
+        /// </summary>
         public string CargoName { get; set; }
+        /// <summary>
+        /// 承运单位
+        /// </summary>
         public string Carrier { get; set; }
+        /// <summary>
+        /// 采样方式
+        /// </summary>
         public string Sampling { get; set; }
-        public DateTime StartAddTime { get; set; }
-        public DateTime EndAddTime { get; set; }
+        /// <summary>
+        /// 创建时间-开始
+        /// </summary>
+        public string StartAddTime { get; set; }
+        /// <summary>
+        /// 创建时间-结束
+        /// </summary>
+        public string EndAddTime { get; set; }
     }
 
     public class TransportPlanModel
