@@ -28,10 +28,6 @@ namespace TMV.DTO.Tr
         /// 状态-1.正常，2.告警
         /// </summary>
         public string State { get; set; }
-        /// <summary>
-        /// 衡名称
-        /// </summary>
-        public string Name { get; set; }
 
         /// <summary>
         /// 开始时间

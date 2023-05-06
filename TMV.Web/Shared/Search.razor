@@ -1,4 +1,4 @@
-﻿@inherits ProCompontentBase
+﻿@inherits LayComponentBase
 @inject NavHelper NavHelper
 
 @{
@@ -27,7 +27,7 @@
                             <MIcon Size=20 Color="neutral-lighten-4">@nav.ParentIcon</MIcon>
                         </MListItemAction>
                         <MListItemContent>
-                            <span Class="text-btn">@GetI18nFullTitle(nav.FullTitle)</span>
+                            <span Class="text-btn">@nav.FullTitle</span>
                         </MListItemContent>
                     </MListItem>
                 }
@@ -52,21 +52,9 @@
         var output = new List<NavModel>();
         if (search is not null && search != "")
         {
-            output.AddRange(NavHelper.SameLevelNavs.Where(n => n.Href is not null &&
-            GetI18nFullTitle(n.FullTitle).Contains(search, StringComparison.OrdinalIgnoreCase)));
+            output.AddRange(NavHelper.SameLevelNavs.Where(n => n.Href is not null));
+          
         }
         return output;
-    }
-
-    string GetI18nFullTitle(string fullTitle)
-    {
-        var arr = fullTitle.Split(' ').ToList();
-        if (arr.Count == 1) return T(fullTitle);
-        else
-        {
-            var parent = arr[0];
-            arr.RemoveAt(0);
-            return $"{T(parent)} {T(string.Join(' ', arr))}";
-        }
     }
 }

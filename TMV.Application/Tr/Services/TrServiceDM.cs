@@ -36,8 +36,6 @@ namespace TMV.Application.Tr.Services
 
         public ResultPageEntity<TransportationRecordsDTO> GetTransportationRecordsList(Request_TransportationRecords dto)
         {
-
-
             var exp = Expressionable.Create<TMV_TransportationRecords>();
             if (!dto.STime.IsNullOrEmpty())
             {
@@ -55,34 +53,27 @@ namespace TMV.Application.Tr.Services
             {
                 exp = exp.And(w => w.State == Convert.ToInt32(dto.Code));
             }
-            if (!dto.Name.IsNullOrEmpty())
-            {
-            }
-            if (!dto.PlateNumber.IsNullOrEmpty())
-            {
-            }
-            if (!dto.MineCode.IsNullOrEmpty())
-            {
-            }
-
-
             int count = 0;
-
-
-            var query = c.Queryable<TMV_TransportationRecords>().Where(exp.ToExpression()).Select(x => new TransportationRecordsDTO()
+            var query = c.Queryable<TMV_TransportationRecords, TMV_TransportPlan, TMV_Car>((a, b, c) => a.CollieryId == b.Id &&a.CarId==c.Id)
+                 .Where(exp.ToExpression())
+                 .WhereIF(!dto.PlateNumber.IsNullOrEmpty(), ((a, b, c) => c.PlateNumber == dto.PlateNumber))
+                 .WhereIF(!dto.PlateNumber.IsNullOrEmpty(), ((a, b, c) =>b.MineCode == dto.MineCode))
+                .Select((a, b, c) => new TransportationRecordsDTO()
             {
-                Id = x.Id,
-                CarId = x.CarId,
-                CollieryId = x.CollieryId,
-                ETime = x.ETime,
-                IsUpload = x.IsUpload,
-                NetWeight = x.NetWeight,
-                RoughWeight = x.RoughWeight,
-                State = x.State,
-                STime = x.STime,
-                TareWeight = x.TareWeight,
-                Code = x.Code,
-            }).Mapper(x =>
+                Id = a.Id,
+                CarId = a.CarId,
+                CollieryId = a.CollieryId,
+                ETime = a.ETime,
+                IsUpload = a.IsUpload,
+                NetWeight = a.NetWeight,
+                RoughWeight = a.RoughWeight,
+                State = a.State,
+                STime = a.STime,
+                TareWeight = a.TareWeight,
+                Code = a.Code,
+                MineCode=b.MineCode,
+                PlateNumber=c.PlateNumber
+                }).Mapper(x =>
             {
                 x.ScalageRecordsData = c.Queryable<TMV_ScalageRecords>().Where(w => w.TId == x.Id).Select(
                  xx => new ScalageRecordsDTO()
@@ -104,11 +95,8 @@ namespace TMV.Application.Tr.Services
 
                      }
                  }).ToList();
-                x.MineCode = c.Queryable<TMV_TransportPlan>().Where(w => w.Id == x.CollieryId).First().MineCode;
-                x.PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber;
-
             })
-                .OrderByDescending(px => px.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+                .OrderByDescending(a => a.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             return new ResultPageEntity<TransportationRecordsDTO>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
 
