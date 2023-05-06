@@ -102,6 +102,48 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetTransportationRecordsList(TMV.DTO.Tr.Request_TransportationRecords)">
+            <summary>
+            获取物流订单
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.AddTransportationRecords(TMV.DTO.Tr.TransportationRecordsModel)">
+            <summary>
+            添加物流订单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.UpTransportationRecords(TMV.DTO.Tr.TransportationRecordsModel)">
+            <summary>
+            修改物流订单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.DeTransportationRecords(System.Guid)">
+            <summary>
+            删除物流订单
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetDataInfo(TMV.DTO.Authorization.AuthorizationDTO)">
+            <summary>
+            Socket解析成物流订单
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetScalageRecordsList(TMV.DTO.Tr.Request_ScalageRecordsDTO)">
+            <summary>
+            获取称重记录
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
         <member name="M:TMV.Application.Users.UsersService.GetUsersList(TMV.DTO.Users.Request_Users)">
             <summary>
             获取用户列表

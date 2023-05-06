@@ -66,7 +66,7 @@ namespace TMV.Web.Core
             app.UseRouting();
 
             app.UseInject();
-            app.SocketServereMildd();
+            //app.SocketServereMildd();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
