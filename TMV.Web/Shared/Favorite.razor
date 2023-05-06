@@ -1,4 +1,4 @@
-﻿@inherits ProCompontentBase
+﻿@inherits LayComponentBase
 @inject GlobalConfig GlobalConfig;
 @inject NavigationManager Nav
 @inject NavHelper NavHelper
@@ -15,7 +15,7 @@
                 </span>
             </ActivatorContent>
             <ChildContent>
-                <span>@GetI18nFullTitle(menu.FullTitle)</span>
+                <span>@menu.FullTitle</span>
             </ChildContent>
         </MTooltip>
     }
@@ -54,7 +54,7 @@
                             <MIcon Size=20 Color="neutral-lighten-3">@nav.ParentIcon</MIcon>
                         </MListItemAction>
                         <MListItemContent>
-                            <span Class="text-btn">@GetI18nFullTitle(nav.FullTitle)</span>
+                            <span Class="text-btn">@nav.FullTitle</span>
                         </MListItemContent>
                         <MListItemIcon Class="my-1">
                             <MButton Icon Text Color="dark-yellow" StopPropagation

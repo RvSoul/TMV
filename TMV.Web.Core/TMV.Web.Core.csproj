@@ -15,6 +15,7 @@
 
 
 	<ItemGroup>
+	  <PackageReference Include="Blazored.SessionStorage" Version="2.3.0" />
 	  <PackageReference Include="Masa.Blazor" Version="0.6.2" />
 	  <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
 	</ItemGroup>

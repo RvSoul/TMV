@@ -18,31 +18,31 @@ namespace TMV.Web.Core.Handle
         }
         public override async Task HandleAsync(AuthorizationHandlerContext context)
         {
-            //var isAuthenticated = context.User.Identity.IsAuthenticated;
-            //if (isAuthenticated)
-            //{
-            //    await AuthorizeHandleAsync(context);
-            //    // 自动刷新 token
-            //    //if (JWTEncryption.AutoRefreshToken(context, context.GetCurrentHttpContext()))
-            //    //{
-            //    //    await AuthorizeHandleAsync(context);
-            //    //}
-            //    //else context.Fail();    // 授权失败
-            //}
-            //else
-            //{
-            //    Fail(context);
-            //    await App.HttpContext?.SignOutAsync();
-            //}
+            var isAuthenticated = context.User.Identity.IsAuthenticated;
+            if (isAuthenticated)
+            {
+                await AuthorizeHandleAsync(context);
+                // 自动刷新 token
+                //if (JWTEncryption.AutoRefreshToken(context, context.GetCurrentHttpContext()))
+                //{
+                //    await AuthorizeHandleAsync(context);
+                //}
+                //else context.Fail();    // 授权失败
+            }
+            else
+            {
+                Fail(context);
+                await App.HttpContext?.SignOutAsync();
+            }
 
-            //static void Fail(AuthorizationHandlerContext context)
-            //{
-            //    context.Fail(); // 授权失败
-            //    DefaultHttpContext currentHttpContext = context.GetCurrentHttpContext();
-            //    if (currentHttpContext == null)
-            //        return;
-            //    currentHttpContext.SignoutToSwagger();
-            //}
+            static void Fail(AuthorizationHandlerContext context)
+            {
+                context.Fail(); // 授权失败
+                DefaultHttpContext currentHttpContext = context.GetCurrentHttpContext();
+                if (currentHttpContext == null)
+                    return;
+                currentHttpContext.SignoutToSwagger();
+            }
         }
 
         /// <summary>

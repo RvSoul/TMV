@@ -2,6 +2,7 @@
 @layout EmptyLayout
 @inherits BaseComponentBase
 @inject IAuthService usersServiceDM
+@inject WebsiteAuthenticator WebsiteAuthenticator
 <MRow Class="max-height ma-0">
     <MCol Md=4 Sm=12 Class="neutral-lighten-5">
         <image class="ml-12 mt-12" style="height:40px;"
@@ -57,15 +58,25 @@
     private string PassWord { get; set; }
     public async void OnLogin(MouseEventArgs args)
     {
-        loginMode.Account = LoginName;
-        loginMode.Password = PassWord;
-        var ajaxOption = new AjaxOption { Url = Navigation.BaseUri + "api/auth/login", Data = loginMode };
-        var str = await AjaxService.GetMessageAsync(ajaxOption);
-        if (str.IsSuccessStatusCode)
-        {
-            await PopupService.ToastAsync("登录成功", AlertTypes.Success);
-            Navigation.NavigateTo(Navigation.BaseUri);
-        }
-        await PopupService.ToastAsync("登录失败", AlertTypes.Error);
+        loginMode.Account = LoginName??"admin";
+        loginMode.Password = PassWord??"123456";
+        await WebsiteAuthenticator.LoginAsync(loginMode);
+        Navigation.NavigateTo(Navigation.BaseUri + "home/home");
+        //var ajaxOption = new AjaxOption { Url = Navigation.BaseUri + "api/auth/login", Data = loginMode };
+        // var str = await AjaxService.GetMessageAsync(ajaxOption);
+        //var str =await usersServiceDM.Login(loginMode);
+        //if (str.IsSuccessStatusCode)
+        //{
+        //    //authenticationStateProvider.UserAuthenticated(str.UserId);
+        //    //await sessionStorage.SetItemAsync("UserId", str.UserId);
+        //    _cookieStorage?.SetItemAsync("UserId", str.ReasonPhrase);
+        //    await PopupService.ToastAsync("登录成功", AlertTypes.Success);
+        //   
+        //}
+        //await PopupService.ToastAsync("登录失败", AlertTypes.Error);
+    }
+    protected async override Task OnInitializedAsync()
+    {
+        //await PopupService.ToastAsync("登录成功", AlertTypes.Success);
     }
 }

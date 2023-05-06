@@ -4,6 +4,7 @@ namespace TMV.Web.Pages.TransportationRecords.ViewModel
 {
     public class TransportationRecordsPage: PageBase<TransportationRecordsDTO>
     {
+        public string Code { get; set; }
         public string PlateNumber { get; set; }
         public string MineCode { get; set; }
         /// <summary>

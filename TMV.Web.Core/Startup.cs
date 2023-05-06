@@ -1,11 +1,14 @@
-﻿using Furion;
+﻿using Blazored.SessionStorage;
+using Furion;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TMV.Core;
 using TMV.Web.Core.AjaxServer;
 using TMV.Web.Core.Components;
+using TMV.Web.Core.Handle;
 using TMV.Web.Core.SocketServer;
 
 namespace TMV.Web.Core
@@ -17,6 +20,12 @@ namespace TMV.Web.Core
             // 允许跨域
             services.AddCorsAccessor();
             services.AddConsoleFormatter();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllers().AddInjectWithUnifyResult();
             //认证组件
             services.AddComponent<AuthComponent>();
@@ -35,6 +44,9 @@ namespace TMV.Web.Core
             services.AddGlobalForServer();
             services.AddRemoteRequest();
             services.AddScoped<AjaxService>();
+            services.AddScoped<WebsiteAuthenticator>();
+            services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<WebsiteAuthenticator>());
+            services.AddBlazoredSessionStorage();
             // 日志配置信息 begin
             services.AddFileLogging("SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
             {
@@ -57,16 +69,16 @@ namespace TMV.Web.Core
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            app.SocketServereMildd();
             app.UseCors();
-            app.UseAuthentication();
-            app.UseAuthorization();
+           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseInject();
-            //app.SocketServereMildd();
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
