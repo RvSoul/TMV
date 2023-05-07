@@ -37,6 +37,7 @@ namespace TMV.Application.TransportPlan.Services
             }
              
             TMV_TransportPlan pt = model.Adapt<TMV_TransportPlan>();
+            pt.AddTime=DateTime.Now;
 
             var result = c.Insertable(pt).ExecuteCommand();
             if (result > 0)

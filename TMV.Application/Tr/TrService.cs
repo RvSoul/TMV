@@ -10,6 +10,8 @@ using TMV.DTO.Tr;
 using TMV.DTO;
 using TMV.Application.Scale.Services;
 using TMV.Application.Tr.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Utility;
 
 namespace TMV.Application.Tr
 {
@@ -46,8 +48,17 @@ namespace TMV.Application.Tr
         }
 
         [AllowAnonymous]
-        [HttpPost("GetDataInfo")]
-        public ResultEntity<bool> GetDataInfo([FromBody] AuthorizationDTO dto)
+        [HttpGet("GetDataInfo")]
+        public ResultEntity<bool> GetDataInfo([FromQuery] string data)
+        {
+
+            AuthorizationDTO dto = JsonHelper.FromJSON<AuthorizationDTO>(data);
+            return dm.GetDataInfo(dto);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetDataInfo2")]
+        public ResultEntity<bool> GetDataInfo2([FromQuery] AuthorizationDTO dto)
         {
             return dm.GetDataInfo(dto);
         }

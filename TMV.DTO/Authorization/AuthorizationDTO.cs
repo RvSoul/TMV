@@ -32,25 +32,14 @@ namespace TMV.DTO.Authorization
         /// 衡器出口光幕-0:出口光幕正常;1:阻挡;
         /// </summary>
         public int outX { get; set; }
-
-        /// <summary>
-        /// 衡器入衡道闸状态-0:关门;1:开门;
-        /// </summary>
-        public int EntranceGate { get; set; }
-
-        /// <summary>
-        /// 衡器出衡道闸状态-0:关门;1:开门
-        /// </summary>
-        public int ExitGater { get; set; }
         /// <summary>
         /// 表示下列数据有效状态-0:无效;1:有效;
         /// </summary>
         public int State { get; set; }
         /// <summary>
-        /// 表示该车辆当日入厂次数
+        /// 衡器入衡道闸状态-0:关门;1:开门;
         /// </summary>
-        public int TrainNumber { get; set; }
-
+        public int EntranceGate { get; set; }
         /// <summary>
         /// 衡器上面车辆正确停靠-0:无效;1:正确停靠;
         /// </summary>
@@ -67,6 +56,13 @@ namespace TMV.DTO.Authorization
         /// 衡器称重流程正常结束-0:无效;1:通知车辆出衡;
         /// </summary>
         public int GoOut { get; set; }
+
+        /// <summary>
+        /// 衡器出衡道闸状态-0:关门;1:开门
+        /// </summary>
+        public int ExitGater { get; set; }
+         
+       
         /// <summary>
         /// 衡器车辆完全出衡-0:无效;1:表示结束;
         /// </summary>
@@ -87,6 +83,9 @@ namespace TMV.DTO.Authorization
         /// 衡器上面车辆运煤的重量
         /// </summary>
         public int Weight { get; set; }
-
+        /// <summary>
+        /// 表示该车辆当日入厂次数
+        /// </summary>
+        //public int TrainNumber { get; set; }
     }
 }

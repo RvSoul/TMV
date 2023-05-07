@@ -29,6 +29,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\TMV.Core\TMV.Core.csproj" />
 		<ProjectReference Include="..\TMV.DTO\TMV.DTO.csproj" />
+		<ProjectReference Include="..\Utility\Utility.csproj" />
 	</ItemGroup>
 
 </Project>

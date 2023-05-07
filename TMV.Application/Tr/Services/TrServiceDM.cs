@@ -135,10 +135,10 @@ namespace TMV.Application.Tr.Services
             }
 
             int scaleNum = c.Queryable<TMV_Scale>().Where(w => w.Type == 1 && w.State == 1).Count();
-            List<DateTime> timeLi = c.Queryable<TMV_TransportationRecords>().OrderByDescending(px => px.STime).Take(scaleNum).Select(x => x.STime).ToList();
+            List<DateTime> timeLi = c.Queryable<TMV_TransportationRecords>().OrderByDescending(px => px.STime).Take(scaleNum).Select(x => x.STime.Date).ToList();
 
 
-            TMV_TransportationRecords oldTr = c.Queryable<TMV_TransportationRecords>().Where(w => timeLi.Contains(w.STime) && w.CarId == car.Id && w.CollieryId == tp.Id).First();
+            TMV_TransportationRecords oldTr = c.Queryable<TMV_TransportationRecords>().Where(w => timeLi.Contains(w.STime.Date) && w.CarId == car.Id && w.CollieryId == tp.Id).First();
             if (oldTr != null)
             {
                 #region 有上一趟数据
