@@ -19,7 +19,10 @@ namespace TMV.Web.Core
         {
             // 允许跨域
             services.AddCorsAccessor();
-            services.AddConsoleFormatter();
+            services.AddConsoleFormatter(options =>
+            {
+                options.WithTraceId = true;
+            });
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(10);
@@ -48,7 +51,7 @@ namespace TMV.Web.Core
             services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<WebsiteAuthenticator>());
             services.AddBlazoredSessionStorage();
             // 日志配置信息 begin
-            services.AddFileLogging("SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
+            services.AddFileLogging("logs/SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
             {
                 options.FileNameRule = fileName =>
                 {
@@ -69,7 +72,7 @@ namespace TMV.Web.Core
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            app.SocketServereMildd();
+            
             app.UseCors();
 
             app.UseHttpsRedirection();
@@ -79,6 +82,7 @@ namespace TMV.Web.Core
             app.UseAuthorization();
             app.UseInject();
             app.UseSession();
+            app.SocketServereMildd();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

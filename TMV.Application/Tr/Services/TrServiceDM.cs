@@ -111,6 +111,7 @@ namespace TMV.Application.Tr.Services
             throw new NotImplementedException();
         }
 
+        [AllowAnonymous]
         public ResultEntity<bool> GetDataInfo(AuthorizationDTO dto)
         {
             if (dto.State == 0)

@@ -5,7 +5,7 @@ using System.Text;
 
 
     Console.WriteLine("开始链接");
-    string host="192.168.1.4";
+    string host= "192.168.1.4";
     int port = 5395;
     //if (args.Length == 0)
     //    // If no server name is passed as argument to this program,
@@ -26,29 +26,37 @@ static Socket ConnectSocket(string server, int port)
         IPHostEntry hostEntry = null;
 
         // Get host related information.
-        hostEntry = Dns.GetHostEntry(server);
+        //hostEntry = Dns.GetHostEntry(server);
+        var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        // Loop through the AddressList to obtain the supported AddressFamily. This is to avoid
-        // an exception that occurs when the host IP Address is not compatible with the address family
-        // (typical in the IPv6 case).
-        foreach (IPAddress address in hostEntry.AddressList)
+        //设置socket连接 端口为socketServer的端口
+        socket.Connect("192.168.1.4", 5395);
+        if (socket.Connected)
         {
-            IPEndPoint ipe = new IPEndPoint(address, port);
-            Socket tempSocket =
-                new Socket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
-            tempSocket.Connect(ipe);
-
-            if (tempSocket.Connected)
-            {
-                s = tempSocket;
-                break;
-            }
-            else
-            {
-                continue;
-            }
+            Console.WriteLine("链接超哥 ");
         }
+
+            // Loop through the AddressList to obtain the supported AddressFamily. This is to avoid
+            // an exception that occurs when the host IP Address is not compatible with the address family
+            // (typical in the IPv6 case).
+        //    foreach (IPAddress address in hostEntry.AddressList)
+        //{
+        //   // IPEndPoint ipe = new IPEndPoint(address, port);
+        //    Socket tempSocket =
+        //        new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        //    tempSocket.Connect(server, port);
+
+        //    if (tempSocket.Connected)
+        //    {
+        //        s = tempSocket;
+        //        break;
+        //    }
+        //    else
+        //    {
+        //        continue;
+        //    }
+        //}
         return s;
     }
     catch (Exception ex)

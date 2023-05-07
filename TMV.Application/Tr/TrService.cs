@@ -45,8 +45,9 @@ namespace TMV.Application.Tr
             return dm.UpTransportationRecords(model);
         }
 
-        [HttpGet("GetDataInfo")]
-        public ResultEntity<bool> GetDataInfo([FromQuery] AuthorizationDTO dto)
+        [AllowAnonymous]
+        [HttpPost("GetDataInfo")]
+        public ResultEntity<bool> GetDataInfo([FromBody] AuthorizationDTO dto)
         {
             return dm.GetDataInfo(dto);
         }

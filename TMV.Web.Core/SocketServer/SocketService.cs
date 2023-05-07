@@ -9,6 +9,8 @@ using Furion;
 using System.Threading;
 using Microsoft.AspNetCore.Builder;
 using OneOf.Types;
+using Microsoft.AspNetCore.Http;
+using Furion.Logging;
 
 namespace TMV.Web.Core.SocketServer
 {
@@ -22,20 +24,30 @@ namespace TMV.Web.Core.SocketServer
         [LoggingMonitor]
         private static void OpenServerSocket()
         {
-            Console.WriteLine("开启socket服务");
-            var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
-            //1、创建Socket对象
-            //参数：寻址方式，当前为Ivp4  指定套接字类型   指定传输协议Tcp；
-            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //2、绑定端口、IP
-            IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse(ReceiveIp.ReceiveIp), ReceiveIp.Port);
-            socket.Bind(iPEndPoint);
-            //3、开启侦听
-            socket.Listen(10);//如果同时来了100个连接请求，只能处理一个,队列中10个在等待连接的客户端，其他的则返回错误消息。
-            Console.WriteLine("开始监听....");
-            //4、开始接受客户端的连接
-            ThreadPool.QueueUserWorkItem(new WaitCallback(AcceptClientConnect), socket);
-            //loadServer = 1;
+            try
+            {
+                //var dd = App.HttpContext;
+                //var sd = App.HttpContext.GetLocalIpAddressToIPv4();
+                Log.Information("开启socket服务");
+                var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
+                //1、创建Socket对象
+                //参数：寻址方式，当前为Ivp4  指定套接字类型   指定传输协议Tcp；
+                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                //2、绑定端口、IP
+                IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse(ReceiveIp.ReceiveIp), ReceiveIp.Port);
+                socket.Bind(iPEndPoint);
+                //3、开启侦听
+                socket.Listen(10);//如果同时来了100个连接请求，只能处理一个,队列中10个在等待连接的客户端，其他的则返回错误消息。
+                Log.Information("开始监听....");
+                //4、开始接受客户端的连接
+                ThreadPool.QueueUserWorkItem(new WaitCallback(AcceptClientConnect), socket);
+                //loadServer = 1;
+            }
+            catch (Exception ex)
+            {
+                Log.Debug(ex.Message);
+            }
+            
 
         }
         /// <summary>
@@ -65,6 +77,7 @@ namespace TMV.Web.Core.SocketServer
         private static void ReceiveClientMsg(object obj)
         {
             var proxSocket = obj as Socket;
+            Log.Information("-----------开始接受客户端信息————————");
             //创建缓存内存，存储接收的信息   ,不能放到while中，这块内存可以循环利用
             byte[] data = new byte[1020 * 1024];
             while (true)
@@ -87,7 +100,7 @@ namespace TMV.Web.Core.SocketServer
                     return;
                 }
                 string msgStr = Encoding.Default.GetString(data, 0, len);
-                Console.WriteLine("接受到的数据："+ msgStr);
+                Log.Information("接受到的数据：" + msgStr);
                 //储存到数据库
                 Task.Run(() =>
                 {
