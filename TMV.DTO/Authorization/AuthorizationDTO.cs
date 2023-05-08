@@ -86,6 +86,6 @@ namespace TMV.DTO.Authorization
         /// <summary>
         /// 表示该车辆当日入厂次数
         /// </summary>
-        //public int TrainNumber { get; set; }
+        public int TrainNumber { get; set; }
     }
 }

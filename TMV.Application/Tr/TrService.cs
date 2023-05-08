@@ -12,6 +12,7 @@ using TMV.Application.Scale.Services;
 using TMV.Application.Tr.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Utility;
+using Microsoft.Extensions.Logging;
 
 namespace TMV.Application.Tr
 {
@@ -19,8 +20,11 @@ namespace TMV.Application.Tr
     public class TrService : IDynamicApiController, ITransient
     {
         public ITrServiceDM dm;
-        public TrService(ITrServiceDM TrService)
+        private readonly ILogger<TrService> _logger;
+
+        public TrService(ITrServiceDM TrService, ILogger<TrService> logger)
         {
+            _logger = logger;
             dm = TrService;
         }
         [HttpGet("AddTransportationRecords")]
@@ -48,18 +52,18 @@ namespace TMV.Application.Tr
         }
 
         [AllowAnonymous]
-        [HttpGet("GetDataInfo")]
-        public ResultEntity<bool> GetDataInfo([FromQuery] string data)
+        [HttpPost, HttpGet("GetDataInfo")]
+        public ResultEntity<bool> GetDataInfo([FromBody] string data)
         {
-
             AuthorizationDTO dto = JsonHelper.FromJSON<AuthorizationDTO>(data);
             return dm.GetDataInfo(dto);
         }
 
         [AllowAnonymous]
-        [HttpGet("GetDataInfo2")]
+        [HttpGet, HttpPost("GetDataInfo2")]
         public ResultEntity<bool> GetDataInfo2([FromQuery] AuthorizationDTO dto)
         {
+            _logger.LogInformation(dto.ToJSON());
             return dm.GetDataInfo(dto);
         }
 
