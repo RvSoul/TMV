@@ -3,6 +3,7 @@ using Furion;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TMV.Core;
@@ -29,6 +30,7 @@ namespace TMV.Web.Core
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            //services.AddWebSockets();
             services.AddControllers().AddInjectWithUnifyResult();
             //认证组件
             services.AddComponent<AuthComponent>();
