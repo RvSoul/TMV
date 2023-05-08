@@ -4,6 +4,26 @@
         <name>TMV.Core</name>
     </assembly>
     <members>
+        <member name="T:TMV.Core.CM.TMV_Abnormal">
+            <summary>
+            异常处理记录
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Abnormal.Code">
+            <summary>
+            异常编号
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Abnormal.AbnormalCause">
+            <summary>
+            异常原因
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_Abnormal.Disposal">
+            <summary>
+            异常处理方式
+            </summary>
+        </member>
         <member name="T:TMV.Core.CM.TMV_AbnormalRecords">
             <summary>
             异常处理记录

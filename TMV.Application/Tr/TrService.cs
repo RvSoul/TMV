@@ -11,8 +11,8 @@ using TMV.DTO;
 using TMV.Application.Scale.Services;
 using TMV.Application.Tr.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Utility;
 using Microsoft.Extensions.Logging;
+using StackExchange.Profiling.Internal;
 
 namespace TMV.Application.Tr
 {
@@ -55,7 +55,7 @@ namespace TMV.Application.Tr
         [HttpPost, HttpGet("GetDataInfo")]
         public ResultEntity<bool> GetDataInfo([FromBody] string data)
         {
-            AuthorizationDTO dto = JsonHelper.FromJSON<AuthorizationDTO>(data);
+            AuthorizationDTO dto = data.FromJson<AuthorizationDTO>();
             return dm.GetDataInfo(dto);
         }
 
@@ -63,7 +63,7 @@ namespace TMV.Application.Tr
         [HttpGet, HttpPost("GetDataInfo2")]
         public ResultEntity<bool> GetDataInfo2([FromQuery] AuthorizationDTO dto)
         {
-            _logger.LogInformation(dto.ToJSON());
+            _logger.LogInformation(dto.ToJson());
             return dm.GetDataInfo(dto);
         }
 

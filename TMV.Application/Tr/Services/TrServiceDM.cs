@@ -12,14 +12,18 @@ using TMV.DTO.ModelData;
 using Furion.LinqBuilder;
 using TMV.DTO.Users;
 using NPOI.SS.Formula.Functions;
+using Microsoft.Extensions.Logging;
+using StackExchange.Profiling.Internal;
 
 namespace TMV.Application.Tr.Services
 {
     public class TrServiceDM : ITrServiceDM, IDynamicApiController, ITransient
     {
         ISqlSugarClient c;
-        public TrServiceDM(ISqlSugarClient db)
+        private readonly ILogger<TrService> _logger;
+        public TrServiceDM(ISqlSugarClient db, ILogger<TrService> logger)
         {
+            _logger = logger;
             c = db;
         }
 
@@ -113,7 +117,7 @@ namespace TMV.Application.Tr.Services
 
         [AllowAnonymous]
         public ResultEntity<bool> GetDataInfo(AuthorizationDTO dto)
-        {
+        {  
             if (dto.State == 0)
             {
                 return new ResultEntityUtil<bool>().Failure("连接成功-无效数据！");
@@ -258,7 +262,7 @@ namespace TMV.Application.Tr.Services
                 }
                 #endregion
             }
-            return new ResultEntityUtil<bool>().Success(true);
+            return new ResultEntityUtil<bool>().Success(true,"数据处理完成！");
         }
 
 

@@ -11,17 +11,23 @@ using Microsoft.AspNetCore.Builder;
 using OneOf.Types;
 using Microsoft.AspNetCore.Http;
 using Furion.Logging;
+using TMV.Application.Tr.Services;
+using Microsoft.Extensions.DependencyInjection;
+using TMV.DTO.Authorization;
+using StackExchange.Profiling.Internal;
 
 namespace TMV.Web.Core.SocketServer
 {
     public static class SocketService
     {
+        static ITrServiceDM trServiceDM { get; set; }
         public static void SocketServereMildd(this IApplicationBuilder app)
         {
+            var al = app.ApplicationServices;
+            trServiceDM = al.GetService<ITrServiceDM>();
             OpenServerSocket();
         }
         static List<Socket> clientScoketLis = new List<Socket>();
-        [LoggingMonitor]
         private static void OpenServerSocket()
         {
             try
@@ -47,7 +53,7 @@ namespace TMV.Web.Core.SocketServer
             {
                 Log.Debug(ex.Message);
             }
-            
+
 
         }
         /// <summary>
@@ -91,7 +97,7 @@ namespace TMV.Web.Core.SocketServer
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
-                   // LoggerHelper.Error(ex, $"ReceiveClientMsg->");
+                    // LoggerHelper.Error(ex, $"ReceiveClientMsg->");
                     return;
                 }
 
@@ -101,12 +107,53 @@ namespace TMV.Web.Core.SocketServer
                 }
                 string msgStr = Encoding.Default.GetString(data, 0, len);
                 Log.Information("接受到的数据：" + msgStr);
+                try
+                {
+                    var qdata = msgStr.FromJson<AuthorizationDTO>();
+                    var rdata = trServiceDM.GetDataInfo(qdata);
+                    Log.Information("-------------------------------------------------------------------------------------");
+                    Log.Information("TMV执行结果：" + rdata.ToJson());
+                    var request = "ssssssssssssssssssss";
+                    Byte[] bytesSent = Encoding.ASCII.GetBytes(request);
+                    var sd=proxSocket.Send(bytesSent, bytesSent.Length, 0);
+                    
+                    //SendClientMsg("")
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug("TMV解析错误：" + ex.Message);
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                }
+
                 //储存到数据库
                 Task.Run(() =>
                 {
-                   // ALCDataToSqlData(msgStr);
+                    // ALCDataToSqlData(msgStr);
                 });
 
+            }
+        }
+
+        private static void SendClientMsg(string ip, int port)
+        {
+            try
+            {
+                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+                //设置socket连接 端口为socketServer的端口
+                socket.Connect(ip, port);
+                if (!socket.Connected)
+                {
+                    Log.Information($"链接到{ip}:{port}失败");
+                }
+                var request = "";
+                Byte[] bytesSent = Encoding.ASCII.GetBytes(request);
+                socket.Send(bytesSent, bytesSent.Length, 0);
+            }
+            catch (Exception ex)
+            {
+
+                Log.Information($"连接异常");
             }
         }
     }
