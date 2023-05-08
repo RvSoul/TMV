@@ -10,7 +10,7 @@ using TMV.DTO.Authorization;
 using TMV.DTO.Tr;
 using TMV.DTO.ModelData;
 using Furion.LinqBuilder;
-using TMV.DTO.Users; 
+using TMV.DTO.Users;
 using NPOI.SS.Formula.Functions;
 
 namespace TMV.Application.Tr.Services
@@ -116,7 +116,7 @@ namespace TMV.Application.Tr.Services
         {
             if (dto.State == 0)
             {
-                return new ResultEntityUtil<bool>().Success(true, "连接成功！");
+                return new ResultEntityUtil<bool>().Failure("连接成功-无效数据！");
             }
             TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
             if (car == null)

@@ -26,6 +26,11 @@ namespace TMV.DTO.Authorization
         /// <summary>
         /// 煤矿单位，与燃料系统保持一致
         /// </summary>
+        public string MEIKDW { get; set; }
+
+        /// <summary>
+        /// 供应商名称，与燃料系统保持一致
+        /// </summary>
         public string GONGYS { get; set; }
 
         /// <summary>
@@ -103,45 +108,21 @@ namespace TMV.DTO.Authorization
         /// </summary>
         public string JINCHH { get; set; }
 
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
+        /// <summary>
+        /// 出厂秤号
+        /// </summary>
+        public string CHUCHH { get; set; }
 
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
+        /// <summary>
+        /// 承运单位
+        /// </summary>
+        public string CHENGYDW { get; set; }
 
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
-
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
-
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
-
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
-
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
-
-        ///// <summary>
-        ///// qqqqqqqqqqq
-        ///// </summary>
-        //public string qqqqqqqqqqq { get; set; }
+        /// <summary>
+        /// 车次
+        /// </summary>
+        public string CHEC { get; set; }
+         
 
     }
 }
