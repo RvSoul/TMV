@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using TMV.Core;
 using TMV.Web.Core.AjaxServer;
 using TMV.Web.Core.Components;
@@ -53,11 +54,26 @@ namespace TMV.Web.Core
             services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<WebsiteAuthenticator>());
             services.AddBlazoredSessionStorage();
             // 日志配置信息 begin
-            services.AddFileLogging("logs/SysLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
+            services.AddFileLogging("logs/InformLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
             {
                 options.FileNameRule = fileName =>
                 {
                     return string.Format(fileName, DateTime.UtcNow);
+                };
+                options.WriteFilter = (logMsg) =>
+                {
+                    return logMsg.LogLevel == LogLevel.Information;
+                };
+            });
+            services.AddFileLogging("logs/errorLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
+            {
+                options.FileNameRule = fileName =>
+                {
+                    return string.Format(fileName, DateTime.UtcNow);
+                };
+                options.WriteFilter = (logMsg) =>
+                {
+                    return logMsg.LogLevel == LogLevel.Error;
                 };
             });
             // end

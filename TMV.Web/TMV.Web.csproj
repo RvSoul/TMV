@@ -42,6 +42,9 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <None Update="DockerBuild.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -51,7 +51,7 @@ namespace TMV.Web.Core.SocketServer
             }
             catch (Exception ex)
             {
-                Log.Debug(ex.Message);
+                Log.Error(ex.Message);
             }
 
 
@@ -84,6 +84,7 @@ namespace TMV.Web.Core.SocketServer
         {
             var proxSocket = obj as Socket;
             Log.Information("-----------开始接受客户端信息————————");
+            Log.Information($"接受到远程链接{proxSocket.RemoteEndPoint.ToString()}");
             //创建缓存内存，存储接收的信息   ,不能放到while中，这块内存可以循环利用
             byte[] data = new byte[1020 * 1024];
             while (true)
@@ -121,7 +122,7 @@ namespace TMV.Web.Core.SocketServer
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug("TMV解析错误：" + ex.Message);
+                    Log.Information("TMV解析错误：" + ex.Message);
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                 }
 

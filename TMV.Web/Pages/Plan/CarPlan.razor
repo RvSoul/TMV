@@ -10,344 +10,349 @@
 @inject NavigationManager Nav
 @inject ITransportPlanServiceDM _tranPlanServiceDM
 <MCard Class="mt-6">
-    <MCardText Class="pa-6">
-        <MRow>
+	<MCardText Class="pa-6">
+		<MRow>
 
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.Code" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="编号">
-                </MTextField>
-            </MCol>
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.CargoName"
-                            Flat Dense
-                            Color="primary"
-                            Solo
-                            HideDetails="@("auto")"
-                            BackgroundColor="fill-lighten-1"
-                            Label="货物名称"
-                            Clearable>
-                </MTextField>
-            </MCol>
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.Carrier"
-                            Flat Dense
-                            Color="primary"
-                            Solo
-                            HideDetails="@("auto")"
-                            BackgroundColor="fill-lighten-1"
-                            Label="承运单位"
-                            Clearable></MTextField>
-            </MCol>
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MSelect @bind-Value="tpPage.Sampling"
-                         Items="rooleItem"
-                         ItemText="u => u.Label"
-                         ItemValue="u => u.Value"
-                         Color="primary"
-                         Solo
-                         Flat Dense
-                         TItem="RoleItem"
-                         HideDetails="@("auto")"
-                         BackgroundColor="fill-lighten-1"
-                         TItemValue="string"
-                         TValue="string"
-                         OnSelectedItemUpdate="item=>selectFitItem=item"
-                         OnChange="item=>OnFiltChange(item)"
-                         Label="采样方式"></MSelect>
-            </MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="tpPage.Code" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="编号">
+				</MTextField>
+			</MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="tpPage.CargoName"
+							Flat Dense
+							Color="primary"
+							Solo
+							HideDetails="@("auto")"
+							BackgroundColor="fill-lighten-1"
+							Label="货物名称"
+							Clearable>
+				</MTextField>
+			</MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="tpPage.Carrier"
+							Flat Dense
+							Color="primary"
+							Solo
+							HideDetails="@("auto")"
+							BackgroundColor="fill-lighten-1"
+							Label="承运单位"
+							Clearable></MTextField>
+			</MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MSelect @bind-Value="tpPage.Sampling"
+						 Items="rooleItem"
+						 ItemText="u => u.Label"
+						 ItemValue="u => u.Value"
+						 Color="primary"
+						 Solo
+						 Flat Dense
+						 TItem="RoleItem"
+						 HideDetails="@("auto")"
+						 BackgroundColor="fill-lighten-1"
+						 TItemValue="string"
+						 TValue="string"
+						 OnSelectedItemUpdate="item=>selectFitItem=item"
+						 OnChange="item=>OnFiltChange(item)"
+						 Label="采样方式"></MSelect>
+			</MCol>
 
-            <MCol Md=3 Sm=2 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
-                    查询
-                </MButton>
-            </MCol>
+			<MCol Md=3 Sm=2 Class="d-flex block-center">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
+					查询
+				</MButton>
+			</MCol>
 
-            <MCol Md=1 Sm=12 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
-                    新增
-                </MButton>
-            </MCol>
-        </MRow>
-    </MCardText>
-    <MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="TransportPlanDTO" Width="@("120%")" ItemsPerPage="tpPage.PageSize" Class="elevation-1" FixedRight>
-        <HeaderColContent Context="header">
-            <span class="text-subtitle">@header.Text</span>
-        </HeaderColContent>
-        <ItemColContent>
-            @switch (context.Header.Value)
-            {
-                case (nameof(TransportPlanDTO.Sampling)):
-                    if (context.Item.Sampling == 1)
-                    {
-                        <span>人采</span>
-                    }
-                    if (context.Item.Sampling == 2)
-                    {
-                        <span>机采</span>
-                    }
-                    break;
-                case "actions":
-                    <MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
-                    <MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
-                    break;
-                default:
-                    @context.Value
-                    break;
-            }
+			<MCol Md=1 Sm=12 Class="d-flex block-center">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+					新增
+				</MButton>
+			</MCol>
+		</MRow>
+	</MCardText>
+	<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="TransportPlanDTO" Width="@("120%")" ItemsPerPage="tpPage.PageSize" Class="elevation-1" FixedRight>
+		<HeaderColContent Context="header">
+			<span class="text-subtitle">@header.Text</span>
+		</HeaderColContent>
+		<ItemColContent>
+			@switch (context.Header.Value)
+			{
+				case (nameof(TransportPlanDTO.Sampling)):
+					if (context.Item.Sampling == 1)
+					{
+						<span>人采</span>
+					}
+					if (context.Item.Sampling == 2)
+					{
+						<span>机采</span>
+					}
+					break;
+				case "actions":
+					<MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
+					<MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
+					break;
+				default:
+					@context.Value
+					break;
+			}
 
-        </ItemColContent>
-    </MDataTable>
-    <MDialog @bind-Value="_visible"
-             MaxWidth="800">
-        <MCard>
-            <MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
-            <MCardTitle>
-                <span class="text-h5">@FormTitle</span>
-            </MCardTitle>
+		</ItemColContent>
+	</MDataTable>
+	<MDialog @bind-Value="_visible"
+			 MaxWidth="800">
+		<MCard>
+			<MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
+				<MCardTitle>
+					<span class="text-h5">@FormTitle</span>
+				</MCardTitle>
 
-            <MCardText>
-                <MContainer>
-                    <MRow>
-                        <MCol Cols="12" Sm="6" Md="4">
-                            <MSelect @bind-Value="selectvalue"
-                                     Items="rooleItem"
-                                     ItemText="u => u.Label"
-                                     ItemValue="u => u.Value"
-                                     TItem="RoleItem"
-                                     TItemValue="string"
-                                     TValue="string"
-                                     Clearable
-                                     OnSelectedItemUpdate="item=>selectFitItem=item"
-                                     OnChange="item=>OnBillChange(item)"
-                                         required
-                                     Label="采样方式"></MSelect>
-                            </MCol>
-                        <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                                <MTextField @bind-Value="_editedItem.Code" Clearable required
-                                        Label="编号"></MTextField>
-                        </MCol>
+				<MCardText>
+					<MContainer>
+						<MRow>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MSelect @bind-Value="selectvalue"
+										 Items="rooleItem"
+										 ItemText="u => u.Label"
+										 ItemValue="u => u.Value"
+										 TItem="RoleItem"
+										 TItemValue="string"
+										 TValue="string"
+										 Clearable
+										 OnSelectedItemUpdate="item=>selectFitItem=item"
+										 OnChange="item=>OnBillChange(item)"
+										 required
+										 Label="采样方式"></MSelect>
+							</MCol>
+							<MCol Cols="12"
+								  Sm="6"
+								  Md="4">
+								<MTextField @bind-Value="_editedItem.Code" Clearable required
+											Label="编号"></MTextField>
+							</MCol>
 
-                            <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                                <MTextField @bind-Value="_editedItem.Tonnage" Clearable required
-                                        Label="进煤吨数"></MTextField>
-                            </MCol>
-                       
-                        <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.SendUnit" required Name="input-10-1" Type="text" Clearable Label="发货单位"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.ReceiptUnit" required Name="input-10-1" Type="text" Clearable Label="收货单位"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.CargoName" required Name="input-10-1" Type="text" Clearable Label="货物名称"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.Carrier" required Name="input-10-1" Type="text" Clearable Label="承运单位"></MTextField>
-                        </MCol>
-                        
-                        <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.MineCode" required Name="input-10-1" Type="text" Clearable Label="矿号"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.MineName" required Name="input-10-1" Type="text" Clearable Label="矿名"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.ShipName" Name="input-10-1" Type="text" Clearable Label="船名"></MTextField>
-                        </MCol>
-                        <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.ShippingUnit" required Name="input-10-1" Type="text" Clearable Label="船运单位"></MTextField>
-                        </MCol>
-                        
-                    </MRow>
-                </MContainer>
-            </MCardText>
-            <MCardActions>
-                <MSpacer></MSpacer>
-                <MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
-                    <MButton Type="submit" Color="blue darken-1" Text OnClick="Save">保存</MButton>
-            </MCardActions>
-            </MForm>
-        </MCard>
-    </MDialog>
+							<MCol Cols="12"
+								  Sm="6"
+								  Md="4">
+								<MTextField @bind-Value="_editedItem.Tonnage" Clearable required
+											Label="进煤吨数"></MTextField>
+							</MCol>
+
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.SendUnit" required Name="input-10-1" Type="text" Clearable Label="发货单位"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.ReceiptUnit" required Name="input-10-1" Type="text" Clearable Label="收货单位"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.CargoName" required Name="input-10-1" Type="text" Clearable Label="货物名称"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.Carrier" required Name="input-10-1" Type="text" Clearable Label="承运单位"></MTextField>
+							</MCol>
+
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.MineCode" required Name="input-10-1" Type="text" Clearable Label="矿号"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.MineName" required Name="input-10-1" Type="text" Clearable Label="矿名"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.ShipName" Name="input-10-1" Type="text" Clearable Label="船名"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.ShippingUnit" required Name="input-10-1" Type="text" Clearable Label="船运单位"></MTextField>
+							</MCol>
+
+						</MRow>
+					</MContainer>
+				</MCardText>
+				<MCardActions>
+					<MSpacer></MSpacer>
+					<MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
+					<MButton Type="submit" Color="blue darken-1" Text OnClick="Save">保存</MButton>
+				</MCardActions>
+			</MForm>
+		</MCard>
+	</MDialog>
 </MCard>
 @code {
 
-    private int _editedIndex = -1;
-    bool _valid = false;
-    private MForm _form;
-    private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
-    private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
-    public bool _menu;
-    public void MenuOK()
-    {
-        _prevDate = _date;
-        _editedItem.ArrivalTime = Convert.ToDateTime(_prevDate.Year + "-" + _prevDate.Month+"-"+_prevDate.Day);
-        _menu = false;
-    }
+	private int _editedIndex = -1;
+	bool _valid = false;
+	private MForm _form;
+	private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
+	private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
+	public bool _menu;
+	public void MenuOK()
+	{
+		_prevDate = _date;
+		_editedItem.ArrivalTime = Convert.ToDateTime(_prevDate.Year + "-" + _prevDate.Month + "-" + _prevDate.Day);
+		_menu = false;
+	}
 
-    public void MenuCancel()
-    {
-        _date = _prevDate;
-        _menu = false;
-    }
-    public static string FormateDate(DateTime date)
-    {
-        return date.ToString("yyyy-MM-dd");
-    }
-    public class RoleItem
-    {
-        public string Label { get; set; }
-        public string Value { get; set; }
-        public RoleItem(string label, string value)
-        {
-            Label = label;
-            Value = value;
-        }
-    }
-    public string selectvalue { get; set; }
-    public RoleItem selectItem { get; set; }
-    public RoleItem selectFitItem { get; set; }
-    [Parameter]
-    public string Name { get; set; }
-    List<RoleItem> rooleItem = new()
-        {
-            new RoleItem("人采", "1"),
-            new RoleItem("机采", "2"),
-        };
+	public void MenuCancel()
+	{
+		_date = _prevDate;
+		_menu = false;
+	}
+	public static string FormateDate(DateTime date)
+	{
+		return date.ToString("yyyy-MM-dd");
+	}
+	public class RoleItem
+	{
+		public string Label { get; set; }
+		public string Value { get; set; }
+		public RoleItem(string label, string value)
+		{
+			Label = label;
+			Value = value;
+		}
+	}
+	public string selectvalue { get; set; }
+	public RoleItem selectItem { get; set; }
+	public RoleItem selectFitItem { get; set; }
+	[Parameter]
+	public string Name { get; set; }
+	List<RoleItem> rooleItem = new()
+		{
+			new RoleItem("人采", "1"),
+			new RoleItem("机采", "2"),
+		};
 
-    public string FormTitle
-    {
-        get
-        {
-            return _editedIndex == -1 ? "新增" : "编辑";
-        }
-    }
-    public TransportPlanDTO _editedItem = new TransportPlanDTO();
-    List<DataTableHeader<TransportPlanDTO>> _headers = new()
-        {
-            new() { Text = "编号", Value = nameof(TransportPlanDTO.Code), CellClass = "" },
-            new() { Text = "进煤吨数", Value = nameof(TransportPlanDTO.Tonnage) },
-            new() { Text = "发货单位", Value = nameof(TransportPlanDTO.SendUnit) },
-            new() { Text = "收货单位", Value = nameof(TransportPlanDTO.ReceiptUnit) },
-            new() { Text = "货物名称", Value = nameof(TransportPlanDTO.CargoName) },
-            new() { Text = "承运单位", Value = nameof(TransportPlanDTO.Carrier) },
-            new() { Text = "到货日期", Value = nameof(TransportPlanDTO.ArrivalTime) },
-            new() { Text = "矿号", Value = nameof(TransportPlanDTO.MineCode) },
-            new() { Text = "矿名", Value = nameof(TransportPlanDTO.MineName) },
-            new() { Text = "船名", Value = nameof(TransportPlanDTO.ShipName) },
-            new() { Text = "船运单位", Value = nameof(TransportPlanDTO.ShippingUnit) },
-            new() { Text = "采样方式", Value = nameof(TransportPlanDTO.Sampling) },
-            new() { Text = "计划时间", Value = nameof(TransportPlanDTO.AddTime) },
-            new() { Text = "操作", Value = "actions" }
+	public string FormTitle
+	{
+		get
+		{
+			return _editedIndex == -1 ? "新增" : "编辑";
+		}
+	}
+	public TransportPlanDTO _editedItem = new TransportPlanDTO();
+	List<DataTableHeader<TransportPlanDTO>> _headers = new()
+		{
+			new() { Text = "编号", Value = nameof(TransportPlanDTO.Code), CellClass = "" },
+			new() { Text = "进煤吨数", Value = nameof(TransportPlanDTO.Tonnage) },
+			new() { Text = "发货单位", Value = nameof(TransportPlanDTO.SendUnit) },
+			new() { Text = "收货单位", Value = nameof(TransportPlanDTO.ReceiptUnit) },
+			new() { Text = "货物名称", Value = nameof(TransportPlanDTO.CargoName) },
+			new() { Text = "承运单位", Value = nameof(TransportPlanDTO.Carrier) },
+			new() { Text = "到货日期", Value = nameof(TransportPlanDTO.ArrivalTime) },
+			new() { Text = "矿号", Value = nameof(TransportPlanDTO.MineCode) },
+			new() { Text = "矿名", Value = nameof(TransportPlanDTO.MineName) },
+			new() { Text = "船名", Value = nameof(TransportPlanDTO.ShipName) },
+			new() { Text = "船运单位", Value = nameof(TransportPlanDTO.ShippingUnit) },
+			new() { Text = "采样方式", Value = nameof(TransportPlanDTO.Sampling) },
+			new() { Text = "计划时间", Value = nameof(TransportPlanDTO.AddTime) },
+			new() { Text = "操作", Value = "actions" }
 
-        };
-    bool _visible = false;
-    public List<int> _pageSize = new() { 10, 20, 50 };
-    public TransportPlanPage tpPage = new();
-    protected override void OnInitialized()
-    {
-        _editedItem.ArrivalTime = DateTime.Now;
-        Initialize();
-    }
-    public void Initialize()
-    {
-        var dto = new Request_TransportPlan();
-        if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
-        if (!string.IsNullOrWhiteSpace(tpPage.CargoName)) dto.CargoName = tpPage.CargoName;
-        if (!string.IsNullOrWhiteSpace(tpPage.Carrier)) dto.Carrier = tpPage.Carrier;
-        if (!string.IsNullOrWhiteSpace(tpPage.Sampling)) dto.Sampling = tpPage.Sampling;
-        var rest = _tranPlanServiceDM.GetTransportPlanList(dto);
-        var result = new TransportPlanPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-        tpPage = result;
-    }
-    public void EditItem(TransportPlanDTO usersDTO)
-    {
-        _editedItem = usersDTO;
-        _visible = true;
-        _editedIndex = 1;
-        _date = DateOnly.FromDateTime(_editedItem.ArrivalTime);
-        // selectvalue = usersDTO.Type.ToString();
-    }
-    public async Task DeleteItem(TransportPlanDTO usersDTO)
-    {
-        var result = _tranPlanServiceDM.DeTransportPlan(usersDTO.Id);
-        if (result.IsSuccess)
-        {
-            await PopupService.ToastAsync("删除成功", AlertTypes.Success);
-            tpPage.Datas.RemoveAt(tpPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
-        }
-        else
-        {
-            await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
-        }
-    }
-    public void Close()
-    {
-        _visible = false;
-        _editedItem = new TransportPlanDTO();
-        _editedIndex = -1;
-        selectvalue = "";
-    }
-    public async Task Save()
-    {
-        var bol=_form.Validate();
-        if (bol)
-        {
-            ResultEntity<bool> resultEntity = new();
-            var model = _editedItem.Adapt<TransportPlanModel>();
-            if (_editedIndex > -1)
-            {
-                var item = tpPage.Datas.Any(x => x.Id == _editedItem.Id);
-                if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-                resultEntity = _tranPlanServiceDM.UpTransportPlan(model);
-            }
-            else
-            {
-                resultEntity = _tranPlanServiceDM.AddTransportPlan(model);
+		};
+	bool _visible = false;
+	public List<int> _pageSize = new() { 10, 20, 50 };
+	public TransportPlanPage tpPage = new();
+	protected override void OnInitialized()
+	{
+		_editedItem.ArrivalTime = DateTime.Now;
+		Initialize();
+	}
+	public void Initialize()
+	{
+		var dto = new Request_TransportPlan();
+		if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
+		if (!string.IsNullOrWhiteSpace(tpPage.CargoName)) dto.CargoName = tpPage.CargoName;
+		if (!string.IsNullOrWhiteSpace(tpPage.Carrier)) dto.Carrier = tpPage.Carrier;
+		if (!string.IsNullOrWhiteSpace(tpPage.Sampling)) dto.Sampling = tpPage.Sampling;
+		var rest = _tranPlanServiceDM.GetTransportPlanList(dto);
+		var result = new TransportPlanPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		tpPage = result;
+		for (int i = 0; i < 10; i++)
+		{
+			tpPage.Datas.AddRange(result.Datas);
+			tpPage.CurrentCount += result.Datas.Count();
+		}
+	}
+	public void EditItem(TransportPlanDTO usersDTO)
+	{
+		_editedItem = usersDTO;
+		_visible = true;
+		_editedIndex = 1;
+		_date = DateOnly.FromDateTime(_editedItem.ArrivalTime);
+		// selectvalue = usersDTO.Type.ToString();
+	}
+	public async Task DeleteItem(TransportPlanDTO usersDTO)
+	{
+		var result = _tranPlanServiceDM.DeTransportPlan(usersDTO.Id);
+		if (result.IsSuccess)
+		{
+			await PopupService.ToastAsync("删除成功", AlertTypes.Success);
+			tpPage.Datas.RemoveAt(tpPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
+		}
+		else
+		{
+			await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
+		}
+	}
+	public void Close()
+	{
+		_visible = false;
+		_editedItem = new TransportPlanDTO();
+		_editedIndex = -1;
+		selectvalue = "";
+	}
+	public async Task Save()
+	{
+		var bol = _form.Validate();
+		if (bol)
+		{
+			ResultEntity<bool> resultEntity = new();
+			var model = _editedItem.Adapt<TransportPlanModel>();
+			if (_editedIndex > -1)
+			{
+				var item = tpPage.Datas.Any(x => x.Id == _editedItem.Id);
+				if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
+				resultEntity = _tranPlanServiceDM.UpTransportPlan(model);
+			}
+			else
+			{
+				resultEntity = _tranPlanServiceDM.AddTransportPlan(model);
 
-            }
-            if (resultEntity.IsSuccess)
-            {
-                _editedItem.AddTime = DateTime.Now;
-                await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-                if (_editedIndex == -1) tpPage.Datas.Add(_editedItem);
-            }
-            else
-            {
-                await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
-            }
-            Close();
-        }
-        
-      
-    }
-    public void OnBillChange(string newValue)
-    {
-        _editedItem.Sampling = Convert.ToInt32(newValue);
-        if (_editedIndex == -1)
-        {
-            if (_editedItem.Sampling == 1)
-            {
-                _editedItem.Code = "00" + 1;
-            }
-            else
-            {
-                _editedItem.Code = "00" + 1 + "J";
-            }
-        }
-    }
-    public void OnFiltChange(string newValue)
-    {
-        tpPage.Sampling = newValue;
-        Initialize();
-    }
-     public void seach()
-    {
-        Initialize();
-    }
+			}
+			if (resultEntity.IsSuccess)
+			{
+				_editedItem.AddTime = DateTime.Now;
+				await PopupService.ToastAsync("操作成功", AlertTypes.Success);
+				if (_editedIndex == -1) tpPage.Datas.Add(_editedItem);
+			}
+			else
+			{
+				await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
+			}
+			Close();
+		}
+
+
+	}
+	public void OnBillChange(string newValue)
+	{
+		_editedItem.Sampling = Convert.ToInt32(newValue);
+		if (_editedIndex == -1)
+		{
+			if (_editedItem.Sampling == 1)
+			{
+				_editedItem.Code = "00" + 1;
+			}
+			else
+			{
+				_editedItem.Code = "00" + 1 + "J";
+			}
+		}
+	}
+	public void OnFiltChange(string newValue)
+	{
+		tpPage.Sampling = newValue;
+		Initialize();
+	}
+	public void seach()
+	{
+		Initialize();
+	}
 }
 
