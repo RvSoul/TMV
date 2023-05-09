@@ -119,9 +119,10 @@ namespace TMV.Web.Core.SocketServer
                 Log.Information("接受到的数据：" + msgStr);
                 try
                 {
+                    Log.Information("-------------------------------------------------------------------------------------");
                     var qdata = msgStr.FromJson<AuthorizationDTO>();
                     var rdata = trServiceDM.GetDataInfo(qdata);
-                    Log.Information("-------------------------------------------------------------------------------------");
+                   
                     Log.Information("TMV执行结果：" + rdata.ToJson());
                     var request = "ssssssssssssssssssss";
                     Byte[] bytesSent = Encoding.ASCII.GetBytes(rdata.ToJson());
