@@ -39,7 +39,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(415, 33);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(71, 24);
             this.button1.TabIndex = 0;
@@ -60,16 +60,16 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(71, 38);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(97, 23);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "124.221.218.182";
+            this.textBox1.Text = "192.168.1.63";
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(220, 38);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(59, 23);
             this.textBox2.TabIndex = 3;
@@ -88,7 +88,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(4, 80);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(498, 165);
@@ -105,7 +105,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.ipaddress);
             this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

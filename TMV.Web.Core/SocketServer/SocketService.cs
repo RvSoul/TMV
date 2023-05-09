@@ -35,12 +35,9 @@ namespace TMV.Web.Core.SocketServer
         {
             try
             {
-                //var dd = App.HttpContext;
-                //var sd = App.HttpContext.GetLocalIpAddressToIPv4();
                 Log.Information("开启socket服务");
                 var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
-                //1、创建Socket对象
-                //参数：寻址方式，当前为Ivp4  指定套接字类型   指定传输协议Tcp；
+                
                 var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 //2、绑定端口、IP
                 IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse(ReceiveIp.ReceiveIp), ReceiveIp.Port);
@@ -71,11 +68,12 @@ namespace TMV.Web.Core.SocketServer
             {
                 //创建一个负责通信的Socket
                 Socket proxSocket = serverSocket.Accept();
-                var so= socketConfigService.GetSocketConfig(proxSocket.RemoteEndPoint.ToString());
+                var ip = proxSocket.RemoteEndPoint.ToString();
+                var so= socketConfigService.GetSocketConfig(ip.Substring(0, ip.IndexOf(':')));
                 if (so.Data==null)
                 {
                     SendClientMsg(proxSocket, "IP地址不被允许链接");
-                    Log.Information($"IP地址：{proxSocket.RemoteEndPoint.ToString()}不被允许链接");
+                    Log.Information($"IP地址：{ip}不被允许链接");
                     proxSocket.Close();
                 }
                 else
