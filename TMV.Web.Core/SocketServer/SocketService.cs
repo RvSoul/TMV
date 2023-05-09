@@ -124,15 +124,15 @@ namespace TMV.Web.Core.SocketServer
                     Log.Information("-------------------------------------------------------------------------------------");
                     Log.Information("TMV执行结果：" + rdata.ToJson());
                     var request = "ssssssssssssssssssss";
-                    Byte[] bytesSent = Encoding.ASCII.GetBytes(request);
+                    Byte[] bytesSent = Encoding.ASCII.GetBytes(rdata.ToJson());
                     var sd=proxSocket.Send(bytesSent, bytesSent.Length, 0);
-                    
+                    Log.Information("-------------------------------------------------------------------------------------");
                     //SendClientMsg("")
                 }
                 catch (Exception ex)
                 {
                     Log.Information("TMV解析错误：" + ex.Message);
-                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    Log.Information("-------------------------------------------------------------------------------------");
                 }
 
                 //储存到数据库
