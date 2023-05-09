@@ -34,7 +34,7 @@ namespace TMV.Core
                     db.Aop.OnLogExecuting = (sql, pars) =>
                     {
                         //Console.WriteLine(sql);//输出sql
-                        Console.WriteLine($"当前SQL语句：【{sql}】，参数：【{string.Join(",", pars.Select(t => t.Value))}】");
+                        //Console.WriteLine($"当前SQL语句：【{sql}】，参数：【{string.Join(",", pars.Select(t => t.Value))}】");
                     };
                 });
 
