@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="NPOI" Version="2.6.0" />
     <PackageReference Include="O2S.Components.PDFRender4NET.Win" Version="11.1.2" />
   </ItemGroup>
 
