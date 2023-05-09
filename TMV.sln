@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketClient", "SocketClien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMV.DTO", "TMV.DTO\TMV.DTO.csproj", "{73E3C133-B0EA-4AC6-AF51-D36D0F081DDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{49266A28-C236-4475-A4CC-6B28780AC55F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "Utility\Utility.csproj", "{49266A28-C236-4475-A4CC-6B28780AC55F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMV_Upload", "TMV_Upload\TMV_Upload.csproj", "{D0CFA068-959A-4182-AC65-628253B64475}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMV_Upload", "TMV_Upload\TMV_Upload.csproj", "{D0CFA068-959A-4182-AC65-628253B64475}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
