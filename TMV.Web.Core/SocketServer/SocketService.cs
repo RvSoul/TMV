@@ -120,6 +120,7 @@ namespace TMV.Web.Core.SocketServer
 				}
 				string clientMsg = Encoding.UTF8.GetString(buffer, 0, rece);
 				ShowMsg(string.Format("Client : {0}", clientMsg));
+				
 				_hubContext.Clients.All.SendAsync("ReceiveMessage", "bob", clientMsg);
 			}
 		}
