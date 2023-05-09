@@ -5,6 +5,9 @@
 @using TMV.DTO.Tr;
 @using TMV.Web.Pages.AbnormalRecords.ViewModel;
 @using TMV.Web.Pages.TransportationRecords.ViewModel;
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
 @inherits ProCompontentBase
 @inject ITrServiceDM _trRecodeServiceDM
 @inject IArServiceDM _arServiceDM
@@ -27,6 +30,12 @@
 	<MCol Md=8 Sm=12>
 		<MCard Class="max-height">
 			<MCardTitle><MIcon Large Left>mdi-bell-ring</MIcon> <span class="text-h6 font-weight-light">告警动态</span></MCardTitle>
+			<ul id="messagesList">
+				@foreach (var message in messages)
+				{
+					<li>@message</li>
+				}
+			</ul>
 			<MDataTable Headers="_saheaders" Items="abRePage.Datas" HideDefaultFooter Class="table-border-none pt-2">
 				<HeaderColContent Context="header">
 					<span class="text-subtitle">@header.Text</span>
@@ -78,7 +87,7 @@
 								<MIcon Size=32>mdi-grill-outline</MIcon>
 							</MAvatar>
 							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">今日矿数</div>
+								<div class="text-btn neutral-lighten-4--text" @onclick="Send">今日矿数</div>
 								<h6>3&nbsp;<span style="font-size:12px;color:#2c2c2c;">(个)</span></h6>
 							</div>
 						</div>
@@ -93,6 +102,47 @@
 @code {
 	public TransportationRecordsPage tpPage = new();
 	public AbnormalRecordsPage abRePage = new();
+
+
+	private HubConnection? hubConnection;
+	private List<string> messages = new List<string>();
+	private string? userInput = "llalaa";
+	private string? messageInput = "lalala";
+
+	protected override async Task OnInitializedAsync()
+	{
+		hubConnection = new HubConnectionBuilder()
+			.WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+			.Build();
+
+		hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+		{
+			var encodedMsg = $"{user}: {message}";
+			messages.Add(encodedMsg);
+			InvokeAsync(StateHasChanged);
+		});
+
+		await hubConnection.StartAsync();
+	}
+
+	private async Task Send()
+	{
+		if (hubConnection is not null)
+		{
+			await hubConnection.SendAsync("SendMessage", userInput, messageInput);
+		}
+	}
+
+	public bool IsConnected =>
+		hubConnection?.State == HubConnectionState.Connected;
+
+	public async ValueTask DisposeAsync()
+	{
+		if (hubConnection is not null)
+		{
+			await hubConnection.DisposeAsync();
+		}
+	}
 	List<DataTableHeader<TransportationRecordsDTO>> _headers = new()
 	{
 		new() { Text = "物流单号", Value = nameof(TransportationRecordsDTO.Code), CellClass = "" },
