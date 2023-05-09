@@ -120,11 +120,33 @@ namespace TMV.Web.Core.SocketServer
 				}
 				string clientMsg = Encoding.UTF8.GetString(buffer, 0, rece);
 				ShowMsg(string.Format("Client : {0}", clientMsg));
-				
-				_hubContext.Clients.All.SendAsync("ReceiveMessage", "bob", clientMsg);
+
+				tmvdata(clientMsg);
+
+                _hubContext.Clients.All.SendAsync("ReceiveMessage", "bob", clientMsg);
 			}
 		}
 
+		static void tmvdata(string msgStr) {
+			try
+			{
+                Log.Information("-------------------------------------------------------------------------------------");
+                var qdata = msgStr.FromJson<AuthorizationDTO>();
+				var rdata = trServiceDM.GetDataInfo(qdata);
+				
+				Log.Information("TMV执行结果：" + rdata.ToJson());
+
+				//Byte[] bytesSent = Encoding.ASCII.GetBytes(rdata.ToJson());
+				//var sd = proxSocket.Send(bytesSent, bytesSent.Length, 0);
+				Log.Information("-------------------------------------------------------------------------------------");
+				//SendClientMsg("")
+			}
+			catch (Exception ex)
+			{
+				Log.Information("TMV解析错误：" + ex.Message);
+				Log.Information("-------------------------------------------------------------------------------------");
+			}
+		}
 
 		static void ShowMsg(string s)
 		{
