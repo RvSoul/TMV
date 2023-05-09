@@ -109,17 +109,10 @@
             <param name="httpContext"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Web.Core.SocketServer.SocketService.AcceptClientConnect(System.Object)">
+        <member name="T:TMV.Web.Core.ChatHub">
             <summary>
-            线程池线程执行的接受客户端连接方法
+            集线器
             </summary>
-            <param name="obj">传入的Socket</param>
-        </member>
-        <member name="M:TMV.Web.Core.SocketServer.SocketService.ReceiveClientMsg(System.Object)">
-            <summary>
-            不断接收客户端信息子线程方法
-            </summary>
-            <param name="obj">参数Socke对象</param>
         </member>
     </members>
 </doc>
