@@ -117,7 +117,7 @@ namespace TMV.Application.Tr.Services
 
         [AllowAnonymous]
         public ResultEntity<bool> GetDataInfo(AuthorizationDTO dto)
-        {  
+        {
             if (dto.State == 0)
             {
                 return new ResultEntityUtil<bool>().Failure("连接成功-无效数据！");
@@ -245,7 +245,17 @@ namespace TMV.Application.Tr.Services
                         TMV_AbnormalRecords ar = new TMV_AbnormalRecords();
                         ar.Id = Guid.NewGuid();
                         ar.TId = tr.Id;
-                        ar.AbnormalCause = "错误码错误";
+
+                        var ta = c.Queryable<TMV_Abnormal>().Where(w => w.Code == dto.Error).First();
+                        if (ta != null)
+                        {
+                            ar.AbnormalCause = ta.AbnormalCause;
+                        }
+                        else
+                        {
+                            ar.AbnormalCause = "错误码：" + dto.Error.ToString();
+                        }
+
                         ar.AddTime = DateTime.Now;
                         c.Insertable(ar).ExecuteCommand();
                     }
@@ -262,7 +272,7 @@ namespace TMV.Application.Tr.Services
                 }
                 #endregion
             }
-            return new ResultEntityUtil<bool>().Success(true,"数据处理完成！");
+            return new ResultEntityUtil<bool>().Success(true, "数据处理完成！");
         }
 
 
