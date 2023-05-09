@@ -1,21 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using TMV.Application.TransportPlan.Services;
-using TMV.Application.Users;
-using TMV.Core.CM;
-using TMV.DTO.TransportPlan;
-using TMV.DTO.ModelData;
+﻿using TMV.Core.CM;
 using TMV.DTO.TransportPlan;
 using TMV.DTO;
-using TMV.DTO.Scale;
 using Furion.LinqBuilder;
-using Dm;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using TMV.DTO.Users;
 
 namespace TMV.Application.TransportPlan.Services
 {

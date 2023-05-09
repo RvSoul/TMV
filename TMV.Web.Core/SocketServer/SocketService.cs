@@ -15,16 +15,19 @@ using TMV.Application.Tr.Services;
 using Microsoft.Extensions.DependencyInjection;
 using TMV.DTO.Authorization;
 using StackExchange.Profiling.Internal;
+using TMV.Application.SocketConfig.Service;
 
 namespace TMV.Web.Core.SocketServer
 {
     public static class SocketService
     {
         static ITrServiceDM trServiceDM { get; set; }
-        public static void SocketServereMildd(this IApplicationBuilder app)
+        static ISocketConfigService socketConfigService { get; set; }
+    public static void SocketServereMildd(this IApplicationBuilder app)
         {
             var al = app.ApplicationServices;
             trServiceDM = al.GetService<ITrServiceDM>();
+            socketConfigService = al.GetService<SocketConfigService>();
             OpenServerSocket();
         }
         static List<Socket> clientScoketLis = new List<Socket>();
@@ -32,12 +35,9 @@ namespace TMV.Web.Core.SocketServer
         {
             try
             {
-                //var dd = App.HttpContext;
-                //var sd = App.HttpContext.GetLocalIpAddressToIPv4();
                 Log.Information("开启socket服务");
                 var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
-                //1、创建Socket对象
-                //参数：寻址方式，当前为Ivp4  指定套接字类型   指定传输协议Tcp；
+                
                 var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 //2、绑定端口、IP
                 IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse(ReceiveIp.ReceiveIp), ReceiveIp.Port);
@@ -62,17 +62,26 @@ namespace TMV.Web.Core.SocketServer
         /// <param name="obj">传入的Socket</param>
         private static void AcceptClientConnect(object obj)
         {
-            //转换Socket
             var serverSocket = obj as Socket;
             //接受客户端的连接
             while (true)
             {
-                //5、创建一个负责通信的Socket
+                //创建一个负责通信的Socket
                 Socket proxSocket = serverSocket.Accept();
-                //将连接的Socket存入集合
-                clientScoketLis.Add(proxSocket);
-                //6、不断接收客户端发送来的消息
-                ThreadPool.QueueUserWorkItem(new WaitCallback(ReceiveClientMsg), proxSocket);
+                var ip = proxSocket.RemoteEndPoint.ToString();
+                var so= socketConfigService.GetSocketConfig(ip.Substring(0, ip.IndexOf(':')));
+                if (so.Data==null)
+                {
+                    SendClientMsg(proxSocket, "IP地址不被允许链接");
+                    Log.Information($"IP地址：{ip}不被允许链接");
+                    proxSocket.Close();
+                }
+                else
+                {
+                    //接收客户端发送来的消息
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(ReceiveClientMsg), proxSocket);
+                }
+                //ThreadPool.QueueUserWorkItem(new WaitCallback(ReceiveClientMsg), proxSocket);
             }
 
         }
@@ -115,15 +124,15 @@ namespace TMV.Web.Core.SocketServer
                     Log.Information("-------------------------------------------------------------------------------------");
                     Log.Information("TMV执行结果：" + rdata.ToJson());
                     var request = "ssssssssssssssssssss";
-                    Byte[] bytesSent = Encoding.ASCII.GetBytes(request);
+                    Byte[] bytesSent = Encoding.ASCII.GetBytes(rdata.ToJson());
                     var sd=proxSocket.Send(bytesSent, bytesSent.Length, 0);
-                    
+                    Log.Information("-------------------------------------------------------------------------------------");
                     //SendClientMsg("")
                 }
                 catch (Exception ex)
                 {
                     Log.Information("TMV解析错误：" + ex.Message);
-                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    Log.Information("-------------------------------------------------------------------------------------");
                 }
 
                 //储存到数据库
@@ -135,26 +144,16 @@ namespace TMV.Web.Core.SocketServer
             }
         }
 
-        private static void SendClientMsg(string ip, int port)
+        private static void SendClientMsg(Socket socket, string msg)
         {
             try
             {
-                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-                //设置socket连接 端口为socketServer的端口
-                socket.Connect(ip, port);
-                if (!socket.Connected)
-                {
-                    Log.Information($"链接到{ip}:{port}失败");
-                }
-                var request = "";
-                Byte[] bytesSent = Encoding.ASCII.GetBytes(request);
+                Byte[] bytesSent = Encoding.ASCII.GetBytes(msg);
                 socket.Send(bytesSent, bytesSent.Length, 0);
             }
             catch (Exception ex)
             {
-
-                Log.Information($"连接异常");
+                Log.Information($"发送消息异常：{ex.Message}");
             }
         }
     }
