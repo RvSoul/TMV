@@ -76,6 +76,8 @@ namespace TMV.Web.Core
                     return logMsg.LogLevel == LogLevel.Error;
                 };
             });
+            // 即使通讯
+            services.AddSignalR();
             // end
         }
 
@@ -90,7 +92,7 @@ namespace TMV.Web.Core
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            
+
             app.UseCors();
 
             app.UseHttpsRedirection();
@@ -103,6 +105,9 @@ namespace TMV.Web.Core
             app.SocketServereMildd();
             app.UseEndpoints(endpoints =>
             {
+                // 注册集线器
+                endpoints.MapHubs();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
