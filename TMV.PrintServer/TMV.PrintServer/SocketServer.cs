@@ -57,7 +57,7 @@ namespace TMV.PrintServer
                                                                                               //客户端网络结点号  
             remoteEndPoint = _ClientSocket.RemoteEndPoint.ToString();
             LocalEndPoint = _ClientSocket.LocalEndPoint.ToString();
-             msg+=$"\r\n远端地址:{remoteEndPoint}\r\n本端地址：{LocalEndPoint}";
+            msg+=$"\r\n远端地址:{remoteEndPoint}\r\n本端地址：{LocalEndPoint}";
             var sd = Send("{\"ID\":\"PSAIOT-000000015\",\"Sn\":1,\"ClassName\":1,\"inX\":1,\"outX\":0,\"State\":1,\"EntranceGate\":1,\"Inside\":1,\"StartWeigh\":1,\"Finish\":1,\"GoOut\":1,\"ExitGater\":1,\"End\":1,\"Error\":0,\"PlateNumber\":\"DK1577\",\"CollieryCode\":\"3003\",\"Weight\":3800}");
             threadReceive = new Thread(Receive);
             threadReceive.IsBackground = true;
