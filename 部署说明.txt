@@ -5,9 +5,8 @@
 	docker login 124.221.218.182:8012
 	username:admin
 	pwd:Harbor12345
+
 //执行批处理生成镜像并推送到仓库
 	执行根目录下的DockerBuild.bat处理
 //从远程仓储中获取镜像并运行步骤：
-	1 先停止运行的容器：docker stop 容器id 在删除镜像 dockers rmi 镜像id
-	2 拉取镜像命令：docker pull  124.221.218.182:8012/tmv/tmv
-	3 docker run --name=tmvrq -d -p 5000:5000 -p 5395:5395 -d 124.221.218.182:8012/tmv/tmv
+	在服务器上执行命令source TMV.Web.DockPush.sh
