@@ -72,7 +72,7 @@ namespace TMV.Web.Core.SocketServer
                 //创建一个负责通信的Socket
                 Socket proxSocket = serverSocket.Accept();
                 var so= socketConfigService.GetSocketConfig(proxSocket.RemoteEndPoint.ToString());
-                if (!so.IsSuccess)
+                if (so.Data==null)
                 {
                     SendClientMsg(proxSocket, "IP地址不被允许链接");
                     Log.Information($"IP地址：{proxSocket.RemoteEndPoint.ToString()}不被允许链接");
