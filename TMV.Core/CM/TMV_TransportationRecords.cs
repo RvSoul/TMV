@@ -56,7 +56,7 @@ namespace TMV.Core.CM
         /// 扣重
         /// </summary>
         [DefaultValue("扣重")]
-        public int? KouWeight { get; set; }
+        public int KouWeight { get; set; }
 
         /// <summary>
         /// 进厂时间
@@ -83,10 +83,5 @@ namespace TMV.Core.CM
         /// </summary>
         [DefaultValue("是否上传")]
         public int IsUpload { get; set; }
-
-        /// <summary>
-        /// 扣重
-        /// </summary> 
-        public int KouWeight { get; set; }
     }
 }

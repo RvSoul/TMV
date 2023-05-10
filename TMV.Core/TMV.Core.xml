@@ -279,11 +279,6 @@
             是否上传-1.未上传，2.已上传
             </summary>
         </member>
-        <member name="P:TMV.Core.CM.TMV_TransportationRecords.KouWeight">
-            <summary>
-            扣重
-            </summary> 
-        </member>
         <member name="T:TMV.Core.CM.TMV_TransportPlan">
             <summary>
             运输计划
