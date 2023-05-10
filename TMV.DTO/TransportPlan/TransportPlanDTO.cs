@@ -90,6 +90,18 @@ namespace TMV.DTO.TransportPlan
         /// 创建时间
         /// </summary>
         public string AddTime { get; }
+        /// <summary>
+        /// 煤矿单位
+        /// </summary>
+        public string MEIKDW { get; set; }
+        /// <summary>
+        /// 供应商名称
+        /// </summary>
+        public string GONGYS { get; set; }
+        /// <summary>
+        /// 船号
+        /// </summary>
+        public string ShipCode { get; set; }
     }
     public class TransportPlanDTO
     {
@@ -158,5 +170,17 @@ namespace TMV.DTO.TransportPlan
         /// 创建时间
         /// </summary>
         public DateTime AddTime { get; set; }
+        /// <summary>
+        /// 煤矿单位
+        /// </summary>
+        public string MEIKDW { get; set; }
+        /// <summary>
+        /// 供应商名称
+        /// </summary>
+        public string GONGYS { get; set; }
+        /// <summary>
+        /// 船号
+        /// </summary>
+        public string ShipCode { get; set; }
     }
 }

@@ -206,7 +206,7 @@
         </member>
         <member name="P:TMV.Core.CM.TMV_Scale.Type">
             <summary>
-            衡类型-1.重，2.轻,3.混合
+            衡类型-1.重，2.混合,3.轻
             </summary>
         </member>
         <member name="P:TMV.Core.CM.TMV_Scale.State">
@@ -279,6 +279,11 @@
             是否上传-1.未上传，2.已上传
             </summary>
         </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.KouWeight">
+            <summary>
+            扣重
+            </summary> 
+        </member>
         <member name="T:TMV.Core.CM.TMV_TransportPlan">
             <summary>
             运输计划
@@ -347,6 +352,21 @@
         <member name="P:TMV.Core.CM.TMV_TransportPlan.AddTime">
             <summary>
             创建时间
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.MEIKDW">
+            <summary>
+            煤矿单位
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.GONGYS">
+            <summary>
+            供应商名称
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.ShipCode">
+            <summary>
+            船号
             </summary>
         </member>
         <member name="T:TMV.Core.CM.TMV_Users">

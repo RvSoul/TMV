@@ -84,6 +84,18 @@ namespace TMV.Core.CM
         /// </summary>
         [DefaultValue("创建时间")]
         public DateTime AddTime { get; set; }
-        
+
+        /// <summary>
+        /// 煤矿单位
+        /// </summary>
+        public string MEIKDW { get; set; }
+        /// <summary>
+        /// 供应商名称
+        /// </summary>
+        public string GONGYS { get; set; }
+        /// <summary>
+        /// 船号
+        /// </summary>
+        public string ShipCode { get; set; }
     }
 }

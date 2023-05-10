@@ -52,19 +52,19 @@ namespace TMV.Application.Tr
         }
 
         [AllowAnonymous]
-        [HttpPost, HttpGet("GetDataInfo")]
-        public ResultEntity<bool> GetDataInfo([FromBody] string data)
+        [HttpPost, HttpGet("GetDataInfo2")]
+        public ResultInfo GetDataInfo2([FromBody] string data)
         {
             AuthorizationDTO dto = data.FromJson<AuthorizationDTO>();
-            return dm.GetDataInfo(dto);
+            return dm.GetDataInfo2(dto);
         }
 
         [AllowAnonymous]
         [HttpGet, HttpPost("GetDataInfo2")]
-        public ResultEntity<bool> GetDataInfo2([FromQuery] AuthorizationDTO dto)
+        public ResultInfo GetDataInfo2([FromQuery] AuthorizationDTO dto)
         {
             _logger.LogInformation(dto.ToJson());
-            return dm.GetDataInfo(dto);
+            return dm.GetDataInfo2(dto);
         }
 
         [HttpGet("GetScalageRecordsList")]

@@ -76,6 +76,7 @@ namespace TMV.Application.Tr.Services
                     STime = a.STime,
                     TareWeight = a.TareWeight,
                     Code = a.Code,
+                    KouWeight = a.KouWeight,
                     MineCode = b.MineCode,
                     PlateNumber = c.PlateNumber
                 }).Mapper(x =>
@@ -115,165 +116,7 @@ namespace TMV.Application.Tr.Services
             throw new NotImplementedException();
         }
 
-        [AllowAnonymous]
-        public ResultEntity<bool> GetDataInfo(AuthorizationDTO dto)
-        {
-            if (dto.State == 0)
-            {
-                return new ResultEntityUtil<bool>().Failure("连接成功-无效数据！");
-            }
-            TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
-            if (car == null)
-            {
-                return new ResultEntityUtil<bool>().Failure("车牌号不存在！");
-            }
-            TMV_Scale scale = c.Queryable<TMV_Scale>().Where(w => w.Name == dto.ClassName.ToString()).First();
-            if (scale == null)
-            {
-                return new ResultEntityUtil<bool>().Failure("衡不存在！");
-            }
-            TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.CollieryCode && w.AddTime.Date == DateTime.Now.Date).First();
-            if (tp == null)
-            {
-                return new ResultEntityUtil<bool>().Failure("运输计划不存在！");
-            }
 
-            int scaleNum = c.Queryable<TMV_Scale>().Where(w => w.Type == 1 && w.State == 1).Count();
-            List<DateTime> timeLi = c.Queryable<TMV_TransportationRecords>().OrderByDescending(px => px.STime).Take(scaleNum).Select(x => x.STime.Date).ToList();
-
-
-            TMV_TransportationRecords oldTr = c.Queryable<TMV_TransportationRecords>().Where(w => timeLi.Contains(w.STime.Date) && w.CarId == car.Id && w.CollieryId == tp.Id).First();
-            if (oldTr != null)
-            {
-                #region 有上一趟数据
-                if (oldTr.ETime == null && oldTr.TareWeight == null && oldTr.NetWeight == null)
-                {
-                    #region 未记录皮重（未轻衡称重）
-                    if (scale.Type == 1)
-                    {
-                        #region 重衡
-                        return new ResultEntityUtil<bool>().Failure("有上一趟数据/未轻衡称重/重衡：异常还是重新称重！");
-                        #endregion
-                    }
-                    else
-                    {
-                        #region 轻衡
-                        TMV_ScalageRecords sr = new TMV_ScalageRecords();
-                        sr.Id = Guid.NewGuid();
-                        sr.ScaleId = scale.Id;
-                        sr.TId = oldTr.Id;
-                        sr.Weigh = dto.Weight;
-                        sr.AddTime = DateTime.Now;
-                        c.Insertable(sr).ExecuteCommand();
-
-                        #endregion
-                    }
-                    #endregion
-                }
-                else
-                {
-                    #region 已记录皮重（已轻衡称重）
-                    if (scale.Type == 1)
-                    {
-                        #region 重衡
-                        return new ResultEntityUtil<bool>().Failure("有上一趟数据/已轻衡称重/重衡：异常！");
-                        #endregion
-                    }
-                    else
-                    {
-                        #region 轻衡
-                        return new ResultEntityUtil<bool>().Failure("有上一趟数据/已轻衡称重/轻衡：异常还是重新称重！");
-                        #endregion
-                    }
-                    #endregion
-                }
-                #endregion
-            }
-            else
-            {
-                #region 没有有上一趟数据
-                if (scale.Type == 1)
-                {
-                    #region 重衡
-                    TMV_TransportationRecords tr = new TMV_TransportationRecords();
-                    tr.Id = Guid.NewGuid();
-
-                    string ycode = "";
-                    do
-                    {
-                        ycode = "DT" + DateTime.Now.ToString("yyMMddHHmmssfff");
-                    } while (c.Queryable<TMV_TransportationRecords>().Where(n => n.Code == ycode).First() != null);
-                    tr.Code = ycode;
-
-                    tr.CarId = car.Id;
-                    tr.CollieryId = tp.Id;
-                    tr.RoughWeight = dto.Weight;
-                    tr.STime = DateTime.Now;
-                    tr.IsUpload = 1;
-                    tr.State = 1;
-
-                    TMV_ScalageRecords sr = new TMV_ScalageRecords();
-                    sr.Id = Guid.NewGuid();
-                    sr.ScaleId = scale.Id;
-                    sr.TId = tr.Id;
-                    sr.Weigh = dto.Weight;
-                    sr.AddTime = DateTime.Now;
-
-                    if (dto.inX == 1)
-                    {
-                        tr.State = 2;
-                        TMV_AbnormalRecords ar = new TMV_AbnormalRecords();
-                        ar.Id = Guid.NewGuid();
-                        ar.TId = tr.Id;
-                        ar.AbnormalCause = "入口光幕阻挡";
-                        ar.AddTime = DateTime.Now;
-                        c.Insertable(ar).ExecuteCommand();
-                    }
-                    if (dto.outX == 1)
-                    {
-                        tr.State = 2;
-                        TMV_AbnormalRecords ar = new TMV_AbnormalRecords();
-                        ar.Id = Guid.NewGuid();
-                        ar.TId = tr.Id;
-                        ar.AbnormalCause = "出口光幕阻挡";
-                        ar.AddTime = DateTime.Now;
-                        c.Insertable(ar).ExecuteCommand();
-                    }
-                    if (dto.Error != 0)
-                    {
-                        tr.State = 2;
-                        TMV_AbnormalRecords ar = new TMV_AbnormalRecords();
-                        ar.Id = Guid.NewGuid();
-                        ar.TId = tr.Id;
-
-                        var ta = c.Queryable<TMV_Abnormal>().Where(w => w.Code == dto.Error).First();
-                        if (ta != null)
-                        {
-                            ar.AbnormalCause = ta.AbnormalCause;
-                        }
-                        else
-                        {
-                            ar.AbnormalCause = "错误码：" + dto.Error.ToString();
-                        }
-
-                        ar.AddTime = DateTime.Now;
-                        c.Insertable(ar).ExecuteCommand();
-                    }
-                    c.Insertable(tr).ExecuteCommand();
-                    c.Insertable(sr).ExecuteCommand();
-                    #endregion
-                }
-                else
-                {
-                    #region 轻衡
-                    return new ResultEntityUtil<bool>().Failure("没有有上一趟数据/轻衡：异常！");
-
-                    #endregion
-                }
-                #endregion
-            }
-            return new ResultEntityUtil<bool>().Success(true, "数据处理完成！");
-        }
 
 
         public ResultPageEntity<ScalageRecordsDTO> GetScalageRecordsList(Request_ScalageRecordsDTO dto)
@@ -313,6 +156,247 @@ namespace TMV.Application.Tr.Services
         {
 
             return new ResultEntityUtil<bool>().Success(true);
+        }
+
+
+
+
+        [AllowAnonymous]
+        public ResultInfo GetDataInfo1(AuthorizationDTO dto)
+        {
+            if (dto.State == 0)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "连接成功-无效数据！");
+            }
+            TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
+            if (car == null)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "车牌号不存在！");
+            }
+
+            TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.CollieryCode && w.AddTime.Date == DateTime.Now.Date).First();
+            if (tp == null)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "矿号-运输计划不存在！");
+            }
+            //int scaleNum = c.Queryable<TMV_Scale>().Where(w => w.Type == 1 && w.State == 1).Count();
+            //List<DateTime> timeLi = c.Queryable<TMV_TransportationRecords>().OrderByDescending(px => px.STime).Take(scaleNum).Select(x => x.STime.Date).ToList();
+            TMV_TransportationRecords tr = new TMV_TransportationRecords();
+            tr.Id = Guid.NewGuid();
+            tr.State = 1;
+
+
+            TMV_TransportationRecords oldTr = c.Queryable<TMV_TransportationRecords>().Where(w => w.CarId == car.Id && w.CollieryId == tp.Id).First();
+            if (oldTr != null)
+            {
+                #region 有上一趟数据
+                if (oldTr.ETime == null && oldTr.TareWeight == null && oldTr.NetWeight == null)
+                {
+                    #region 未记录皮重（未轻衡称重）
+                    return new ResultInfoUtil().Failure(dto.ID, "1", "0", "有上一趟数据/未轻衡称重：上一趟没有出厂怎么又进场绑卡了！");
+                    #endregion
+                }
+                else
+                {
+                    #region 已记录皮重（已轻衡称重）
+                    TimeSpan ts = DateTime.Now - oldTr.STime;
+                    if (ts.Minutes < 60)
+                    {
+                        //一个小时内再次进厂告警
+                        tr.State = 2;
+                        TMV_AbnormalRecords ar = new TMV_AbnormalRecords();
+                        ar.Id = Guid.NewGuid();
+                        ar.TId = tr.Id;
+                        ar.AbnormalCause = "进场/出场时间报警";
+                        ar.AddTime = DateTime.Now;
+                        c.Insertable(ar).ExecuteCommand();
+                    }
+                    #endregion
+                }
+                #endregion
+            }
+
+            #region 绑卡操作 
+
+            string ycode = "";
+            do
+            {
+                ycode = "DT" + DateTime.Now.ToString("yyMMddHHmmssfff");
+            } while (c.Queryable<TMV_TransportationRecords>().Where(n => n.Code == ycode).First() != null);
+            tr.Code = ycode;
+
+            tr.CarId = car.Id;
+            tr.CollieryId = tp.Id;
+            tr.RoughWeight = dto.Weight;
+            tr.STime = DateTime.Now;
+            tr.IsUpload = 1;
+            tr.KouWeight = 0;
+
+            c.Insertable(tr).ExecuteCommand();
+
+            #endregion
+
+            return new ResultInfoUtil().Success(dto.ID, "1", "绑卡完成！");
+        }
+        [AllowAnonymous]
+        public ResultInfo GetDataInfo2(AuthorizationDTO dto)
+        {
+            #region 数据验证
+            if (dto.State == 0)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "连接成功-无效数据！");
+            }
+            if (dto.Inside == 0)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "未正常停靠！");
+            }
+            if (dto.Finish == 0)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "未锁称！");
+            }
+
+            TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
+            if (car == null)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "车牌号不存在！");
+            }
+            TMV_Scale scale = c.Queryable<TMV_Scale>().Where(w => w.Name == dto.ClassName.ToString()).First();
+            if (scale == null)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "衡不存在！");
+            }
+            TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.CollieryCode && w.AddTime.Date == DateTime.Now.Date).First();
+            if (tp == null)
+            {
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "矿号-运输计划不存在！");
+            }
+            #endregion
+
+            TMV_TransportationRecords oldTr = c.Queryable<TMV_TransportationRecords>().Where(w => w.CarId == car.Id && w.CollieryId == tp.Id && w.ETime == null).First();
+            if (oldTr != null)
+            {
+                #region 有上一趟数据
+
+                TimeSpan ts = DateTime.Now - oldTr.STime;
+                if (ts.Minutes < 3)
+                {
+                    //3分钟内表示未采样 
+                    return new ResultInfoUtil().Failure(dto.ID, "1", "0", "未采样！");
+                }
+
+                if (scale.Type == 1)
+                {
+                    #region 重衡
+                    if (oldTr.RoughWeight == null)
+                    {
+                        #region 未记录毛重
+                        TMV_ScalageRecords sr = new TMV_ScalageRecords();
+                        sr.Id = Guid.NewGuid();
+                        sr.ScaleId = scale.Id;
+                        sr.TId = oldTr.Id;
+                        sr.Weigh = dto.Weight;
+                        sr.AddTime = DateTime.Now;
+                        c.Insertable(sr).ExecuteCommand();
+                        oldTr.RoughWeight = dto.Weight;
+                        #endregion
+                    }
+                    else
+                    {
+                        #region 已记录毛重-重新称重
+                        TMV_ScalageRecords sr = new TMV_ScalageRecords();
+                        sr.Id = Guid.NewGuid();
+                        sr.ScaleId = scale.Id;
+                        sr.TId = oldTr.Id;
+                        sr.Weigh = dto.Weight;
+                        sr.AddTime = DateTime.Now;
+                        c.Insertable(sr).ExecuteCommand();
+                        oldTr.RoughWeight = dto.Weight;
+
+                        oldTr.State = 2;
+                        TMV_AbnormalRecords ar = new TMV_AbnormalRecords();
+                        ar.Id = Guid.NewGuid();
+                        ar.TId = oldTr.Id;
+                        ar.AbnormalCause = "已记录毛重-重新过重衡";
+                        ar.AddTime = DateTime.Now;
+                        c.Insertable(ar).ExecuteCommand();
+                        #endregion
+                    }
+                    #endregion
+                }
+                else
+                {
+                    #region 轻衡
+                    if (dto.Weight < car.EmptyWeight)
+                    {
+                        return new ResultInfoUtil().Failure(dto.ID, "1", "0", "皮重小于空水空油重量异常！");
+                    }
+                    if (dto.Weight > car.FullWeight)
+                    {
+                        return new ResultInfoUtil().Failure(dto.ID, "1", "0", "皮重大于满水满油重量异常！");
+                    }
+
+                    if (oldTr.RoughWeight == null)
+                    {
+                        #region 未记录毛重
+                        return new ResultInfoUtil().Failure(dto.ID, "1", "0", "未记录毛重：请先到重衡上去记录毛重！");
+                        #endregion
+                    }
+                    else
+                    {
+                       
+                        #region 已记录毛重-轻衡称重
+                        if (oldTr.TareWeight == null && oldTr.NetWeight == null)
+                        {
+                            #region 未记录皮重和净重
+                            TMV_ScalageRecords sr = new TMV_ScalageRecords();
+                            sr.Id = Guid.NewGuid();
+                            sr.ScaleId = scale.Id;
+                            sr.TId = oldTr.Id;
+                            sr.Weigh = dto.Weight;
+                            sr.AddTime = DateTime.Now;
+                            c.Insertable(sr).ExecuteCommand();
+                            oldTr.TareWeight = dto.Weight;
+                            oldTr.NetWeight = oldTr.RoughWeight - dto.Weight;
+                            #endregion
+                        }
+                        else
+                        {
+                            #region 已记录皮重和净重-重新称重
+                            TMV_ScalageRecords sr = new TMV_ScalageRecords();
+                            sr.Id = Guid.NewGuid();
+                            sr.ScaleId = scale.Id;
+                            sr.TId = oldTr.Id;
+                            sr.Weigh = dto.Weight;
+                            sr.AddTime = DateTime.Now;
+                            c.Insertable(sr).ExecuteCommand();
+                            oldTr.TareWeight = dto.Weight;
+                            oldTr.NetWeight = oldTr.RoughWeight - dto.Weight;
+
+                            oldTr.State = 2;
+                            TMV_AbnormalRecords ar = new TMV_AbnormalRecords();
+                            ar.Id = Guid.NewGuid();
+                            ar.TId = oldTr.Id;
+                            ar.AbnormalCause = "已记录皮重和净重-重新过轻衡";
+                            ar.AddTime = DateTime.Now;
+                            c.Insertable(ar).ExecuteCommand();
+                            #endregion
+                        }
+
+
+                        #endregion
+                    }
+                    #endregion
+                }
+                c.Updateable(oldTr).ExecuteCommand();
+                #endregion
+            }
+            else
+            {
+                #region 没有有上一趟数据
+                return new ResultInfoUtil().Failure(dto.ID, "1", "0", "没有有绑卡！");
+                #endregion
+            }
+            return new ResultInfoUtil().Success(dto.ID, "1", "称重完成！");
         }
     }
 }

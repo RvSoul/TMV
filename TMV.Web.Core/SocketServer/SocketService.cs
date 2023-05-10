@@ -18,6 +18,7 @@ using StackExchange.Profiling.Internal;
 using TMV.Application.SocketConfig.Service;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
+using TMV.DTO;
 
 namespace TMV.Web.Core.SocketServer
 {
@@ -98,8 +99,13 @@ namespace TMV.Web.Core.SocketServer
 					break;
 				}
 				string clientMsg = Encoding.UTF8.GetString(buffer, 0, rece);
-				//ShowMsg(string.Format("Client : {0}", clientMsg));
-				tmvdata(clientMsg);
+                
+               
+
+
+
+                //ShowMsg(string.Format("Client : {0}", clientMsg));
+                tmvdata(clientMsg);
 				_hubContext.Clients.All.SendAsync("ReceiveMessage", "erverthing", clientMsg);
 			}
 		}
@@ -109,15 +115,111 @@ namespace TMV.Web.Core.SocketServer
 			try
 			{
 				Log.Information("-------------------------------------------------------------------------------------");
+				Log.Information("接收数据:" + msgStr);
 				var qdata = msgStr.FromJson<AuthorizationDTO>();
-				var rdata = trServiceDM.GetDataInfo(qdata);
+				ResultInfo rdata = new ResultInfo();
+
+
+
+                if (qdata.ID.Equals("PSAIOT-000000001"))
+                {
+                    #region 大门口值班室-读卡器-车牌和矿号
+                    rdata = trServiceDM.GetDataInfo1(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000002"))
+                {
+                    #region 制卡器-1号-重衡值班室-(石柱发电厂)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000003"))
+                {
+                    #region 备份
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000004"))
+                {
+                    #region 大门出口-读卡器(石柱发电厂)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000005"))
+                {
+                    #region 重衡2号入口-读卡器(石柱发电厂)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000006"))
+                {
+                    #region 重衡1号入口-读卡器(石柱发电厂)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000007"))
+                {
+                    #region 大门入口-读卡器(石柱发电厂)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000008"))
+                {
+                    #region 轻衡入口-读卡(石柱发电)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000009"))
+                {
+                    #region 打印读卡器-轻衡值班室
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000010"))
+                {
+                    #region 矿号绑定终端
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000011"))
+                {
+                    #region 大门口值班室-控制柜(石柱发电厂)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000012"))
+                {
+                    #region 重衡值班室-控制柜(石柱发电)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000013"))
+                {
+                    #region 轻衡值班室-控制柜(石柱发电厂)
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000014"))
+                {
+                    #region 备份
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000015"))
+                {
+                    #region 北斗授时-轻衡值班室房顶立杆(石柱发电) 
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
+                else if (qdata.ID.Equals("PSAIOT-000000016"))
+                {
+                    #region 备份
+                    rdata = trServiceDM.GetDataInfo2(qdata);
+                    #endregion
+                }
 
 				Log.Information("TMV执行结果：" + rdata.ToJson());
-
-				//Byte[] bytesSent = Encoding.ASCII.GetBytes(rdata.ToJson());
-				//var sd = proxSocket.Send(bytesSent, bytesSent.Length, 0);
 				Log.Information("-------------------------------------------------------------------------------------");
-				//SendClientMsg("")
 			}
 			catch (Exception ex)
 			{
@@ -220,7 +322,7 @@ namespace TMV.Web.Core.SocketServer
 		//        try
 		//        {
 		//            var qdata = msgStr.FromJson<AuthorizationDTO>();
-		//            var rdata = trServiceDM.GetDataInfo(qdata);
+		//            var rdata = trServiceDM.GetDataInfo2(qdata);
 		//            Log.Information("-------------------------------------------------------------------------------------");
 		//            Log.Information("TMV执行结果：" + rdata.ToJson());
 		//            var request = "ssssssssssssssssssss";

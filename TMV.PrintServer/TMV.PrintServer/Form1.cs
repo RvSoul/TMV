@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
-using Word;
+//using Word;
 using static System.Drawing.Printing.PrinterSettings;
 
 namespace TMV.PrintServer
@@ -83,17 +83,17 @@ namespace TMV.PrintServer
         }
         public void WordToPdfWithWPS(string sourcePath, string targetPath)
         {
-            try
-            {
-                Word.Application _word = new Word.Application();
-                //打开_filePath的word文件
-                var doc = _word.Documents.Open(sourcePath);
-                //转换文件，输出保存
-                doc.ExportAsFixedFormat(targetPath.Replace(".doc", ".pdf"), Word.WdExportFormat.wdExportFormatPDF);
-                doc.Close();
-            }catch (Exception ex){
-                Console.WriteLine(ex.Message);
-            }
+            //try
+            //{
+            //    Word.Application _word = new Word.Application();
+            //    //打开_filePath的word文件
+            //    var doc = _word.Documents.Open(sourcePath);
+            //    //转换文件，输出保存
+            //    doc.ExportAsFixedFormat(targetPath.Replace(".doc", ".pdf"), Word.WdExportFormat.wdExportFormatPDF);
+            //    doc.Close();
+            //}catch (Exception ex){
+            //    Console.WriteLine(ex.Message);
+            //}
         }
     }
 }

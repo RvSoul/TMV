@@ -39,12 +39,7 @@ namespace TMV.Application.Tr.Services
         /// <returns></returns>
         ResultEntity<bool> DeTransportationRecords(Guid id);
 
-        /// <summary>
-        /// Socket解析成物流订单
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        ResultEntity<bool> GetDataInfo(AuthorizationDTO dto);
+       
 
         /// <summary>
         /// 获取称重记录
@@ -52,5 +47,19 @@ namespace TMV.Application.Tr.Services
         /// <param name="dto"></param>
         /// <returns></returns>
         ResultPageEntity<ScalageRecordsDTO> GetScalageRecordsList(Request_ScalageRecordsDTO dto);
+
+        /// <summary>
+        /// Socket解析成物流订单-进场绑卡
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        ResultInfo GetDataInfo1(AuthorizationDTO dto);
+
+        /// <summary>
+        /// Socket解析成物流订单-毛重
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        ResultInfo GetDataInfo2(AuthorizationDTO dto);
     }
 }

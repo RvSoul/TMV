@@ -40,7 +40,7 @@ namespace TMV.DTO.Tr
         public string ETime { get; set; }
 
     }
-  
+
     public class TransportationRecordsModel
     {
 
@@ -75,7 +75,7 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 毛量
         /// </summary> 
-        public int RoughWeight { get; set; }
+        public int? RoughWeight { get; set; }
 
         /// <summary>
         /// 皮重
@@ -108,6 +108,13 @@ namespace TMV.DTO.Tr
         /// 是否上传-1.未上传，2.已上传
         /// </summary> 
         public int IsUpload { get; set; }
+
+        /// <summary>
+        /// 扣重
+        /// </summary> 
+        public int KouWeight { get; set; }
+
+
         /// <summary>
         /// 称重记录
         /// </summary>
