@@ -24,79 +24,62 @@ namespace TMV.Web.Core.SocketServer
 	public static class SocketService
 	{
 		static ITrServiceDM trServiceDM { get; set; }
-		//static ISocketConfigService socketConfigService { get; set; }
 		static IHubContext<ChatHub> _hubContext;
-
 		static Socket socketListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
 		public static void SocketServereMildd(this IApplicationBuilder app)
 		{
-			var al = app.ApplicationServices;
-			trServiceDM = al.GetService<ITrServiceDM>();
-			_hubContext = (IHubContext<ChatHub>)al.GetService(typeof(IHubContext<ChatHub>));
-
-			//socketConfigService = al.GetService<SocketConfigService>();
-			var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
-			ServerEnd(ReceiveIp.Port, 10, socketListener);
-			Thread th = new Thread(ServerCommunity);
-			th.Start(socketListener);
-
-			//OpenServerSocket();
+			try
+			{
+				var al = app.ApplicationServices;
+				trServiceDM = al.GetService<ITrServiceDM>();
+				_hubContext = (IHubContext<ChatHub>)al.GetService(typeof(IHubContext<ChatHub>));
+				var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
+				ServerEnd(ReceiveIp.Port, 10, socketListener);
+				Thread th = new Thread(ServerCommunity);
+				th.Start(socketListener);
+			}
+			catch (Exception ex)
+			{
+				Log.Information("socketServer：" + ex.Message);
+			}
 		}
 		static void ServerEnd(int myPort, int allowNum, Socket socketListener)
 		{
-
 			IPAddress ip = IPAddress.Any;
-
 			int port = myPort;
-
 			IPEndPoint point = new IPEndPoint(ip, port);
-
 			socketListener.Bind(point);
-
-			ShowMsg($"Listening...{ip}:{port}");
-
+			//ShowMsg($"Listening...{ip}:{port}");
 			socketListener.Listen(allowNum);
 		}
 
 		static void ServerCommunity(object obListener)
 		{
 			Socket temp = (Socket)obListener;
-
 			while (true)
 			{
 				Socket socketSender = temp.Accept();
-
-				ShowMsg(("Client IP = " + socketSender.RemoteEndPoint.ToString()) + " Connect Succese!");
-
+				//ShowMsg(("Client IP = " + socketSender.RemoteEndPoint.ToString()) + " Connect Succese!");
 				Thread ReceiveMsg = new Thread(ReceiveClient);
-
 				ReceiveMsg.IsBackground = true;
-
 				Thread SendToClient = new Thread(SendMsgToClient);
-
 				SendToClient.Start(socketSender);
-
 				ReceiveMsg.Start(socketSender);
 			}
-
 		}
 
 		static void SendMsgToClient(object mySocketSender)
 		{
 			Socket socketSender = mySocketSender as Socket;
-
 			while (true)
 			{
 				if (socketSender.RemoteEndPoint == null)
 				{
-					ShowMsg("socketSender.RemoteEndPoint == null");
+					//ShowMsg("socketSender.RemoteEndPoint == null");
 					break;
 				}
 				string msg = Console.ReadLine();
-
 				byte[] buffer = Encoding.UTF8.GetBytes(msg);
-
 				socketSender.Send(buffer);
 			}
 
@@ -105,35 +88,30 @@ namespace TMV.Web.Core.SocketServer
 		static void ReceiveClient(object mySocketSender)
 		{
 			Socket socketSender = mySocketSender as Socket;
-
 			while (true)
 			{
-
 				byte[] buffer = new byte[1024];
-
 				int rece = socketSender.Receive(buffer);
-
 				if (rece == 0)
 				{
-					ShowMsg(string.Format("Client : {0} + 下線了", socketSender.RemoteEndPoint.ToString()));
+					//ShowMsg(string.Format("Client : {0} + 下線了", socketSender.RemoteEndPoint.ToString()));
 					break;
 				}
 				string clientMsg = Encoding.UTF8.GetString(buffer, 0, rece);
-				ShowMsg(string.Format("Client : {0}", clientMsg));
-
+				//ShowMsg(string.Format("Client : {0}", clientMsg));
 				tmvdata(clientMsg);
-
-                _hubContext.Clients.All.SendAsync("ReceiveMessage", "bob", clientMsg);
+				_hubContext.Clients.All.SendAsync("ReceiveMessage", "erverthing", clientMsg);
 			}
 		}
 
-		static void tmvdata(string msgStr) {
+		static void tmvdata(string msgStr)
+		{
 			try
 			{
-                Log.Information("-------------------------------------------------------------------------------------");
-                var qdata = msgStr.FromJson<AuthorizationDTO>();
+				Log.Information("-------------------------------------------------------------------------------------");
+				var qdata = msgStr.FromJson<AuthorizationDTO>();
 				var rdata = trServiceDM.GetDataInfo(qdata);
-				
+
 				Log.Information("TMV执行结果：" + rdata.ToJson());
 
 				//Byte[] bytesSent = Encoding.ASCII.GetBytes(rdata.ToJson());
@@ -148,10 +126,10 @@ namespace TMV.Web.Core.SocketServer
 			}
 		}
 
-		static void ShowMsg(string s)
-		{
-			Console.WriteLine(s);
-		}
+		//static void ShowMsg(string s)
+		//{
+		//	Console.WriteLine(s);
+		//}
 		//static List<Socket> clientScoketLis = new List<Socket>();
 		//private static void OpenServerSocket()
 		//{
