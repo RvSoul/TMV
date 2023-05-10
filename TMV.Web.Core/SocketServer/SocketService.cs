@@ -26,7 +26,6 @@ namespace TMV.Web.Core.SocketServer
 	{
 		static ITrServiceDM trServiceDM { get; set; }
 		static IHubContext<ChatHub> _hubContext;
-		static Socket socketListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 		public static void SocketServereMildd(this IApplicationBuilder app)
 		{
 			try
@@ -35,6 +34,7 @@ namespace TMV.Web.Core.SocketServer
 				trServiceDM = al.GetService<ITrServiceDM>();
 				_hubContext = (IHubContext<ChatHub>)al.GetService(typeof(IHubContext<ChatHub>));
 				var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
+				var socketListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 				ServerEnd(ReceiveIp.Port, 10, socketListener);
 				Thread th = new Thread(ServerCommunity);
 				th.Start(socketListener);
