@@ -130,16 +130,23 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetDataInfo(TMV.DTO.Authorization.AuthorizationDTO)">
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetScalageRecordsList(TMV.DTO.Tr.Request_ScalageRecordsDTO)">
+            <summary>
+            获取称重记录
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetDataInfo1(TMV.DTO.Authorization.AuthorizationDTO)">
             <summary>
             Socket解析成物流订单
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetScalageRecordsList(TMV.DTO.Tr.Request_ScalageRecordsDTO)">
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetDataInfo(TMV.DTO.Authorization.AuthorizationDTO)">
             <summary>
-            获取称重记录
+            Socket解析成物流订单
             </summary>
             <param name="dto"></param>
             <returns></returns>

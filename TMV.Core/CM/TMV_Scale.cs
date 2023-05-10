@@ -26,7 +26,7 @@ namespace TMV.Core.CM
         public string Name { get; set; }
 
         /// <summary>
-        /// 衡类型-1.重，2.轻,3.混合
+        /// 衡类型-1.重，2.混合,3.轻
         /// </summary>
         [DefaultValue("衡类型")]
         public int Type { get; set; }

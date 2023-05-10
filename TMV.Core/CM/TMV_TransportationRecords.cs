@@ -39,7 +39,7 @@ namespace TMV.Core.CM
         /// 毛量
         /// </summary>
         [DefaultValue("毛量")]
-        public int RoughWeight { get; set; }
+        public int? RoughWeight { get; set; }
 
         /// <summary>
         /// 皮重
@@ -78,5 +78,10 @@ namespace TMV.Core.CM
         /// </summary>
         [DefaultValue("是否上传")]
         public int IsUpload { get; set; }
+
+        /// <summary>
+        /// 扣重
+        /// </summary> 
+        public int KouWeight { get; set; }
     }
 }
