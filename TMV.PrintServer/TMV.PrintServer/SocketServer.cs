@@ -5,111 +5,168 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TMV.PrintServer.Model;
+using NPOI.Util;
+using TMV.PrintServer.Comm;
 
 namespace TMV.PrintServer
 {
     public class SocketServer
     {
-        /// <summary>
-        /// 客户端socket
-        /// </summary>
-        Socket _ClientSocket = null;
-        /// <summary>
-        /// IP地址
-        /// </summary>
-        public string ipAddress = string.Empty;
-        /// <summary>
-        /// IP端口
-        /// </summary>
-        public int Port;
-        /// <summary>
-        /// 接收线程
-        /// </summary>
-        private Thread threadReceive;
-        /// <summary>
-        /// 是否运行
-        /// </summary>
-        private bool IsRun = false;
-        /// <summary>
-        /// 远端地址
-        /// </summary>
-        private string remoteEndPoint;
-        /// <summary>
-        /// 本端地址
-        /// </summary>
-        private string LocalEndPoint;
+        DbContext  dbContext;
+        static List<Socket> clientScoketLis ;
         public string msg = "";
-        /// <summary>
-        /// 客户端
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="Port"></param>
-        public SocketServer(string ip, int Port)
+        public SocketServer()
         {
-            _ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            this.ipAddress = ip;
-            this.Port = Port;
+            clientScoketLis = new List<Socket>();
+            dbContext = new DbContext();
         }
-
-        public string Start()
+        public  string OpenServerSocket(string ip ,int port)
         {
-            _ClientSocket.Connect(new IPEndPoint(IPAddress.Parse(this.ipAddress), this.Port));//通过IP和端口号来定位一个所要连接的服务器端
-                                                                                              //客户端网络结点号  
-            remoteEndPoint = _ClientSocket.RemoteEndPoint.ToString();
-            LocalEndPoint = _ClientSocket.LocalEndPoint.ToString();
-            msg+=$"\r\n远端地址:{remoteEndPoint}\r\n本端地址：{LocalEndPoint}";
-            var sd = Send("{\"ID\":\"PSAIOT-000000015\",\"Sn\":1,\"ClassName\":1,\"inX\":1,\"outX\":0,\"State\":1,\"EntranceGate\":1,\"Inside\":1,\"StartWeigh\":1,\"Finish\":1,\"GoOut\":1,\"ExitGater\":1,\"End\":1,\"Error\":0,\"PlateNumber\":\"DK1577\",\"CollieryCode\":\"3003\",\"Weight\":3800}");
-            threadReceive = new Thread(Receive);
-            threadReceive.IsBackground = true;
-            threadReceive.Start();
-            IsRun = true;
+            try
+            {
+                msg+="开启socket服务";
+                //var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
+
+                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                //2、绑定端口、IP
+                IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+                socket.Bind(iPEndPoint);
+                //3、开启侦听
+                socket.Listen(10);//如果同时来了100个连接请求，只能处理一个,队列中10个在等待连接的客户端，其他的则返回错误消息。
+                msg += "\r\n开始监听....";
+                //4、开始接受客户端的连接
+                ThreadPool.QueueUserWorkItem(new WaitCallback(AcceptClientConnect), socket);
+                //loadServer = 1;
+            }
+            catch (Exception ex)
+            {
+                msg += "\r\nSocket服务异常，异常信息：" + ex.Message;
+            }
             return msg;
         }
         /// <summary>
-        /// 消息的接收
+        /// 线程池线程执行的接受客户端连接方法
         /// </summary>
-        private void Receive()
+        /// <param name="obj">传入的Socket</param>
+        private  void AcceptClientConnect(object obj)
         {
-            byte[] TempData = new byte[1024 * 10];
-            while (IsRun)
+            var serverSocket = obj as Socket;
+            //接受客户端的连接
+            while (true)
             {
-                //传递一个byte数组，用于接收数据。length表示接收了多少字节的数据
-                int length = _ClientSocket.Receive(TempData);
-                if (length == 0)
-                {
-                    IsRun = false;
-                    msg+= "\r\n服务器断开链接";
-                    break;
-                }
-                else
-                {
-                    string message = Encoding.UTF8.GetString(TempData, 0, length);//只将接收到的数据进行转化
-                    msg+=$"\r\n远端地址:{remoteEndPoint} 本端地址：{LocalEndPoint} 获取到的数据:{message}";
-                }
+                //创建一个负责通信的Socket
+                Socket proxSocket = serverSocket.Accept();
+                var ip = proxSocket.RemoteEndPoint.ToString();
+               // var so = socketConfigService.GetSocketConfig(ip.Substring(0, ip.IndexOf(':')));
+                //if (so.Data == null)
+                //{
+                //    SendClientMsg(proxSocket, "IP地址不被允许链接");
+                //    Log.Information($"IP地址：{ip}不被允许链接");
+                //    proxSocket.Close();
+                //}
+                //else
+                //{
+                //    //接收客户端发送来的消息
+                //    ThreadPool.QueueUserWorkItem(new WaitCallback(ReceiveClientMsg), proxSocket);
+                //}
+                ThreadPool.QueueUserWorkItem(new WaitCallback(ReceiveClientMsg), proxSocket);
             }
+
         }
         /// <summary>
-        /// 发送数据
+        /// 不断接收客户端信息子线程方法
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public int Send(string data)
+        /// <param name="obj">参数Socke对象</param>
+        private  void ReceiveClientMsg(object obj)
         {
-            return _ClientSocket.Send(Encoding.UTF8.GetBytes(data));
-        }
-        public void Close()
-        {
-            IsRun = false;
-            if (threadReceive != null)
+            var proxSocket = obj as Socket;
+            //Log.Information("-----------开始接受客户端信息————————");
+           // Log.Information($"接受到远程链接{proxSocket.RemoteEndPoint.ToString()}");
+            //创建缓存内存，存储接收的信息   ,不能放到while中，这块内存可以循环利用
+            byte[] data = new byte[1020 * 1024];
+            while (true)
             {
+                int len = 0;
                 try
                 {
-                    threadReceive.Interrupt();
-                    Thread.Sleep(200);
+                    //接收消息,返回字节长度
+                    len = proxSocket.Receive(data, 0, data.Length, SocketFlags.None);
                 }
-                catch (Exception)
-                { }
-                threadReceive = null;
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    // LoggerHelper.Error(ex, $"ReceiveClientMsg->");
+                    return;
+                }
+
+                if (len <= 0)//判断接收的字节数
+                {
+                    return;
+                }
+                string msgStr = "DK1577";// Encoding.Default.GetString(data, 0, len);
+                msg += "\r\n接受到的数据：" + msgStr;
+               
+
+                //储存到数据库
+                //Task.Run(() =>
+                //{
+                    try
+                    {
+                        if (!string.IsNullOrWhiteSpace(msgStr))
+                        {
+                            WordUtil wordUtil = new();
+                            var printdata = dbContext.db.Queryable<TransportationRecords, TransportPlan, Car, ScalageRecords>((a, b, c, d) => a.CarId == c.Id && a.CollieryId == b.Id && a.Id == d.TId)
+                            .Where((a, b, c) => a.CarId.ToString() == msgStr)
+                            .Select((a, b, c, d) => new PrintDto()
+                            {
+                                unit = a.Unit,
+                                scalenumber = d.ScaleId.ToString(),
+                                number = a.Code,
+                                shipper = b.SendUnit,
+                                consignee = b.ReceiptUnit,
+                                name = b.CargoName,
+                                carryunit = b.Carrier,
+                                specification = "",
+                                splatenumber = c.PlateNumber,
+                                roughweight = a.RoughWeight.ToString(),
+                                tareweight = a.TareWeight.ToString(),
+                                buckleweight = a.KouWeight.ToString(),
+                                netweight = a.NetWeight.ToString(),
+                                shipnumber = b.ShipName,
+                                truckscar = "",
+                                emptycar = "",
+                                trucktime = "",
+                                lighttime = ""
+                            }).First();
+                            if (printdata == null)
+                            {
+                                msg += $"\r\n没有找到车牌号为{msgStr}的记录";
+                            }
+                            else
+                            {
+                                wordUtil.WordWrite(printdata);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        msg += "解析数据错误：" + ex.Message;
+                    }
+               // });
+            }
+        }
+
+        private  void SendClientMsg(Socket socket, string msg)
+        {
+            try
+            {
+                Byte[] bytesSent = Encoding.ASCII.GetBytes(msg);
+                socket.Send(bytesSent, bytesSent.Length, 0);
+            }
+            catch (Exception ex)
+            {
+                //Log.Information($"发送消息异常：{ex.Message}");
             }
         }
     }

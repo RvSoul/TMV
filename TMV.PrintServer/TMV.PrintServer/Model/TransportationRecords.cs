@@ -1,20 +1,18 @@
-﻿using System;
+﻿using SqlSugar;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SqlSugar;
 
-namespace TMV.Core.CM
+namespace TMV.PrintServer.Model
 {
     /// <summary>
     /// 物流订单
     /// </summary>
     [SugarTable("TransportationRecords")]
-    public partial class TMV_TransportationRecords
+    public class TransportationRecords
     {
         [SugarColumn(IsPrimaryKey = true)]
         public Guid Id { get; set; }
@@ -57,6 +55,8 @@ namespace TMV.Core.CM
         /// </summary>
         [DefaultValue("扣重")]
         public int? KouWeight { get; set; }
+        [DefaultValue("单位")]
+        public string Unit { get; set; }
 
         /// <summary>
         /// 进厂时间
@@ -76,8 +76,8 @@ namespace TMV.Core.CM
         /// </summary>
         [DefaultValue("状态")]
         public int State { get; set; }
-        [DefaultValue("单位")]
-        public string Unit { get; set; }
+
+
         /// <summary>
         /// 是否上传-1.未上传，2.已上传
         /// </summary>
