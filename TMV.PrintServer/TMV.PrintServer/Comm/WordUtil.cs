@@ -35,7 +35,7 @@ namespace TMV.PrintServer.Comm
                             var be1 = (XWPFParagraph)be;
                             foreach (var item in TableTestList)
                             {
-                                if (be1.ParagraphText.Contains($"${item.Key}"))
+                                if (be1.ParagraphText.Contains("${"+item.Key+"}"))
                                 {
                                     be1.ReplaceText(be1.ParagraphText, item.Value);
                                 }
@@ -59,7 +59,7 @@ namespace TMV.PrintServer.Comm
                                         var be1 = (XWPFParagraph)be;
                                         foreach (var item in TableTestList)
                                         {
-                                            if (be1.ParagraphText.Contains($"${item.Key}"))
+                                            if (be1.ParagraphText.Contains("${"+item.Key+"}"))
                                             {
                                                 be1.ReplaceText(be1.ParagraphText, item.Value);
                                             }
@@ -72,7 +72,22 @@ namespace TMV.PrintServer.Comm
                 }
             }
             document.Write(ms);
+            SaveToFile(ms);
             return ms;
         }
+        public void SaveToFile(MemoryStream ms)
+        {
+            var path = Application.StartupPath + @"\newprintmodel.docx";
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                byte[] data = ms.ToArray();
+
+
+                fs.Write(data, 0, data.Length);
+                fs.Flush();
+                data = null;
+            }
+        }
     }
+   
 }

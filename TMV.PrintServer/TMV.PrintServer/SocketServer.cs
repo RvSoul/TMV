@@ -117,7 +117,7 @@ namespace TMV.PrintServer
                         {
                             WordUtil wordUtil = new();
                             var printdata = dbContext.db.Queryable<TransportationRecords, TransportPlan, Car, ScalageRecords>((a, b, c, d) => a.CarId == c.Id && a.CollieryId == b.Id && a.Id == d.TId)
-                            .Where((a, b, c) => a.CarId.ToString() == msgStr)
+                            .Where((a, b, c) => c.PlateNumber.ToString() == msgStr)
                             .Select((a, b, c, d) => new PrintDto()
                             {
                                 unit = a.Unit,
