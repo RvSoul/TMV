@@ -35,9 +35,9 @@
 		<Content Update="wwwroot\i18n\config\languageConfig.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Update="wwwroot\i18n\en-US.json">
+		<!--<Content Update="wwwroot\i18n\en-US.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
+		</Content>-->
 		<Content Update="wwwroot\i18n\zh-CN.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>

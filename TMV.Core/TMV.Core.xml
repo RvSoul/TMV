@@ -254,6 +254,11 @@
             净重
             </summary>
         </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.KouWeight">
+            <summary>
+            扣重
+            </summary>
+        </member>
         <member name="P:TMV.Core.CM.TMV_TransportationRecords.STime">
             <summary>
             进厂时间

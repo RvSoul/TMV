@@ -62,18 +62,20 @@
             this.textBox1.Location = new System.Drawing.Point(71, 38);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(97, 23);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "192.168.1.63";
+            this.textBox1.Text = "127.0.0.1";
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(220, 38);
             this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(59, 23);
             this.textBox2.TabIndex = 3;
-            this.textBox2.Text = "5395";
+            this.textBox2.Text = "5288";
             // 
             // label1
             // 

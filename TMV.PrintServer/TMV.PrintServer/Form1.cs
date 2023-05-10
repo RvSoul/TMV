@@ -13,6 +13,7 @@ namespace TMV.PrintServer
 {
     public partial class Form1 : Form
     {
+        SocketServer server = new();
         public Form1()
         {
             InitializeComponent();
@@ -31,24 +32,14 @@ namespace TMV.PrintServer
             string msg = "开始时初始化socket链接";
             try
             {
-                SocketServer client = null;
-                bool isTrue = true;
-                while (isTrue)
-                {
-                    var ip = textBox1.Text.Trim();
-                    var port = int.Parse(textBox2.Text);
-                    client = new SocketServer(ip, port);
-                    client.Start();
-                    msg += "\r\n" + client.msg;
-                    break;
-                }
+                var ip = textBox1.Text.Trim();
+                var port = int.Parse(textBox2.Text);
+                msg+="\r\n"+server.OpenServerSocket(ip, port);
             }
             catch (Exception  ex)
             {
-
                 msg += $"\r\n初始化失败,失败信息{ex.Message}";
             }
-           
             textBox3.Text = msg;
         }
         private void button1_Click(object sender, EventArgs e)
