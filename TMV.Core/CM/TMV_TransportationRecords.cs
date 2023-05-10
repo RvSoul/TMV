@@ -51,12 +51,7 @@ namespace TMV.Core.CM
         /// 净重
         /// </summary>
         [DefaultValue("净重")]
-        public int? NetWeight { get; set; }
-        /// <summary>
-        /// 扣重
-        /// </summary>
-        [DefaultValue("扣重")]
-        public int? KouWeight { get; set; }
+        public int? NetWeight { get; set; } 
 
         /// <summary>
         /// 进厂时间
