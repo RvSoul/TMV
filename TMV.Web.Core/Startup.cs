@@ -104,6 +104,7 @@ namespace TMV.Web.Core
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseRouting();
+			app.UseCorsAccessor();
 			app.UseAuthentication();
 			app.UseAuthorization();
 			app.UseInject();
