@@ -272,7 +272,7 @@ namespace TMV.Application.Tr.Services
             }
             #endregion
 
-            TMV_TransportationRecords oldTr = c.Queryable<TMV_TransportationRecords>().Where(w => w.CarId == car.Id && w.CollieryId == tp.Id  && w.ETime == null).First();
+            TMV_TransportationRecords oldTr = c.Queryable<TMV_TransportationRecords>().Where(w => w.CarId == car.Id && w.CollieryId == tp.Id && w.ETime == null).First();
             if (oldTr != null)
             {
                 #region 有上一趟数据
@@ -326,6 +326,15 @@ namespace TMV.Application.Tr.Services
                 else
                 {
                     #region 轻衡
+                    if (dto.Weight < car.EmptyWeight)
+                    {
+                        return new ResultInfoUtil().Failure(dto.ID, "1", "0", "皮重小于空水空油重量异常！");
+                    }
+                    if (dto.Weight > car.FullWeight)
+                    {
+                        return new ResultInfoUtil().Failure(dto.ID, "1", "0", "皮重大于满水满油重量异常！");
+                    }
+
                     if (oldTr.RoughWeight == null)
                     {
                         #region 未记录毛重
@@ -334,6 +343,7 @@ namespace TMV.Application.Tr.Services
                     }
                     else
                     {
+                       
                         #region 已记录毛重-轻衡称重
                         if (oldTr.TareWeight == null && oldTr.NetWeight == null)
                         {
@@ -372,12 +382,12 @@ namespace TMV.Application.Tr.Services
                             #endregion
                         }
 
+
                         #endregion
                     }
                     #endregion
                 }
-
-
+                c.Updateable(oldTr).ExecuteCommand();
                 #endregion
             }
             else

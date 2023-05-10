@@ -139,14 +139,14 @@
         </member>
         <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetDataInfo1(TMV.DTO.Authorization.AuthorizationDTO)">
             <summary>
-            Socket解析成物流订单
+            Socket解析成物流订单-进场绑卡
             </summary>
             <param name="dto"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetDataInfo(TMV.DTO.Authorization.AuthorizationDTO)">
+        <member name="M:TMV.Application.Tr.Services.ITrServiceDM.GetDataInfo2(TMV.DTO.Authorization.AuthorizationDTO)">
             <summary>
-            Socket解析成物流订单
+            Socket解析成物流订单-毛重
             </summary>
             <param name="dto"></param>
             <returns></returns>
