@@ -15,6 +15,7 @@ namespace TMV.PrintServer
     {
         DbContext  dbContext;
         static List<Socket> clientScoketLis ;
+        PrintServer printServer = new();
         public string msg = "";
         public SocketServer()
         {
@@ -146,6 +147,7 @@ namespace TMV.PrintServer
                             else
                             {
                                 wordUtil.WordWrite(printdata);
+                                printServer.Print();
                             }
                         }
                     }
