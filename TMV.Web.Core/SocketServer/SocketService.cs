@@ -46,7 +46,7 @@ namespace TMV.Web.Core.SocketServer
 		}
 		static void ServerEnd(int myPort, int allowNum, Socket socketListener)
 		{
-			IPAddress ip = IPAddress.Parse("127.0.0.1");
+			IPAddress ip = IPAddress.Any;
 			int port = myPort;
 			IPEndPoint point = new IPEndPoint(ip, port);
 			socketListener.Bind(point);
