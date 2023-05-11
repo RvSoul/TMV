@@ -59,10 +59,10 @@ namespace TMV.Application.Tr.Services
             int count = 0;
 
 
-            var query = c.Queryable<TMV_TransportationRecords, TMV_TransportPlan, TMV_Car>((a, b, c) => a.CollieryId == b.Id && a.CarId == c.Id).OrderByDescending((a, b, c) => a.STime)
+            var query = c.Queryable<TMV_TransportationRecords, TMV_TransportPlan, TMV_Car>((a, b, c) => a.CollieryId == b.Id && a.CarId == c.Id).OrderByDescending(a => a.STime)
                 .Where(exp.ToExpression())
                 .WhereIF(!dto.PlateNumber.IsNullOrEmpty(), (a, b, c) => c.PlateNumber == dto.PlateNumber)
-                .WhereIF(!dto.MineCode.IsNullOrEmpty(), (a, b, c) => b.MineCode == dto.MineCode).OrderByDescending(a => a.STime)
+                .WhereIF(!dto.MineCode.IsNullOrEmpty(), (a, b, c) => b.MineCode == dto.MineCode)
                 .Select((a, b, c) => new TransportationRecordsDTO()
                 {
                     Id = a.Id,
@@ -107,7 +107,7 @@ namespace TMV.Application.Tr.Services
                             x.PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber;
 
                         })
-                .OrderByDescending(a => a.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
+                .ToPageList(dto.PageIndex, dto.PageSize, ref count);
             return new ResultPageEntity<TransportationRecordsDTO>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
 
@@ -161,7 +161,7 @@ namespace TMV.Application.Tr.Services
         }
 
 
-        
+
 
 
         [AllowAnonymous]

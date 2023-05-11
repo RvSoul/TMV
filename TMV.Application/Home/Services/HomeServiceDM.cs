@@ -29,8 +29,9 @@ namespace TMV.Application.Home.Services
 
         public ResultEntity<List<TransportationRecordsDTO>> GetHomeTransportationRecordsList()
         {
-            var query = c.Queryable<TMV_TransportationRecords, TMV_TransportPlan, TMV_Car>((a, b, c) => a.CollieryId == b.Id && a.CarId == c.Id).OrderByDescending((a, b, c) => a.STime)
-                .OrderByDescending(a => a.STime).Take(5)
+            var query = c.Queryable<TMV_TransportationRecords, TMV_TransportPlan, TMV_Car>((a, b, c) => a.CollieryId == b.Id && a.CarId == c.Id)
+                .OrderByDescending(a => a.STime)
+                //.Take(5)
                 .Select((a, b, c) => new TransportationRecordsDTO()
                 {
                     Id = a.Id,
@@ -53,7 +54,7 @@ namespace TMV.Application.Home.Services
                     x.PlateNumber = c.Queryable<TMV_Car>().Where(w => w.Id == x.CarId).First().PlateNumber;
 
                 })
-                .OrderByDescending(a => a.STime).ToList();
+                 .ToList();
             return new ResultEntityUtil<List<TransportationRecordsDTO>>().Success(query);
         }
 
@@ -70,7 +71,7 @@ namespace TMV.Application.Home.Services
 
         public ResultEntity<List<UploadDTO>> GetScData()
         {
-            List<UploadDTO> li =new List<UploadDTO>();
+            List<UploadDTO> li = new List<UploadDTO>();
 
 
             return new ResultEntityUtil<List<UploadDTO>>().Success(li);
