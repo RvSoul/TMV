@@ -14,6 +14,7 @@ using static System.Drawing.Printing.PrinterSettings;
 
 namespace TMV.PrintServer
 {
+   
     public partial class Form1 : Form
     {
         public static Form1 form;
@@ -22,7 +23,7 @@ namespace TMV.PrintServer
         public delegate void SetText(string text);
         public Form1()
         {
-            form=this;
+            form =this;
             InitializeComponent();
             using (BackgroundWorker bw = new BackgroundWorker())
             {
