@@ -39,9 +39,10 @@ namespace TMV.PrintServer.Comm
                                 if (be1.ParagraphText.Contains("${"+item.Key+"}"))
                                 {
                                     st = st.Replace("${" + item.Key + "}", item.Value);
+                                    be1.ReplaceText(be1.ParagraphText, st);
                                 }
                             }
-                            be1.ReplaceText(be1.ParagraphText, st);
+                           
                         }
                     }
                 }
@@ -75,7 +76,7 @@ namespace TMV.PrintServer.Comm
             }
             document.Write(ms);
            // WordToPdfWithWPS(ms, Application.StartupPath + @"\printmodel.pdf");
-            //SaveToFile(ms);
+            SaveToFile(ms);
             return ms;
         }
         public void WordToPdfWithWPS(MemoryStream stream,string targetPath)

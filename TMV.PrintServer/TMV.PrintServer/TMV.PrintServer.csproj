@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspose.Words" Version="23.5.0" />
+    <PackageReference Include="FreeSpire.Doc" Version="10.8.1" />
     <PackageReference Include="Furion" Version="4.8.8.13" />
     <PackageReference Include="NPOI" Version="2.6.0" />
     <PackageReference Include="O2S.Components.PDFRender4NET.Win" Version="11.1.2" />
