@@ -83,7 +83,7 @@ namespace TMV.Application.Scale.Services
             var li = c.Queryable<TMV_Scale>()
                 .WhereIF(!string.IsNullOrWhiteSpace(dto.Name), w => w.Name == dto.Name)
                  .WhereIF(!string.IsNullOrWhiteSpace(dto.Type), w => w.Type == Convert.ToInt32(dto.Type))
-                  .WhereIF(!string.IsNullOrWhiteSpace(dto.State), w => w.State == Convert.ToInt32(dto.State))
+                  .WhereIF(!string.IsNullOrWhiteSpace(dto.State), w => w.State == Convert.ToInt32(dto.State)).OrderBy(px => px.Name)
                 .ToPageList(dto.PageIndex, dto.PageSize, ref total);
             var list = li.Adapt<List<ScaleDTO>>();
             return new ResultPageEntity<ScaleDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };

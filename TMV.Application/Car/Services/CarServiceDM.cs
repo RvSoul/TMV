@@ -33,7 +33,7 @@ namespace TMV.Application.Car.Services
                 .WhereIF(!dto.PlateNumber.IsNullOrEmpty(),x=>x.PlateNumber== dto.PlateNumber)
                 .WhereIF(!dto.Type.IsNullOrEmpty(), x => x.Type == Convert.ToInt32(dto.Type))
                 .WhereIF(!dto.ExerciseCode.IsNullOrEmpty(), x => x.ExerciseCode == dto.ExerciseCode)
-                .WhereIF(!dto.DriverName.IsNullOrEmpty(), x => x.ExerciseCode == dto.DriverName)
+                .WhereIF(!dto.DriverName.IsNullOrEmpty(), x => x.ExerciseCode == dto.DriverName).OrderByDescending(px => px.AddTime)
                 .ToPageList(dto.PageIndex, dto.PageSize, ref total);
 
             var list = query.Adapt<List<CarDTO>>();
