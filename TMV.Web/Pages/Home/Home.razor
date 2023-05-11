@@ -1,6 +1,7 @@
 ﻿@page "/home/home"
 @using TMV.Application.AbnormalRecords.Services;
 @using TMV.Application.Tr.Services;
+@using TMV.Application.Scale.Services;
 @using TMV.DTO.AbnormalRecords;
 @using TMV.DTO.Tr;
 @using TMV.Web.Pages.AbnormalRecords.ViewModel;
@@ -11,89 +12,107 @@
 @inherits ProCompontentBase
 @inject ITrServiceDM _trRecodeServiceDM
 @inject IArServiceDM _arServiceDM
+@inject IScaleServiceDM _scale
 @attribute [Authorize]
 
 
-<MRow>
-	<MCol Md=12 Sm=12>
-		<MCard Class="max-height" Style="border-radius:20px 0px 0px 20px !important;">
-			<MCardTitle><MIcon Large Left>mdi-audio-video</MIcon><span class="text-h6 font-weight-light">运输动态</span></MCardTitle>
-			<MDataTable Headers="_headers" Items=" tpPage.Datas" HideDefaultFooter Class="table-border-none pt-2">
-				<HeaderColContent Context="header">
-					<span class="text-subtitle">@header.Text</span>
-				</HeaderColContent>
-			</MDataTable>
-		</MCard>
+<MRow Style="height: 100%;">
+	<MCol Md=8 Sm=12 Class="max-height" Style="padding-bottom:0;">
+		<MRow Style="height: 160px">
+			<MCol Md=12 Sm=12 Class="max-height" Style="padding-top:0;">
+				<div style="padding:10px;display:flex;justify-content:center;">
+					<MCard Class="max-height" Style="padding:0 8px 8px 8px;margin-right:32px;">
+						<MCardTitle Style="padding:8px 0;"><MIcon Left>mdi-weight-pound</MIcon><span>称重</span></MCardTitle>
+						<div style="display:flex;width:200px;justify-content:flex-end;flex-wrap:wrap;">
+							<div style="background-color:yellow;height:64px;line-height:64px;text-align:right;font-size:48px;width:200px;font-weight:bolder;padding:0 24px;">55</div>
+							<div style="background-color:green;width:24px;height:24px;border-radius:24px;margin-top:8px;margin-right:8px;"></div><div style="height:24px;line-height:24px;margin-top:8px;">稳定</div>
+						</div>
+					</MCard>
+					<MCard Class="max-height" Style="padding:0 8px 8px 8px;margin-right:16px;">
+						<MCardTitle Style="padding:8px 0;"><MIcon Left>mdi-line-scan</MIcon><span>红外线</span></MCardTitle>
+						<div style="display:flex;">
+							<div style="width:24px;height:96px;background-color:red;"></div>
+							<div style="height:96px;padding:0 24px;">
+								<div style="display:flex;justify-content:space-between;">
+									<div style="background-color:green;width:16px;height:16px;border-radius:16px;margin-bottom:8px;"></div>
+									<div style="background-color:green;width:16px;height:16px;border-radius:16px;margin-bottom:8px;"></div>
+								</div>
+								<div style="width:200px;background-color:#aaa;height:48px;"></div>
+								<div style="display:flex;justify-content:space-between;">
+									<div style="background-color:green;width:16px;height:16px;border-radius:16px;margin-top:8px;"></div>
+									<div style="background-color:green;width:16px;height:16px;border-radius:16px;margin-top:8px;"></div>
+								</div>
+							</div>
+							<div style="width:24px;height:96px;background-color:red;"></div>
+						</div>
+					</MCard>
+				</div>
+			</MCol>
+		</MRow>
+		<MRow Style="height: calc(100% - 400px)">
+			<MCol Md=12 Sm=12 Class="max-height">
+				<MCard Class="max-height">
+					<MContainer Fluid>
+						<MRow Align="@AlignTypes.Center">
+							<MCol Cols="6">
+								<MSelect Items="_items"
+										 @bind-Value="@value1"
+										 ItemText="u => u.Label"
+										 ItemValue="u => u.Value"
+										 Filled
+										 Label="Standard"
+										 Dense></MSelect>
+							</MCol>
+
+							<MCol Cols="6">
+								<MSelect Items="_items"
+										 @bind-Value="@value2"
+										 ItemText="u => u.Label"
+										 ItemValue="u => u.Value"
+										 Filled
+										 Label="Filled style"
+										 Dense></MSelect>
+							</MCol>
+
+							<MCol Cols="6">
+								<MSelect Items="_items"
+										 @bind-Value="@value3"
+										 ItemText="u => u.Label"
+										 ItemValue="u => u.Value"
+										 Label="Outlined style"
+										 Dense
+										 Outlined></MSelect>
+							</MCol>
+
+							<MCol Cols="6">
+								<MSelect Items="_items"
+										 @bind-Value="@value4"
+										 ItemText="u => u.Label"
+										 ItemValue="u => u.Value"
+										 Label="Solo field"
+										 Dense
+										 Solo></MSelect>
+							</MCol>
+						</MRow>
+					</MContainer>
+				</MCard>
+			</MCol>
+		</MRow>
+		<MRow Style="height: 240px">
+			<MCol Md=12 Sm=12 Class="max-height" Style="padding-bottom:0;">
+				<MCard Class="max-height">
+					<MCardTitle Style="padding:8px 16px;"><MIcon Left>mdi-audio-video</MIcon><span>过衡记录</span></MCardTitle>
+					<MDataTable Style="width:100%;" Dense Headers="_headers" Items=" tpPage.Datas" ItemsPerPage="tpPage.PageSize" HideDefaultFooter Class="table-border-none pt-2">
+						<HeaderColContent Context="header">
+							<span class="text-subtitle">@header.Text</span>
+						</HeaderColContent>
+					</MDataTable>
+				</MCard>
+			</MCol>
+		</MRow>
 	</MCol>
-</MRow>
-<MRow>
-	<MCol Md=8 Sm=12>
+	<MCol Md=4 Sm=12 Class="max-height">
 		<MCard Class="max-height">
-			<MCardTitle><MIcon Large Left>mdi-bell-ring</MIcon> <span class="text-h6 font-weight-light">告警动态</span></MCardTitle>
-			<ul id="messagesList">
-				@foreach (var message in messages)
-				{
-					<li>@message</li>
-				}
-			</ul>
-			<MDataTable Headers="_saheaders" Items="abRePage.Datas" HideDefaultFooter Class="table-border-none pt-2">
-				<HeaderColContent Context="header">
-					<span class="text-subtitle">@header.Text</span>
-				</HeaderColContent>
-			</MDataTable>
-		</MCard>
-	</MCol>
-	<MCol Md=4 Sm=12>
-		<MCard Class="max-height">
-			<MCardTitle><MIcon Large Left>mdi-chart-pie</MIcon> <span class="text-h6 font-weight-light">今日统计</span></MCardTitle>
-			<MCardText Class="pb-0">
-				<MRow NoGutters>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Color="sample-green" Size=32>mdi-weight-kilogram</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">净重总量</div>
-								<h6>8.504&nbsp;<span style="font-size:12px;color:#2c2c2c;">(吨)</span></h6>
-							</div>
-						</div>
-					</MCol>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Color="dark-yellow" Size=32>mdi-car-lifted-pickup</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">今日车次</div>
-								<h6>35&nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
-							</div>
-						</div>
-					</MCol>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Color="error" Size=32>mdi-bell-alert</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">警告次数</div>
-								<h6>32&nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
-							</div>
-						</div>
-					</MCol>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Size=32>mdi-grill-outline</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text" @onclick="Send">今日矿数</div>
-								<h6>3&nbsp;<span style="font-size:12px;color:#2c2c2c;">(个)</span></h6>
-							</div>
-						</div>
-					</MCol>
-				</MRow>
-			</MCardText>
 		</MCard>
 	</MCol>
 </MRow>
@@ -106,8 +125,30 @@
 
 	private HubConnection? hubConnection;
 	private List<string> messages = new List<string>();
-	private string? userInput = "llalaa";
-	private string? messageInput = "lalala";
+
+	private string value1;
+	private string value2;
+	private string value3;
+	private string value4;
+
+	public class Item
+	{
+		public string Label { get; set; }
+		public string Value { get; set; }
+		public Item(string label, string value)
+		{
+			Label = label;
+			Value = value;
+		}
+	}
+
+	List<Item> _items = new()
+		{
+			new Item("Foo", "1"),
+			new Item("Bar", "2"),
+			new Item("Fizz", "3"),
+			new Item("Buzz", "4"),
+		};
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -125,14 +166,6 @@
 		await hubConnection.StartAsync();
 	}
 
-	private async Task Send()
-	{
-		if (hubConnection is not null)
-		{
-			await hubConnection.SendAsync("SendMessage", userInput, messageInput);
-		}
-	}
-
 	public bool IsConnected =>
 		hubConnection?.State == HubConnectionState.Connected;
 
@@ -146,14 +179,14 @@
 	List<DataTableHeader<TransportationRecordsDTO>> _headers = new()
 	{
 		new() { Text = "物流单号", Value = nameof(TransportationRecordsDTO.Code), CellClass = "" },
-			new() { Text = "车牌号", Value = nameof(TransportationRecordsDTO.PlateNumber)},
-			new() { Text = "矿号", Value = nameof(TransportationRecordsDTO.MineCode) },
-			new() { Text = "毛量", Value = nameof(TransportationRecordsDTO.RoughWeight) },
-			new() { Text = "皮重", Value = nameof(TransportationRecordsDTO.TareWeight) },
-			new() { Text = "净重", Value = nameof(TransportationRecordsDTO.NetWeight) },
-			new() { Text = "进厂时间", Value = nameof(TransportationRecordsDTO.STime) },
-			new() { Text = "出厂时间", Value = nameof(TransportationRecordsDTO.ETime) },
-			new() { Text = "状态", Value = nameof(TransportationRecordsDTO.State) }
+		new() { Text = "车牌号", Value = nameof(TransportationRecordsDTO.PlateNumber)},
+		new() { Text = "矿号", Value = nameof(TransportationRecordsDTO.MineCode) },
+		new() { Text = "毛量", Value = nameof(TransportationRecordsDTO.RoughWeight) },
+		new() { Text = "皮重", Value = nameof(TransportationRecordsDTO.TareWeight) },
+		new() { Text = "净重", Value = nameof(TransportationRecordsDTO.NetWeight) },
+		new() { Text = "进厂时间", Value = nameof(TransportationRecordsDTO.STime) },
+		new() { Text = "出厂时间", Value = nameof(TransportationRecordsDTO.ETime) },
+		new() { Text = "状态", Value = nameof(TransportationRecordsDTO.State) }
 	};
 	List<DataTableHeader<AbnormalRecordsDTO>> _saheaders = new()
 	{
@@ -169,10 +202,6 @@
 	public void Initialize()
 	{
 		var dto = new Request_TransportationRecords();
-		// if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
-		//if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
-		//if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
-		//if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
 		var rest = _trRecodeServiceDM.GetTransportationRecordsList(dto);
 		var result = new TransportationRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
 		tpPage = result;
@@ -180,10 +209,6 @@
 	public void AbReInitialize()
 	{
 		var dto = new Request_AbnormalRecords();
-		// if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
-		//if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
-		//if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
-		//if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
 		var rest = _arServiceDM.GetAbnormalRecordsList(dto);
 		var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
 		abRePage = result;

@@ -20,10 +20,10 @@
 @attribute [AllowAnonymous]
 
 
-<div style="background:#F0F3FA !important;height:100%;width:100%;padding:24px;overflow:hidden;">
+<div style="background:#F0F3FA !important;height:100%;width:100%;padding:16px;overflow:hidden;">
 	<MRow Style="height:400px;">
 		<MCol Md=12 Sm=12>
-			<MCard Class="max-height" Style="border-radius:20px 0px 0px 20px !important;">
+			<MCard Class="max-height">
 				<MCardTitle><MIcon Large Left>mdi-audio-video</MIcon><span class="text-h6 font-weight-light">运输动态</span></MCardTitle>
 				<MDataTable Headers="_headers" Items=" tpPage.Datas" HideDefaultFooter Class="table-border-none pt-2">
 					<HeaderColContent Context="header">
@@ -56,7 +56,7 @@
 								</MAvatar>
 								<div class="ml-3">
 									<div class="text-btn neutral-lighten-4--text">净重总量</div>
-									<h6>@countDTO.Jzzl &nbsp;<span style="font-size:12px;color:#2c2c2c;">(吨)</span></h6>
+									<h6>@countDTO?.Jzzl &nbsp;<span style="font-size:12px;color:#2c2c2c;">(吨)</span></h6>
 								</div>
 							</div>
 						</MCol>
@@ -67,7 +67,7 @@
 								</MAvatar>
 								<div class="ml-3">
 									<div class="text-btn neutral-lighten-4--text">今日车次</div>
-									<h6>@countDTO.Jrcc &nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
+									<h6>@countDTO?.Jrcc &nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
 								</div>
 							</div>
 						</MCol>
@@ -78,7 +78,7 @@
 								</MAvatar>
 								<div class="ml-3">
 									<div class="text-btn neutral-lighten-4--text">告警次数</div>
-									<h6>@countDTO.Gjcs &nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
+									<h6>@countDTO?.Gjcs &nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
 								</div>
 							</div>
 						</MCol>
@@ -89,7 +89,7 @@
 								</MAvatar>
 								<div class="ml-3">
 									<div class="text-btn neutral-lighten-4--text">今日矿数</div>
-									<h6>@countDTO.Jrks &nbsp;<span style="font-size:12px;color:#2c2c2c;">(个)</span></h6>
+									<h6>@countDTO?.Jrks &nbsp;<span style="font-size:12px;color:#2c2c2c;">(个)</span></h6>
 								</div>
 							</div>
 						</MCol>
@@ -103,7 +103,7 @@
 
 @code {
 	public TransportationRecordsPage tpPage = new();
-	public AbnormalRecordsPage abRePage = new();
+	public AbnormalRecordsPage abRePage = new() { Datas = new List<AbnormalRecordsDTO>() };
 	public HomeCountDTO countDTO = new();
 
 	private HubConnection? hubConnection;
