@@ -33,13 +33,15 @@ namespace TMV.PrintServer.Comm
                         if (be.GetType() == typeof(XWPFParagraph))
                         {
                             var be1 = (XWPFParagraph)be;
+                            var st = be1.ParagraphText;
                             foreach (var item in TableTestList)
                             {
                                 if (be1.ParagraphText.Contains("${"+item.Key+"}"))
                                 {
-                                    be1.ReplaceText(be1.ParagraphText, item.Value);
+                                    st = st.Replace("${" + item.Key + "}", item.Value);
                                 }
                             }
+                            be1.ReplaceText(be1.ParagraphText, st);
                         }
                     }
                 }
@@ -72,8 +74,26 @@ namespace TMV.PrintServer.Comm
                 }
             }
             document.Write(ms);
-            SaveToFile(ms);
+           // WordToPdfWithWPS(ms, Application.StartupPath + @"\printmodel.pdf");
+            //SaveToFile(ms);
             return ms;
+        }
+        public void WordToPdfWithWPS(MemoryStream stream,string targetPath)
+        {
+            try
+            {
+              
+                Word.Application _word = new Word.Application();
+                //打开_filePath的word文件
+                var doc = _word.Documents.Open(stream);
+                //转换文件，输出保存
+                doc.ExportAsFixedFormat(targetPath.Replace(".docx", ".pdf"), Word.WdExportFormat.wdExportFormatPDF);
+                doc.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         public void SaveToFile(MemoryStream ms)
         {

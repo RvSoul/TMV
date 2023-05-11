@@ -36,8 +36,9 @@ namespace TMV.Web.Core.SocketServer
 				var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
 				var socketListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 				ServerEnd(ReceiveIp.Port, 10, socketListener);
-				Thread th = new Thread(ServerCommunity);
-				th.Start(socketListener);
+				//Thread th = new Thread(ServerCommunity);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(ServerCommunity), socketListener);
+               // th.Start(socketListener);
 			}
 			catch (Exception ex)
 			{
@@ -61,9 +62,10 @@ namespace TMV.Web.Core.SocketServer
 			{
 				Socket socketSender = temp.Accept();
 				ShowMsg(("Client IP = " + socketSender.RemoteEndPoint.ToString()) + " Connect Succese!");
-				Thread ReceiveMsg = new Thread(ReceiveClient);
-				ReceiveMsg.IsBackground = true;
-				ReceiveMsg.Start(socketSender);
+				//Thread ReceiveMsg = new Thread(ReceiveClient);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(ReceiveClient), socketSender);
+    //            ReceiveMsg.IsBackground = true;
+				//ReceiveMsg.Start(socketSender);
 			}
 		}
 
@@ -205,7 +207,7 @@ namespace TMV.Web.Core.SocketServer
 
 		static void ShowMsg(string s)
 		{
-			Console.WriteLine(s);
+            Log.Information(s);
 		}
 
 		//static List<Socket> clientScoketLis = new List<Socket>();

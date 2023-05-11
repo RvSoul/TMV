@@ -27,9 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="printmodel.doc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="printmodel.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

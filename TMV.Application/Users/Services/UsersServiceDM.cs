@@ -58,7 +58,7 @@ namespace TMV.Application.Users.Services
 
             data.Id = Guid.NewGuid();
             data.Name = model.Name;
-            data.Pwd = model.Pwd;
+            data.Pwd = MD5Encryption.Encrypt(model.Pwd);
             data.Type = model.Type;
 
             data.AddTime = DateTime.Now;
@@ -102,7 +102,7 @@ namespace TMV.Application.Users.Services
 
             var data = c.Queryable<TMV_Users>().InSingle(model.Id);
             data.Name = model.Name;
-            data.Pwd = model.Pwd;
+            data.Pwd = MD5Encryption.Encrypt(model.Pwd);
             data.Type = model.Type;
 
 
