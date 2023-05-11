@@ -62,7 +62,7 @@ namespace TMV.Application.Tr.Services
             var query = c.Queryable<TMV_TransportationRecords, TMV_TransportPlan, TMV_Car>((a, b, c) => a.CollieryId == b.Id && a.CarId == c.Id).OrderByDescending((a, b, c) => a.STime)
                 .Where(exp.ToExpression())
                 .WhereIF(!dto.PlateNumber.IsNullOrEmpty(), (a, b, c) => c.PlateNumber == dto.PlateNumber)
-                .WhereIF(!dto.MineCode.IsNullOrEmpty(), (a, b, c) => b.MineCode == dto.MineCode).OrderByDescending(px => px.STime)
+                .WhereIF(!dto.MineCode.IsNullOrEmpty(), (a, b, c) => b.MineCode == dto.MineCode).OrderByDescending(a => a.STime)
                 .Select((a, b, c) => new TransportationRecordsDTO()
                 {
                     Id = a.Id,
@@ -110,6 +110,8 @@ namespace TMV.Application.Tr.Services
                 .OrderByDescending(a => a.STime).ToPageList(dto.PageIndex, dto.PageSize, ref count);
             return new ResultPageEntity<TransportationRecordsDTO>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
+
+
 
         public ResultEntity<bool> UpTransportationRecords(TransportationRecordsModel model)
         {
@@ -159,6 +161,7 @@ namespace TMV.Application.Tr.Services
         }
 
 
+        
 
 
         [AllowAnonymous]
@@ -236,7 +239,7 @@ namespace TMV.Application.Tr.Services
 
             #endregion
 
-            return new ResultInfoUtil().Success(dto.ID, dto.Sn,   "1", "绑卡完成！");
+            return new ResultInfoUtil().Success(dto.ID, dto.Sn, "1", "绑卡完成！");
         }
         [AllowAnonymous]
         public ResultInfo GetDataInfo2(AuthorizationDTO dto)
@@ -343,7 +346,7 @@ namespace TMV.Application.Tr.Services
                     }
                     else
                     {
-                       
+
                         #region 已记录毛重-轻衡称重
                         if (oldTr.TareWeight == null && oldTr.NetWeight == null)
                         {

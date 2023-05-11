@@ -50,6 +50,12 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:TMV.Application.Home.Services.IHomeServiceDM.GetHomeTransportationRecordsList">
+            <summary>
+            获取首页物流订单
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TMV.Application.Scale.ScaleService.GetScaleList(TMV.DTO.Scale.Request_Scale)">
             <summary>
             获取衡列表

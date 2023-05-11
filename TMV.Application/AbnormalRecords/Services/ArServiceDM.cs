@@ -28,7 +28,7 @@ namespace TMV.Application.AbnormalRecords.Services
             int total = 0;
 
             var query = c.Queryable<TMV_AbnormalRecords, TMV_TransportationRecords, TMV_Users>((a, b, u) => a.TId == b.Id && a.UserId == u.Id)
-                .WhereIF(!string.IsNullOrWhiteSpace(dto.Code), (a, b, u) => b.Code == dto.Code).OrderByDescending(px => px.AddTime)
+                .WhereIF(!string.IsNullOrWhiteSpace(dto.Code), (a, b, u) => b.Code == dto.Code).OrderByDescending(a => a.AddTime)
                 .Select((a, b, u) => new AbnormalRecordsDTO()
                 {
                     Id = a.Id,
