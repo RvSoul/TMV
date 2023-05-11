@@ -1,14 +1,15 @@
 ﻿@page "/screen"
+@layout EmptyLayout
 @using TMV.Application.AbnormalRecords.Services;
 @using TMV.Application.Tr.Services;
 @using TMV.DTO.AbnormalRecords;
 @using TMV.DTO.Tr;
 @using TMV.Web.Pages.AbnormalRecords.ViewModel;
 @using TMV.Web.Pages.TransportationRecords.ViewModel;
-@inherits ProCompontentBase
+@inherits LayComponentBase
 @inject ITrServiceDM _trRecodeServiceDM
 @inject IArServiceDM _arServiceDM
-@attribute [Authorize]
+@attribute [AllowAnonymous]
 
 
 <MRow>
