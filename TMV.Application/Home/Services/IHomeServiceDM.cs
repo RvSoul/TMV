@@ -10,14 +10,14 @@ using TMV.DTO.Count;
 
 namespace TMV.Application.Home.Services
 {
-    internal interface IHomeServiceDM
-    {
-        ResultEntity<HomeCountDTO> GetHomeCount();
+	public interface IHomeServiceDM
+	{
+		ResultEntity<HomeCountDTO> GetHomeCount();
 
-        /// <summary>
-        /// 获取首页物流订单
-        /// </summary>
-        /// <returns></returns>
-        ResultEntity<List<TransportationRecordsDTO>> GetHomeTransportationRecordsList();
-    }
+		/// <summary>
+		/// 获取首页物流订单
+		/// </summary>
+		/// <returns></returns>
+		ResultEntity<List<TransportationRecordsDTO>> GetHomeTransportationRecordsList();
+	}
 }
