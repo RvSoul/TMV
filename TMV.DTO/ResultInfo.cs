@@ -12,7 +12,11 @@ namespace TMV.DTO
         /// <summary>
         /// 下位机设备ID
         /// </summary>
-        public string Sn { get; set; }
+        public string ID { get; set; }
+        /// <summary>
+        /// 流水号
+        /// </summary>
+        public string Sn { get; set; } 
 
         /// <summary>
         /// 应答
@@ -31,20 +35,22 @@ namespace TMV.DTO
     public class ResultInfoUtil
     {
 
-        public ResultInfo Success(string sn, string ack, string message = "操作成功")
+        public ResultInfo Success(string id,string sn, string ack, string message = "操作成功")
         {
             return new ResultInfo
             {
+                ID = id,
                 Sn = sn,
                 Ack = ack,
                 Error = "0",
                 Message = message
             };
         }
-        public ResultInfo Failure(string sn, string ack, string error, string message = "操作成功")
+        public ResultInfo Failure(string id, string sn, string ack, string error, string message)
         {
             return new ResultInfo
             {
+                ID = id,
                 Sn = sn,
                 Ack = ack,
                 Error = error,

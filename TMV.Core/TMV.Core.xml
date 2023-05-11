@@ -271,12 +271,22 @@
         </member>
         <member name="P:TMV.Core.CM.TMV_TransportationRecords.State">
             <summary>
-            状态-1.正常，2.告警
+            状态-  1.正常，2.告警
             </summary>
         </member>
         <member name="P:TMV.Core.CM.TMV_TransportationRecords.IsUpload">
             <summary>
             是否上传-1.未上传，2.已上传
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.ZScaleName">
+            <summary>
+            重衡称名称
+            </summary>
+        </member>
+        <member name="P:TMV.Core.CM.TMV_TransportationRecords.QScaleName">
+            <summary>
+            轻衡称名称
             </summary>
         </member>
         <member name="T:TMV.Core.CM.TMV_TransportPlan">

@@ -1,99 +1,113 @@
 ﻿@page "/screen"
 @layout EmptyLayout
+@using Microsoft.JSInterop;
 @using TMV.Application.AbnormalRecords.Services;
 @using TMV.Application.Tr.Services;
+@using TMV.Application.Home.Services;
 @using TMV.DTO.AbnormalRecords;
 @using TMV.DTO.Tr;
+@using TMV.DTO.Home;
 @using TMV.Web.Pages.AbnormalRecords.ViewModel;
 @using TMV.Web.Pages.TransportationRecords.ViewModel;
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
+@implements IAsyncDisposable
 @inherits LayComponentBase
+@inject IJSRuntime Js;
 @inject ITrServiceDM _trRecodeServiceDM
 @inject IArServiceDM _arServiceDM
+@inject IHomeServiceDM _screen
 @attribute [AllowAnonymous]
 
 
-<MRow>
-	<MCol Md=12 Sm=12>
-		<MCard Class="max-height" Style="border-radius:20px 0px 0px 20px !important;">
-			<MCardTitle><MIcon Large Left>mdi-audio-video</MIcon><span class="text-h6 font-weight-light">运输动态</span></MCardTitle>
-			<MDataTable Headers="_headers" Items=" tpPage.Datas" HideDefaultFooter Class="table-border-none pt-2">
-				<HeaderColContent Context="header">
-					<span class="text-subtitle">@header.Text</span>
-				</HeaderColContent>
-			</MDataTable>
-		</MCard>
-	</MCol>
-</MRow>
-<MRow>
-	<MCol Md=8 Sm=12>
-		<MCard Class="max-height">
-			<MCardTitle><MIcon Large Left>mdi-bell-ring</MIcon> <span class="text-h6 font-weight-light">告警动态</span></MCardTitle>
-			<MDataTable Headers="_saheaders" Items="abRePage.Datas" HideDefaultFooter Class="table-border-none pt-2">
-				<HeaderColContent Context="header">
-					<span class="text-subtitle">@header.Text</span>
-				</HeaderColContent>
-			</MDataTable>
-		</MCard>
-	</MCol>
-	<MCol Md=4 Sm=12>
-		<MCard Class="max-height">
-			<MCardTitle><MIcon Large Left>mdi-chart-pie</MIcon> <span class="text-h6 font-weight-light">今日统计</span></MCardTitle>
-			<MCardText Class="pb-0">
-				<MRow NoGutters>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Color="sample-green" Size=32>mdi-weight-kilogram</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">净重总量</div>
-								<h6>8.504&nbsp;<span style="font-size:12px;color:#2c2c2c;">(吨)</span></h6>
+<div style="background:#F0F3FA !important;height:100%;width:100%;padding:16px;overflow:hidden;">
+	<MRow Style="height:400px;">
+		<MCol Md=12 Sm=12>
+			<MCard Class="max-height">
+				<MCardTitle><MIcon Large Left>mdi-audio-video</MIcon><span class="text-h6 font-weight-light">运输动态</span></MCardTitle>
+				<MDataTable Headers="_headers" Items=" tpPage.Datas" HideDefaultFooter Class="table-border-none pt-2">
+					<HeaderColContent Context="header">
+						<span class="text-subtitle">@header.Text</span>
+					</HeaderColContent>
+				</MDataTable>
+			</MCard>
+		</MCol>
+	</MRow>
+	<MRow Style="height:calc(100% - 400px)">
+		<MCol Md=8 Sm=12 Class="max-height">
+			<MCard Class="max-height">
+				<MCardTitle><MIcon Large Left>mdi-bell-ring</MIcon> <span class="text-h6 font-weight-light">告警动态</span></MCardTitle>
+				<MDataTable Headers="_saheaders" Items="abRePage.Datas" HideDefaultFooter Class="table-border-none pt-2">
+					<HeaderColContent Context="header">
+						<span class="text-subtitle">@header.Text</span>
+					</HeaderColContent>
+				</MDataTable>
+			</MCard>
+		</MCol>
+		<MCol Md=4 Sm=12 Class="max-height">
+			<MCard Class="max-height">
+				<MCardTitle><MIcon Large Left>mdi-chart-pie</MIcon> <span class="text-h6 font-weight-light">今日统计</span></MCardTitle>
+				<MCardText Class="pb-0">
+					<MRow NoGutters>
+						<MCol Md=6 Sm=12 Class="py-12">
+							<div class="d-flex block-center">
+								<MAvatar Size=56 Color="fill-lighten-1">
+									<MIcon Color="sample-green" Size=32>mdi-weight-kilogram</MIcon>
+								</MAvatar>
+								<div class="ml-3">
+									<div class="text-btn neutral-lighten-4--text">净重总量</div>
+									<h6>@countDTO?.Jzzl &nbsp;<span style="font-size:12px;color:#2c2c2c;">(吨)</span></h6>
+								</div>
 							</div>
-						</div>
-					</MCol>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Color="dark-yellow" Size=32>mdi-car-lifted-pickup</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">今日车次</div>
-								<h6>35&nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
+						</MCol>
+						<MCol Md=6 Sm=12 Class="py-12">
+							<div class="d-flex block-center">
+								<MAvatar Size=56 Color="fill-lighten-1">
+									<MIcon Color="dark-yellow" Size=32>mdi-car-lifted-pickup</MIcon>
+								</MAvatar>
+								<div class="ml-3">
+									<div class="text-btn neutral-lighten-4--text">今日车次</div>
+									<h6>@countDTO?.Jrcc &nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
+								</div>
 							</div>
-						</div>
-					</MCol>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Color="error" Size=32>mdi-bell-alert</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">警告次数</div>
-								<h6>32&nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
+						</MCol>
+						<MCol Md=6 Sm=12 Class="py-12">
+							<div class="d-flex block-center">
+								<MAvatar Size=56 Color="fill-lighten-1">
+									<MIcon Color="error" Size=32>mdi-bell-alert</MIcon>
+								</MAvatar>
+								<div class="ml-3">
+									<div class="text-btn neutral-lighten-4--text">告警次数</div>
+									<h6>@countDTO?.Gjcs &nbsp;<span style="font-size:12px;color:#2c2c2c;">(次)</span></h6>
+								</div>
 							</div>
-						</div>
-					</MCol>
-					<MCol Md=6 Sm=12 Class="py-12">
-						<div class="d-flex block-center">
-							<MAvatar Size=56 Color="fill-lighten-1">
-								<MIcon Size=32>mdi-grill-outline</MIcon>
-							</MAvatar>
-							<div class="ml-3">
-								<div class="text-btn neutral-lighten-4--text">今日矿数</div>
-								<h6>3&nbsp;<span style="font-size:12px;color:#2c2c2c;">(个)</span></h6>
+						</MCol>
+						<MCol Md=6 Sm=12 Class="py-12">
+							<div class="d-flex block-center">
+								<MAvatar Size=56 Color="fill-lighten-1">
+									<MIcon Size=32>mdi-grill-outline</MIcon>
+								</MAvatar>
+								<div class="ml-3">
+									<div class="text-btn neutral-lighten-4--text">今日矿数</div>
+									<h6>@countDTO?.Jrks &nbsp;<span style="font-size:12px;color:#2c2c2c;">(个)</span></h6>
+								</div>
 							</div>
-						</div>
-					</MCol>
-				</MRow>
-			</MCardText>
-		</MCard>
-	</MCol>
-</MRow>
+						</MCol>
+					</MRow>
+				</MCardText>
+			</MCard>
+		</MCol>
+	</MRow>
+</div>
 
 
 @code {
 	public TransportationRecordsPage tpPage = new();
-	public AbnormalRecordsPage abRePage = new();
+	public AbnormalRecordsPage abRePage = new() { Datas = new List<AbnormalRecordsDTO>() };
+	public HomeCountDTO countDTO = new();
+
+	private HubConnection? hubConnection;
+	private List<string> messages = new List<string>();
 	List<DataTableHeader<TransportationRecordsDTO>> _headers = new()
 	{
 		new() { Text = "物流单号", Value = nameof(TransportationRecordsDTO.Code), CellClass = "" },
@@ -109,9 +123,55 @@
 	List<DataTableHeader<AbnormalRecordsDTO>> _saheaders = new()
 	{
 		 new() { Text = "运输编号", Value = nameof(AbnormalRecordsDTO.Code), CellClass = "" },
-		 new() { Text = "异常原因", Value = nameof(AbnormalRecordsDTO.AbnormalCause) }
+		 new() { Text = "异常原因", Value = nameof(AbnormalRecordsDTO.Code), CellClass = "" },
+		 new() { Text = "告警内容", Value = nameof(AbnormalRecordsDTO.AbnormalCause) },
+		 new() { Text = "处理状态", Value = nameof(AbnormalRecordsDTO.Code), CellClass = "" },
 
 	};
+
+	private async Task Speak(string word)
+	{
+		await Js.InvokeVoidAsync("speak", word);
+	}
+
+	private async Task UpdateOrder(string message)
+	{
+		await Js.InvokeVoidAsync("speak", message);
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		hubConnection = new HubConnectionBuilder()
+			.WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+			.Build();
+
+		hubConnection.On<string, string>("ReceiveMessage", async (user, message) =>
+		{
+			if (user == "warning")
+			{
+				await Speak(message);
+			}
+			else if (user == "order")
+			{
+				await UpdateOrder(message);
+			}
+			await InvokeAsync(StateHasChanged);
+		});
+
+		await hubConnection.StartAsync();
+	}
+
+	public bool IsConnected =>
+		hubConnection?.State == HubConnectionState.Connected;
+
+	public async ValueTask DisposeAsync()
+	{
+		if (hubConnection is not null)
+		{
+			await hubConnection.DisposeAsync();
+		}
+	}
+
 	protected override void OnInitialized()
 	{
 		Initialize();
@@ -119,24 +179,11 @@
 	}
 	public void Initialize()
 	{
-		var dto = new Request_TransportationRecords();
-		// if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
-		//if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
-		//if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
-		//if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
-		var rest = _trRecodeServiceDM.GetTransportationRecordsList(dto);
-		var result = new TransportationRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-		tpPage = result;
+		var rest = _screen.GetHomeTransportationRecordsList();
+		tpPage = new TransportationRecordsPage(rest.Data) { };
 	}
 	public void AbReInitialize()
 	{
-		var dto = new Request_AbnormalRecords();
-		// if (!string.IsNullOrWhiteSpace(tpPage.CarId)) dto.Code = tpPage.CarId;
-		//if (!string.IsNullOrWhiteSpace(tpPage.Type)) dto.Type = tpPage.Type;
-		//if (!string.IsNullOrWhiteSpace(tpPage.ExerciseCode)) dto.ExerciseCode = tpPage.ExerciseCode;
-		//if (!string.IsNullOrWhiteSpace(tpPage.DriverName)) dto.DriverName = tpPage.DriverName;
-		var rest = _arServiceDM.GetAbnormalRecordsList(dto);
-		var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-		abRePage = result;
+		countDTO = _screen.GetHomeCount().Data;
 	}
 }

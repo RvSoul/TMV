@@ -114,7 +114,15 @@ namespace TMV.DTO.Tr
         /// </summary> 
         public int KouWeight { get; set; }
 
+        /// <summary>
+        /// 重衡称名称
+        /// </summary>
+        public string ZScaleName { get; set; }
 
+        /// <summary>
+        /// 轻衡称名称
+        /// </summary>
+        public string QScaleName { get; set; }
         /// <summary>
         /// 称重记录
         /// </summary>

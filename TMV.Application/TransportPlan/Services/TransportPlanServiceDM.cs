@@ -81,7 +81,7 @@ namespace TMV.Application.TransportPlan.Services
                 expr = expr.And(n => n.AddTime.Date <= Convert.ToDateTime(dto.EndAddTime).Date);
             }
 
-            var li = c.Queryable<TMV_TransportPlan>().Where(expr.ToExpression()).ToPageList(dto.PageIndex, dto.PageSize, ref total);
+            var li = c.Queryable<TMV_TransportPlan>().Where(expr.ToExpression()).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize, ref total);
 
             var list = li.Adapt<List<TransportPlanDTO>>();
             return new ResultPageEntity<TransportPlanDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };

@@ -50,6 +50,30 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:TMV.Application.Home.Services.IHomeServiceDM.GetHomeCount">
+            <summary>
+            获取统计信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Home.Services.IHomeServiceDM.GetHomeTransportationRecordsList">
+            <summary>
+            获取首页物流订单
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Home.Services.IHomeServiceDM.GetScData">
+            <summary>
+            获取上传数据信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Home.Services.IHomeServiceDM.UpScData(System.Collections.Generic.List{System.String})">
+            <summary>
+            上传完成后，处理上传数据状态
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:TMV.Application.Scale.ScaleService.GetScaleList(TMV.DTO.Scale.Request_Scale)">
             <summary>
             获取衡列表

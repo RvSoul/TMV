@@ -797,6 +797,18 @@ th {
     margin-inline-end: 0px;
 }
 
+.m-tabs {
+    height: calc(100% - 4px);
+}
+
+    .m-tabs > .m-page-tabs__page-item {
+        height: calc(100% - 52px);
+    }
+
+.m-page-tabs__page-item > .mt-6 {
+    height: 100%;
+}
+
 .pro-nav > .m-tabs-bar {
     background-color: transparent !important;
 }

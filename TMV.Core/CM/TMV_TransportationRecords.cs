@@ -72,16 +72,25 @@ namespace TMV.Core.CM
 
 
         /// <summary>
-        /// 状态-1.正常，2.告警
+        /// 状态-  1.正常，2.告警
         /// </summary>
         [DefaultValue("状态")]
         public int State { get; set; }
-        [DefaultValue("单位")]
-        public string Unit { get; set; }
+
         /// <summary>
         /// 是否上传-1.未上传，2.已上传
         /// </summary>
         [DefaultValue("是否上传")]
         public int IsUpload { get; set; }
+
+        /// <summary>
+        /// 重衡称名称
+        /// </summary>
+        public string ZScaleName { get; set; }
+
+        /// <summary>
+        /// 轻衡称名称
+        /// </summary>
+        public string QScaleName { get; set; }
     }
 }
