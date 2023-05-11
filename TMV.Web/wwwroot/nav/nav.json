@@ -1,7 +1,7 @@
 [
   {
     "Id": 1,
-    "Title": "主页",
+    "Title": "远程集中计量",
     "Icon": "mdi-trending-up",
     "Href": "home/home"
   },
