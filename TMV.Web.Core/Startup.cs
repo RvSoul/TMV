@@ -55,7 +55,7 @@ namespace TMV.Web.Core
 			services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<WebsiteAuthenticator>());
 			services.AddBlazoredSessionStorage();
 			// 日志配置信息 begin
-			services.AddFileLogging("logs/InformLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
+			services.AddFileLogging(App.Configuration["LogRoute"] + "InformLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
 			{
 				options.FileNameRule = fileName =>
 				{
@@ -66,7 +66,7 @@ namespace TMV.Web.Core
 					return logMsg.LogLevel == LogLevel.Information;
 				};
 			});
-			services.AddFileLogging("logs/errorLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
+			services.AddFileLogging(App.Configuration["LogRoute"] + "errorLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
 			{
 				options.FileNameRule = fileName =>
 				{
