@@ -4,35 +4,40 @@
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 <MApp>
-    <CascadingValue Value="UserId">
-        <MAppBar Elevation=0 App MaxHeight=60
-            Class="@($"{(_pageTab == PageModes.PageTab ?"mx-6":"mx-6 rounded-b-4")}")">
-            <Favorite />
-            <MSpacer />
-          
-           
-            <Login />
-        </MAppBar>
+    @if(Navigation.Uri==Navigation.BaseUri + "screen"){
+        <div><Screen></Screen></div>
+    }else{
+        <div>
+        <CascadingValue Value="UserId">
+            <MAppBar Elevation=0 App MaxHeight=60
+                     Class="@($"{(_pageTab == PageModes.PageTab ?"mx-6":"mx-6 rounded-b-4")}")">
+                <Favorite />
+                <MSpacer />
+                <Login />
+            </MAppBar>
 
-        <Navigation />
+            <Navigation />
 
-        <MMain Class="fill-lighten-1" Style="padding-top:60px">
-            @if (_pageTab == PageModes.PageTab)
-            {
-                <PageTabs>
-                    @Body
-                </PageTabs>
-            }
-            else
-            {
-                <div class="pa-6 max-width">
-                    <Breadcrumb></Breadcrumb>
-                    @Body
-                </div>
-            }
-        </MMain>
-        <Settings @bind-PageModel="_pageTab" @bind-Show=_showSetting />
-   </CascadingValue>
+            <MMain Class="fill-lighten-1" Style="padding-top:60px">
+                @if (_pageTab == PageModes.PageTab)
+                {
+                    <PageTabs>
+                        @Body
+                    </PageTabs>
+                }
+                else
+                {
+                    <div class="pa-6 max-width">
+                        <Breadcrumb></Breadcrumb>
+                        @Body
+                    </div>
+                }
+            </MMain>
+            <Settings @bind-PageModel="_pageTab" @bind-Show=_showSetting />
+        </CascadingValue>
+        </div>
+    }
+    
 </MApp>
 
 @code {
@@ -56,14 +61,18 @@
         {
             var authState = await authenticationState;
             var user = authState?.User;
-
+            string dp=Navigation.Uri;
+            var spurl = Navigation.BaseUri + "screen";
             if (user?.Identity is not null && user.Identity.IsAuthenticated)
             {
                 await PopupService.ToastSuccessAsync($"欢迎{user.Identity.Name} 进入系统！！");
             }
             else
             {
-                Navigation.NavigateTo($"{Navigation.BaseUri}pages/authentication/login-v2");
+                if (dp != spurl)
+                {
+                    Navigation.NavigateTo($"{Navigation.BaseUri}pages/authentication/login-v2");
+                }
             }
         }
     }

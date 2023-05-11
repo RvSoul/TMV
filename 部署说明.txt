@@ -9,4 +9,10 @@
 //执行批处理生成镜像并推送到仓库
 	执行根目录下的DockerBuild.bat处理
 //从远程仓储中获取镜像并运行步骤：
-	在服务器上执行命令source TMV.Web.DockPush.sh
+	在服务器上执行命令source TMV.Web.DockPush.sh   
+
+
+
+
+2
+
