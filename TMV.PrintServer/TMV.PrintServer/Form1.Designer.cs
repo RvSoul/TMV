@@ -93,13 +93,14 @@
             this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(498, 165);
+            this.textBox3.Size = new System.Drawing.Size(498, 228);
             this.textBox3.TabIndex = 5;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(509, 319);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label1);

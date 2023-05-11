@@ -21,15 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Furion" Version="4.8.8.13" />
     <PackageReference Include="NPOI" Version="2.6.0" />
     <PackageReference Include="O2S.Components.PDFRender4NET.Win" Version="11.1.2" />
     <PackageReference Include="SqlSugarCore" Version="5.1.4.71" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="printmodel.doc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="printmodel.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

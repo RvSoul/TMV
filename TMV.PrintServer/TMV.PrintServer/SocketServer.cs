@@ -8,27 +8,31 @@ using System.Threading.Tasks;
 using TMV.PrintServer.Model;
 using NPOI.Util;
 using TMV.PrintServer.Comm;
+using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace TMV.PrintServer
 {
+   
     public class SocketServer
     {
         DbContext  dbContext;
         static List<Socket> clientScoketLis ;
         PrintServer printServer = new();
+        DoWorkEventArgs work;
         public string msg = "";
         public SocketServer()
         {
             clientScoketLis = new List<Socket>();
             dbContext = new DbContext();
         }
-        public  string OpenServerSocket(string ip ,int port)
+        public  string OpenServerSocket(string ip ,int port, DoWorkEventArgs e)
         {
             try
             {
                 msg+="开启socket服务";
                 //var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
-
+                work = e;
                 var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 //2、绑定端口、IP
                 IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
@@ -79,7 +83,7 @@ namespace TMV.PrintServer
         /// 不断接收客户端信息子线程方法
         /// </summary>
         /// <param name="obj">参数Socke对象</param>
-        private  void ReceiveClientMsg(object obj)
+        private   void ReceiveClientMsg(object obj)
         {
             var proxSocket = obj as Socket;
             //Log.Information("-----------开始接受客户端信息————————");
@@ -146,19 +150,19 @@ namespace TMV.PrintServer
                             }
                             else
                             {
-                                wordUtil.WordWrite(printdata);
-                                printServer.Print();
+                                var strm=wordUtil.WordWrite(printdata);
+                                printServer.Print(strm);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        msg += "解析数据错误：" + ex.Message;
+                        msg += "\r\n解析数据错误：" + ex.Message;
                     }
+                work.Result+= "\r\n"+msg;
                // });
             }
         }
-
         private  void SendClientMsg(Socket socket, string msg)
         {
             try

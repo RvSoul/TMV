@@ -34,6 +34,7 @@ namespace TMV.Application.AuthService
         [Description("登录")]
         public async Task<LoginOutDto> Login(LoginInputDTO loginInputDTO)
         {
+            loginInputDTO.Password = MD5Encryption.Encrypt(loginInputDTO.Password);
             var data = _sqlSugarClient.Queryable<TMV_Users>().Where(w => w.Name == loginInputDTO.Account && w.Pwd == loginInputDTO.Password).First();
             if (data != null)
             {
