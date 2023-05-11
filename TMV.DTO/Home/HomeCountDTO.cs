@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TMV.DTO.Count
+namespace TMV.DTO.Home
 {
     public class HomeCountDTO
     {

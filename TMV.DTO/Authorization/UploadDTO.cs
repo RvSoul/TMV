@@ -9,9 +9,14 @@ namespace TMV.DTO.Authorization
     public class UploadDTO
     {
         /// <summary>
+        /// 单号
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
         /// 过衡序号，代表数据唯一性
         /// </summary>
-        public string ID { get; set; }
+        public int ID { get; set; }
 
         /// <summary>
         /// 车牌号
@@ -46,12 +51,12 @@ namespace TMV.DTO.Authorization
         /// <summary>
         /// 毛重
         /// </summary>
-        public string MAOZ { get; set; }
+        public int MAOZ { get; set; }
 
         /// <summary>
         /// 皮重
         /// </summary>
-        public string PIZ { get; set; }
+        public int PIZ { get; set; }
 
         /// <summary>
         /// 发货日期
@@ -101,7 +106,7 @@ namespace TMV.DTO.Authorization
         /// <summary>
         /// 扣重
         /// </summary>
-        public string KOUZ { get; set; }
+        public int KOUZ { get; set; }
 
         /// <summary>
         /// 进厂秤号
