@@ -26,16 +26,16 @@ namespace TMV.Web.Core.SocketServer
     public static class SocketService
     {
         static ITrServiceDM trServiceDM { get; set; }
-		static IHomeServiceDM homeServiceDM { get; set; }
-		static IHubContext<ChatHub> _hubContext;
+        static IHomeServiceDM homeServiceDM { get; set; }
+        static IHubContext<ChatHub> _hubContext;
         public static void SocketServereMildd(this IApplicationBuilder app)
         {
             try
             {
                 var al = app.ApplicationServices;
                 trServiceDM = al.GetService<ITrServiceDM>();
-				homeServiceDM = al.GetService<IHomeServiceDM>();
-				_hubContext = (IHubContext<ChatHub>)al.GetService(typeof(IHubContext<ChatHub>));
+                homeServiceDM = al.GetService<IHomeServiceDM>();
+                _hubContext = (IHubContext<ChatHub>)al.GetService(typeof(IHubContext<ChatHub>));
                 var ReceiveIp = App.GetConfig<SocketConfigs>("SocketConfigs");
                 var socketListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 ServerEnd(ReceiveIp.Port, 10, socketListener);
@@ -99,10 +99,10 @@ namespace TMV.Web.Core.SocketServer
                     {
                         _hubContext.Clients.All.SendAsync("ReceiveMessage", "warning", rs);
                     }
-                   
 
 
-				}
+
+                }
             }
             catch (Exception ex)
             {
@@ -120,14 +120,14 @@ namespace TMV.Web.Core.SocketServer
                 var qdata = msgStr.FromJson<AuthorizationDTO>();
                 ResultInfo rdata = new ResultInfo();
 
-				if (qdata.PlateNumber!=null)
-				{
-				var dd=	homeServiceDM.GetRecordData(qdata.PlateNumber);
-					_hubContext.Clients.All.SendAsync("ReceiveMessage", "Record", dd.ToJson());
-				}
-				
+                if (qdata.PlateNumber != null)
+                {
+                    var dd = homeServiceDM.GetRecordData(qdata.PlateNumber);
+                    _hubContext.Clients.All.SendAsync("ReceiveMessage", "Record", dd.ToJson());
+                }
 
-				if (qdata.ID.Equals("PSAIOT-000000001"))
+
+                if (qdata.ID.Equals("PSAIOT-000000001"))
                 {
                     #region 大门口值班室-读卡器-车牌和矿号
                     rdata = trServiceDM.GetDataInfo1(qdata);

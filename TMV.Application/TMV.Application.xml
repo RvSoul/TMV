@@ -107,9 +107,9 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
-        <member name="M:TMV.Application.Scale.Services.IScaleServiceDM.GetTransportationRecordsList(TMV.DTO.Tr.Request_ScalageRecordsDTO2)">
+        <member name="M:TMV.Application.Scale.Services.IScaleServiceDM.GetScalageRecordsDTO2List(TMV.DTO.Tr.Request_ScalageRecordsDTO2)">
             <summary>
-            
+            运煤集中计量下面的统计
             </summary>
             <param name="dto"></param>
             <returns></returns>

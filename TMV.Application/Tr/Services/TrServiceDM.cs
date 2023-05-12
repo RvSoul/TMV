@@ -155,18 +155,18 @@ namespace TMV.Application.Tr.Services
 		{
 			if (dto.State == 0)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "连接成功-无效数据！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "连接成功-无效数据！");
 			}
 			TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
 			if (car == null)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "车牌号不存在！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "车牌号不存在！");
 			}
 
 			TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.CollieryCode && w.AddTime.Date == DateTime.Now.Date).First();
 			if (tp == null)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "矿号-运输计划不存在！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "矿号-运输计划不存在！");
 			}
 			//int scaleNum = c.Queryable<TMV_Scale>().Where(w => w.Type == 1 && w.State == 1).Count();
 			//List<DateTime> timeLi = c.Queryable<TMV_TransportationRecords>().OrderByDescending(px => px.STime).Take(scaleNum).Select(x => x.STime.Date).ToList();
@@ -182,7 +182,7 @@ namespace TMV.Application.Tr.Services
 				if (oldTr.ETime == null && oldTr.TareWeight == null && oldTr.NetWeight == null)
 				{
 					#region 未记录皮重（未轻衡称重）
-					return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "有上一趟数据/未轻衡称重：上一趟没有出厂怎么又进场绑卡了！");
+					return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "有上一趟数据/未轻衡称重：上一趟没有出厂怎么又进场绑卡了！");
 					#endregion
 				}
 				else
@@ -233,31 +233,31 @@ namespace TMV.Application.Tr.Services
 			#region 数据验证
 			if (dto.State == 0)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "连接成功-无效数据！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "连接成功-无效数据！");
 			}
 			if (dto.Inside == 0)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "未正常停靠！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "未正常停靠！");
 			}
 			if (dto.Finish == 0)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "未锁称！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "未锁称！");
 			}
 
 			TMV_Car car = c.Queryable<TMV_Car>().Where(w => w.PlateNumber == dto.PlateNumber).First();
 			if (car == null)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "车牌号不存在！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "车牌号不存在！");
 			}
 			TMV_Scale scale = c.Queryable<TMV_Scale>().Where(w => w.Name == dto.ClassName.ToString()).First();
 			if (scale == null)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "衡不存在！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "衡不存在！");
 			}
 			TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == dto.CollieryCode && w.AddTime.Date == DateTime.Now.Date).First();
 			if (tp == null)
 			{
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "矿号-运输计划不存在！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "矿号-运输计划不存在！");
 			}
 			#endregion
 
@@ -270,7 +270,7 @@ namespace TMV.Application.Tr.Services
 				if (ts.Minutes < 3)
 				{
 					//3分钟内表示未采样 
-					return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "未采样！");
+					return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "未采样！");
 				}
 
 				if (scale.Type == 1)
@@ -319,17 +319,17 @@ namespace TMV.Application.Tr.Services
 					#region 轻衡
 					if (dto.Weight < car.EmptyWeight)
 					{
-						return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "皮重小于空水空油重量异常！");
+						return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "皮重小于空水空油重量异常！");
 					}
 					if (dto.Weight > car.FullWeight)
 					{
-						return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "皮重大于满水满油重量异常！");
+						return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "皮重大于满水满油重量异常！");
 					}
 
 					if (oldTr.RoughWeight == null)
 					{
 						#region 未记录毛重
-						return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "未记录毛重：请先到重衡上去记录毛重！");
+						return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "未记录毛重：请先到重衡上去记录毛重！");
 						#endregion
 					}
 					else
@@ -386,7 +386,7 @@ namespace TMV.Application.Tr.Services
 			else
 			{
 				#region 没有有上一趟数据
-				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "0", "没有有绑卡！");
+				return new ResultInfoUtil().Failure(dto.ID, dto.Sn, "1", "1", "没有有绑卡！");
 				#endregion
 			}
 			return new ResultInfoUtil().Success(dto.ID, dto.Sn, "1", "称重完成！");
