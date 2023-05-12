@@ -74,6 +74,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:TMV.Application.Home.Services.IHomeServiceDM.GetRecordData(System.String)">
+            <summary>
+            衡实时信息
+            </summary>
+            <param name="PlateNumber">车牌号</param>
+            <returns></returns>
+        </member>
         <member name="M:TMV.Application.Scale.ScaleService.GetScaleList(TMV.DTO.Scale.Request_Scale)">
             <summary>
             获取衡列表
@@ -98,6 +105,13 @@
             启用弃用衡
             </summary>
             <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Application.Scale.Services.IScaleServiceDM.GetTransportationRecordsList(TMV.DTO.Tr.Request_ScalageRecordsDTO2)">
+            <summary>
+            
+            </summary>
+            <param name="dto"></param>
             <returns></returns>
         </member>
         <member name="M:TMV.Application.TransportPlan.TransportPlanService.GetTransportPlanList(TMV.DTO.TransportPlan.Request_TransportPlan)">

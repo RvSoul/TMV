@@ -11,6 +11,8 @@ using TMV.DTO.ModelData;
 using TMV.DTO;
 using TMV.DTO.Users;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using TMV.DTO.Tr;
+using Furion.LinqBuilder;
 
 namespace TMV.Application.Scale.Services
 {
@@ -111,6 +113,29 @@ namespace TMV.Application.Scale.Services
             {
                 return new ResultEntityUtil<bool>().Success(false);
             }
+        }
+
+        public ResultPageEntity<ScalageRecordsDTO2> GetScalageRecordsDTO2List(Request_ScalageRecordsDTO2 dto)
+        {
+            int count = 0;
+
+            var query = c.Queryable<TMV_TransportPlan, TMV_TransportationRecords, TMV_ScalageRecords, TMV_Car>((a, b, c, d) => a.Id == b.CollieryId && b.Id == c.TId && b.CarId == d.Id)
+                .OrderByDescending((a, b, c, d) => c.AddTime)
+                .Where((a, b, c, d) => c.ScaleId == dto.Id && c.AddTime.Date == DateTime.Now.Date)
+                .Select((a, b, c, d) => new ScalageRecordsDTO2()
+                {
+                    Code = b.Code,
+                    PlateNumber = d.PlateNumber,
+                    SendUnit = a.SendUnit,
+                    ReceiptUnit = a.SendUnit,
+                    CargoName = a.CargoName,
+                    RoughWeight = b.RoughWeight,
+                    TareWeight = b.TareWeight,
+                    NetWeight = b.NetWeight,
+                    AddTime = c.AddTime,
+                })
+                .ToList();
+            return new ResultPageEntity<ScalageRecordsDTO2>() { Data = query, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = count };
         }
     }
 }

@@ -83,7 +83,7 @@ namespace TMV.Application.TransportPlan.Services
 
             var li = c.Queryable<TMV_TransportPlan>().Where(expr.ToExpression()).OrderByDescending(px => px.AddTime).ToPageList(dto.PageIndex, dto.PageSize, ref total);
 
-            var list = li.Adapt<List<TransportPlanDTO>>();
+            var list = li.Adapt<List<TransportPlanDTO>>().OrderByDescending(px => px.AddTime).ToList();
             return new ResultPageEntity<TransportPlanDTO>() { Data = list, PageIndex = dto.PageIndex, PageSize = dto.PageSize, Count = total };
         }
 
