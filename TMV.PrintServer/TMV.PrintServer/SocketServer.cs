@@ -125,8 +125,8 @@ namespace TMV.PrintServer
                             .Where((a, b, c) => c.PlateNumber.ToString() == msgStr)
                             .Select((a, b, c, d) => new PrintDto()
                             {
-                                unit = a.Unit,
-                                scalenumber = d.ScaleId.ToString(),
+                                unit = b.MEIKDW,
+                                scalenumber =d.ScaleId.ToString(),
                                 number = a.Code,
                                 shipper = b.SendUnit,
                                 consignee = b.ReceiptUnit,
@@ -143,6 +143,9 @@ namespace TMV.PrintServer
                                 emptycar = "",
                                 trucktime = "",
                                 lighttime = ""
+                            }).Mapper(it =>
+                            {
+                                it.scalenumber = dbContext.db.Queryable<Scale>().Where(x => x.Id.ToString() == it.scalenumber).First()?.Name;
                             }).First();
                             if (printdata == null)
                             {
@@ -159,6 +162,8 @@ namespace TMV.PrintServer
                     {
                         msg += "\r\n解析数据错误：" + ex.Message;
                     }
+                byte[] sd = Encoding.ASCII.GetBytes("ooo999999");
+                SendClientMsg(proxSocket, "uuuuuuuuuuuu");
                 work.Result+= "\r\n"+msg;
                // });
             }

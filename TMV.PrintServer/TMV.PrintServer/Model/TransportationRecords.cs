@@ -37,7 +37,7 @@ namespace TMV.PrintServer.Model
         /// 毛量
         /// </summary>
         [DefaultValue("毛量")]
-        public int RoughWeight { get; set; }
+        public int? RoughWeight { get; set; }
 
         /// <summary>
         /// 皮重
@@ -54,9 +54,7 @@ namespace TMV.PrintServer.Model
         /// 扣重
         /// </summary>
         [DefaultValue("扣重")]
-        public int? KouWeight { get; set; }
-        [DefaultValue("单位")]
-        public string Unit { get; set; }
+        public int KouWeight { get; set; }
 
         /// <summary>
         /// 进厂时间
@@ -72,16 +70,25 @@ namespace TMV.PrintServer.Model
 
 
         /// <summary>
-        /// 状态-1.正常，2.告警
+        /// 状态-  1.正常，2.告警
         /// </summary>
         [DefaultValue("状态")]
         public int State { get; set; }
-
 
         /// <summary>
         /// 是否上传-1.未上传，2.已上传
         /// </summary>
         [DefaultValue("是否上传")]
         public int IsUpload { get; set; }
+
+        /// <summary>
+        /// 重衡称名称
+        /// </summary>
+        public string ZScaleName { get; set; }
+
+        /// <summary>
+        /// 轻衡称名称
+        /// </summary>
+        public string QScaleName { get; set; }
     }
 }

@@ -7,16 +7,14 @@ namespace TMV.PrintServer
 {
     public class PrintServer
     {
-        StreamReader streamToPrint;
-        System.Drawing.Font printFont;
         public void Print(MemoryStream memStream)
         {
             try
             {
                 StringCollection strList = PrinterSettings.InstalledPrinters;
                 var list = strList.Cast<string>().ToList();
-                Document doc = new Document(Application.StartupPath + @"\newprintmodel.docx");
-                //doc.LoadFromStream(memStream,FileFormat.Docx);
+                Document doc = new Document();
+                doc.LoadFromStream(memStream,FileFormat.Docx);
                 //Deli DB-615KI
                 if (list.Any(x => x == "Deli DB-615KII"))
                 {
@@ -25,9 +23,9 @@ namespace TMV.PrintServer
                     PrintDocument pd = doc.PrintDocument;
                     pd.PrinterSettings.PrinterName = "Deli DB-615KII";
                     pd.PrinterSettings.DefaultPageSettings.Landscape = true;
-                    pd.DefaultPageSettings.PaperSize = new PaperSize("aa", 800, 800);
+                    pd.DefaultPageSettings.PaperSize = new PaperSize("aa", 800, 366);
                     pd.OriginAtMargins = true;
-                    Margins margins = new Margins(20, 50, 50, 50);
+                    Margins margins = new Margins(20, 50, 0, 0);
                     pd.DefaultPageSettings.Margins = margins;
                     //pd.PrintPage += new PrintPageEventHandler(this.pdPrint);
                     pd.Print();

@@ -28,21 +28,17 @@ namespace TMV.PrintServer.Comm
                 //遍历word中的段落
                 foreach (var para in document.Paragraphs)
                 {
-                    foreach (var be in para.Body.BodyElements)
+                    if (para.GetType() == typeof(XWPFParagraph))
                     {
-                        if (be.GetType() == typeof(XWPFParagraph))
+                        var be1 = (XWPFParagraph)para;
+                        var st = be1.ParagraphText;
+                        foreach (var item in TableTestList)
                         {
-                            var be1 = (XWPFParagraph)be;
-                            var st = be1.ParagraphText;
-                            foreach (var item in TableTestList)
+                            if (be1.ParagraphText.Contains("${" + item.Key + "}"))
                             {
-                                if (be1.ParagraphText.Contains("${"+item.Key+"}"))
-                                {
-                                    st = st.Replace("${" + item.Key + "}", item.Value);
-                                    be1.ReplaceText(be1.ParagraphText, st);
-                                }
+                                st = st.Replace("${" + item.Key + "}", item.Value);
+                                be1.ReplaceText(be1.ParagraphText, st);
                             }
-                           
                         }
                     }
                 }
@@ -76,7 +72,7 @@ namespace TMV.PrintServer.Comm
             }
             document.Write(ms);
            // WordToPdfWithWPS(ms, Application.StartupPath + @"\printmodel.pdf");
-            SaveToFile(ms);
+            //SaveToFile(ms);
             return ms;
         }
         public void WordToPdfWithWPS(MemoryStream stream,string targetPath)
