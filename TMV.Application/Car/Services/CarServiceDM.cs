@@ -25,8 +25,8 @@ namespace TMV.Application.Car.Services
         }
 
         public ResultPageEntity<CarDTO> GetCarList(Request_Car dto)
-        {            
-
+        {
+            throw new Exception("111111");
             int total = 0;
 
             var query = c.Queryable<TMV_Car>()

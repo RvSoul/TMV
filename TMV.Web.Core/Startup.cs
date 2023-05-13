@@ -13,6 +13,10 @@ using TMV.Web.Core.Components;
 using TMV.Web.Core.Handle;
 using TMV.Web.Core.SocketServer;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
+using TMV.Web.Core.ApiAttribute;
+using TMV.DTO;
 
 namespace TMV.Web.Core
 {
@@ -35,6 +39,30 @@ namespace TMV.Web.Core
             //services.AddWebSockets();
             services.AddControllers().AddInjectWithUnifyResult();
             //认证组件
+            #region 错误拦截 
+            //全局错误拦截
+            services.AddMvc(options => { options.Filters.Add<ExceptionFilter>(); });
+
+            //模型绑定 特性验证，自定义返回格式
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    //获取验证失败的模型字段 
+                    var errors = actionContext.ModelState
+                    .Where(e => e.Value.Errors.Count > 0)
+                    .Select(e => e.Value.Errors.First().ErrorMessage)
+                    .ToList();
+                    var str = string.Join("|", errors);
+                    //设置返回内容
+                    var result = new ResultEntity<bool>()
+                    {
+                        Msg = str
+                    };
+                    return new BadRequestObjectResult(result);
+                };
+            });
+            #endregion
             services.AddComponent<AuthComponent>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
