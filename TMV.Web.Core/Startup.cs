@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using TMV.Web.Core.ApiAttribute;
 using TMV.DTO;
+using Microsoft.Extensions.Options;
 
 namespace TMV.Web.Core
 {
@@ -74,6 +75,7 @@ namespace TMV.Web.Core
                     theme.Themes.Light.Primary = "#4318FF";
                     theme.Themes.Light.Accent = "#4318FF";
                 });
+    
             });
             services.AddHttpContextAccessor();
             services.AddGlobalForServer();

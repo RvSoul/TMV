@@ -53,7 +53,7 @@ namespace TMV.Web.Core.Handle
             return new AuthenticationState(principal);
         }
 
-        public async Task LoginAsync(LoginInputDTO loginFormModel)
+        public async Task<bool> LoginAsync(LoginInputDTO loginFormModel)
         {
             var (userInDatabase, isSuccess) =await LookUpUser(loginFormModel.Account, loginFormModel.Password);
             var principal = new ClaimsPrincipal();
@@ -63,9 +63,10 @@ namespace TMV.Web.Core.Handle
                 var identity = CreateIdentityFromUser(userInDatabase);
                 principal = new ClaimsPrincipal(identity);
                 await _protectedLocalStorage.SetAsync("identity", JsonConvert.SerializeObject(userInDatabase));
-            }
-
-            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
+				NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
+				return true;
+			}
+            return false;
         }
 
         public async Task LogoutAsync()
@@ -87,8 +88,9 @@ namespace TMV.Web.Core.Handle
         private async Task<(LoginOutDto, bool) >LookUpUser(string username, string password)
         {
             var result =await _dataProviderService.Login(new LoginInputDTO() { Account= username ,Password= password });
-
-            return (result, result is not null);
+			if(string.IsNullOrWhiteSpace(result.UserId))
+				return (result, false);
+			return (result, result is not null);
         }
     }
 }

@@ -44,7 +44,7 @@
     style="position:absolute;bottom:48px;margin-left:63%;text-decoration:none;font-size:14px;"></a>
 
 
-@code {
+            @code {
     [Inject]
     public AjaxService AjaxService { get; set; }
     [Inject]
@@ -55,10 +55,18 @@
     private string PassWord { get; set; }
     public async void OnLogin(MouseEventArgs args)
     {
-        loginMode.Account = LoginName??"admin";
+        loginMode.Account = LoginName??"admin2";
         loginMode.Password = PassWord??"123456";
-        await WebsiteAuthenticator.LoginAsync(loginMode);
-        Navigation.NavigateTo(Navigation.BaseUri + "home/home");
+        var lo=await WebsiteAuthenticator.LoginAsync(loginMode);
+        if (lo)
+        {
+            Navigation.NavigateTo(Navigation.BaseUri + "home/home");
+        }
+        else
+        {
+            await PopupService.ToastAsync("登录失败，请检查用户名或密码是否正确", AlertTypes.Error);
+        }
+
         //var ajaxOption = new AjaxOption { Url = Navigation.BaseUri + "api/auth/login", Data = loginMode };
         // var str = await AjaxService.GetMessageAsync(ajaxOption);
         //var str =await usersServiceDM.Login(loginMode);

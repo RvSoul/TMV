@@ -1,4 +1,4 @@
-﻿@page "/abnormalrRecords/inrdex"
+﻿@page "/abnormalrRecords/index"
 @attribute [Authorize]
 @using Microsoft.AspNetCore.Authorization;
 @using TMV.Application.AbnormalRecords.Services;
@@ -17,7 +17,7 @@
 				</MTextField>
 			</MCol>
 			<MCol Md=2 Sm=2 Class="d-flex block-center">
-				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
 					查询
 				</MButton>
 			</MCol>
@@ -79,25 +79,6 @@
 	private int _editedIndex = -1;
 	private bool _loading = true;
 	private DataOptions _options = new DataOptions();
-	private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
-	private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
-	public bool _menu;
-	public void MenuOK()
-	{
-		_prevDate = _date;
-		//_editedItem.ArrivalTime = Convert.ToDateTime(_prevDate.Year + "-" + _prevDate.Month + "-" + _prevDate.Day);
-		_menu = false;
-	}
-
-	public void MenuCancel()
-	{
-		_date = _prevDate;
-		_menu = false;
-	}
-	public static string FormateDate(DateTime date)
-	{
-		return date.ToString("yyyy-MM-dd");
-	}
 	public class RoleItem
 	{
 		public string Label { get; set; }
@@ -131,7 +112,6 @@
 	public AbnormalRecordsPage tpPage = new();
 	protected override void OnInitialized()
 	{
-		//_editedItem.ArrivalTime = DateTime.Now;
 		Initialize();
 	}
 	public void Initialize()
@@ -215,9 +195,9 @@
 		}
 		Close();
 	}
-	public void OnFiltChange(string newValue)
+	
+	public void seach()
 	{
-		tpPage.Search = newValue;
 		Initialize();
 	}
 }
