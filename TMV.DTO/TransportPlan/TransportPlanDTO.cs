@@ -45,7 +45,7 @@ namespace TMV.DTO.TransportPlan
         /// 进煤吨数
         /// </summary>
         [Required]
-        public int Tonnage { get; set; }
+        public decimal Tonnage { get; set; }
         /// <summary>
         /// 发货单位
         /// </summary>
@@ -117,7 +117,7 @@ namespace TMV.DTO.TransportPlan
         /// 进煤吨数
         /// </summary>
         [Required]
-        public int Tonnage { get; set; }
+        public decimal Tonnage { get; set; }
         /// <summary>
         /// 发货单位
         /// </summary>

@@ -61,7 +61,7 @@ namespace TMV.Core.CM
         /// <summary>
         /// 额定载重量
         /// </summary> 
-        public int RatedWeight { get; set; }
+        public decimal RatedWeight { get; set; }
         /// <summary>
         /// 行驶证号
         /// </summary> 
@@ -73,11 +73,11 @@ namespace TMV.Core.CM
         /// <summary>
         /// 空水空油重量
         /// </summary> 
-        public int EmptyWeight { get; set; }
+        public decimal EmptyWeight { get; set; }
         /// <summary>
         /// 满水满油重量
         /// </summary> 
-        public int FullWeight { get; set; }
+        public decimal FullWeight { get; set; }
         /// <summary>
         /// 驾驶员名称
         /// </summary> 

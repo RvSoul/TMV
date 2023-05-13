@@ -39,24 +39,24 @@ namespace TMV.Core.CM
         /// 毛量
         /// </summary>
         [DefaultValue("毛量")]
-        public int? RoughWeight { get; set; }
+        public decimal? RoughWeight { get; set; }
 
         /// <summary>
         /// 皮重
         /// </summary>
         [DefaultValue("皮重")]
-        public int? TareWeight { get; set; }
+        public decimal? TareWeight { get; set; }
 
         /// <summary>
         /// 净重
         /// </summary>
         [DefaultValue("净重")]
-        public int? NetWeight { get; set; }
+        public decimal? NetWeight { get; set; }
         /// <summary>
         /// 扣重
         /// </summary>
         [DefaultValue("扣重")]
-        public int KouWeight { get; set; }
+        public decimal KouWeight { get; set; }
 
         /// <summary>
         /// 进厂时间
