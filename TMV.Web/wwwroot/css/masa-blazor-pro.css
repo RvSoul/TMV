@@ -1115,7 +1115,7 @@ tr:hover {
 }
 
 .m-data-table__wrapper {
-    height: calc(100% - 60px);
+    height: calc(100% - 67px);
 }
 
 .m-application .px-6 {
@@ -1126,4 +1126,14 @@ tr:hover {
 .m-application .mx-6 {
     margin-right: 8px !important;
     margin-left: 8px !important;
+}
+
+.m-subheader {
+    justify-content: flex-end;
+    height: 40px;
+    padding: 0;
+}
+
+.m-input__control {
+    height: 40px;
 }
