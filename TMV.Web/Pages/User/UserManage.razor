@@ -5,233 +5,233 @@
 @inject NavigationManager Nav
 @inject IUsersServiceDM _usersServiceDM
 @attribute [Authorize]
-<MCard Class="mt-6">
-    <MCardText Class="pa-6">
-        <MRow>
-            <MCol Md=11 Sm=12 Class="d-flex block-center">
-              
-            </MCol>
-            <MCol Md=1 Sm=12 Class="d-flex block-center">
-               
-                <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="()=>_visible=true">
-                    新增
-                </MButton>
-            </MCol>
-        </MRow>
-    </MCardText>
-                <MDataTable Headers="_headers" Items=" userPage.Datas" TItem="UsersDTO" ItemsPerPage="userPage.PageSize" Class="elevation-1">
-        <HeaderColContent Context="header">
-            <span class="text-subtitle">@header.Text</span>
-        </HeaderColContent>
-            <ItemColContent>
-                @switch (context.Header.Value)
-                {
-                    case nameof(UsersDTO.Name):
-                        <span>@context.Item.Name</span>
-                        break;
-                    case (nameof(UsersDTO.Pwd)):
-                        <span>***************</span>
-                        break;
+<MCard Class="mt-6 full-card">
+	<MCardText Class="pa-6">
+		<MRow>
+			<MCol Md=11 Sm=12 Class="d-flex block-center">
 
-                    case nameof(UsersDTO.Type):
-                        string statusColor = "info";
-                        <MChip Color="@($"{statusColor}-lighten-5")" TextColor="@(statusColor)" Ripple="false">
-                            @if (context.Item.Type == 1)
-                            {
-                                <span>管理员</span>
-                            }
-                            @if (context.Item.Type == 2)
-                            {
-                                <span>值班员</span>
-                            }
-                            @if (context.Item.Type ==3)
-                            {
-                                <span>维护员</span>
-                            }
-                        </MChip>
-                        break;
-                    case "actions":
-                        <MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
-                    <MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
-                        break;
-                    default:
-                        @context.Value
-                        break;
-                }
-            
-            </ItemColContent>
-    </MDataTable>
-  
-    <MDialog @bind-Value="_visible"
-             MaxWidth="800">
-        <MCard>
-            <MCardTitle>
-                <span class="text-h5">@FormTitle</span>
-            </MCardTitle>
+			</MCol>
+			<MCol Md=1 Sm=12 Class="d-flex block-center">
 
-            <MCardText>
-                <MContainer>
-                    <MRow>
-                        <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                            <MTextField @bind-Value="_editedItem.Name" Clearable
-                                        Label="用户名"></MTextField>
-                        </MCol>
-                        <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                            <MTextField @bind-Value="_editedItem.Pwd" AppendIcon="@(show1 ? "mdi-eye" : "mdi-eye-off")" Counter="true" Name="input-10-1" Type="@(show1 ? "text" : "password")" OnAppendClick="() => show1 = !show1" Label="密码"></MTextField>
-                        </MCol>
-                        <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                            @*<MTextField @bind-Value="_editedItem.Type"  Label="角色"></MTextField>*@
-                            <MSelect @bind-Value="selectvalue"
-                                     Items="rooleItem"
-                                     ItemText="u => u.Label"
-                                     ItemValue="u => u.Value"
-                                     TItem="RoleItem"
-                                     TItemValue="string"
-                                     TValue="string"
-                                     OnSelectedItemUpdate="item=>selectItem=item"
-                                     OnChange="item=>OnBillChange(item)"
-                                     Label="角色"></MSelect>
-                        </MCol>
-                    </MRow>
-                </MContainer>
-            </MCardText>
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+					新增
+				</MButton>
+			</MCol>
+		</MRow>
+	</MCardText>
+	<MDataTable Headers="_headers" Items=" userPage.Datas" TItem="UsersDTO" ItemsPerPage="userPage.PageSize">
+		<HeaderColContent Context="header">
+			<span class="text-subtitle">@header.Text</span>
+		</HeaderColContent>
+		<ItemColContent>
+			@switch (context.Header.Value)
+			{
+				case nameof(UsersDTO.Name):
+					<span>@context.Item.Name</span>
+					break;
+				case (nameof(UsersDTO.Pwd)):
+					<span>***************</span>
+					break;
 
-            <MCardActions>
-                <MSpacer></MSpacer>
-                <MButton Color="blue darken-1"
-                         Text
-                         OnClick="Close">
-                    取消
-                </MButton>
-                <MButton Color="blue darken-1"
-                         Text
-                         OnClick="Save">
-                    保存
-                </MButton>
-                </MCardActions>
-                </MCard>
-                </MDialog>
+				case nameof(UsersDTO.Type):
+					string statusColor = "info";
+					<MChip Color="@($"{statusColor}-lighten-5")" TextColor="@(statusColor)" Ripple="false">
+						@if (context.Item.Type == 1)
+						{
+							<span>管理员</span>
+						}
+						@if (context.Item.Type == 2)
+						{
+							<span>值班员</span>
+						}
+						@if (context.Item.Type == 3)
+						{
+							<span>维护员</span>
+						}
+					</MChip>
+					break;
+				case "actions":
+					<MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
+					<MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
+					break;
+				default:
+					@context.Value
+					break;
+			}
+
+		</ItemColContent>
+	</MDataTable>
+
+	<MDialog @bind-Value="_visible"
+			 MaxWidth="800">
+		<MCard>
+			<MCardTitle>
+				<span class="text-h5">@FormTitle</span>
+			</MCardTitle>
+
+			<MCardText>
+				<MContainer>
+					<MRow>
+						<MCol Cols="12"
+							  Sm="6"
+							  Md="4">
+							<MTextField @bind-Value="_editedItem.Name" Clearable
+										Label="用户名"></MTextField>
+						</MCol>
+						<MCol Cols="12"
+							  Sm="6"
+							  Md="4">
+							<MTextField @bind-Value="_editedItem.Pwd" AppendIcon="@(show1 ? "mdi-eye" : "mdi-eye-off")" Counter="true" Name="input-10-1" Type="@(show1 ? "text" : "password")" OnAppendClick="() => show1 = !show1" Label="密码"></MTextField>
+						</MCol>
+						<MCol Cols="12"
+							  Sm="6"
+							  Md="4">
+							@*<MTextField @bind-Value="_editedItem.Type"  Label="角色"></MTextField>*@
+							<MSelect @bind-Value="selectvalue"
+									 Items="rooleItem"
+									 ItemText="u => u.Label"
+									 ItemValue="u => u.Value"
+									 TItem="RoleItem"
+									 TItemValue="string"
+									 TValue="string"
+									 OnSelectedItemUpdate="item=>selectItem=item"
+									 OnChange="item=>OnBillChange(item)"
+									 Label="角色"></MSelect>
+						</MCol>
+					</MRow>
+				</MContainer>
+			</MCardText>
+
+			<MCardActions>
+				<MSpacer></MSpacer>
+				<MButton Color="blue darken-1"
+						 Text
+						 OnClick="Close">
+					取消
+				</MButton>
+				<MButton Color="blue darken-1"
+						 Text
+						 OnClick="Save">
+					保存
+				</MButton>
+			</MCardActions>
+		</MCard>
+	</MDialog>
 </MCard>
-                @code {
-    private int _editedIndex = -1;
-    private bool show1;
-    public class RoleItem
-    {
-        public string Label { get; set; }
-        public string Value { get; set; }
-        public RoleItem(string label, string value)
-        {
-            Label = label;
-            Value = value;
-        }
-    }
-    public string selectvalue{ get; set; }
-    public RoleItem selectItem { get; set; }
-    [Parameter]
-    public string Name { get; set; }
-    List<RoleItem> rooleItem = new()
-        {
-            new RoleItem("管理员", "1"),
-            new RoleItem("值班员", "2"),
-            new RoleItem("维护员", "3")
-        };
+@code {
+	private int _editedIndex = -1;
+	private bool show1;
+	public class RoleItem
+	{
+		public string Label { get; set; }
+		public string Value { get; set; }
+		public RoleItem(string label, string value)
+		{
+			Label = label;
+			Value = value;
+		}
+	}
+	public string selectvalue { get; set; }
+	public RoleItem selectItem { get; set; }
+	[Parameter]
+	public string Name { get; set; }
+	List<RoleItem> rooleItem = new()
+		{
+			new RoleItem("管理员", "1"),
+			new RoleItem("值班员", "2"),
+			new RoleItem("维护员", "3")
+		};
 
-    public string FormTitle
-    {
-        get
-        {
-            return _editedIndex == -1 ? "新增" : "编辑";
-        }
-    }
-    private UsersDTO _editedItem = new UsersDTO
-        {
-            Name = "",
-            Pwd = "",
-            Type = 1
-        };
-    List<DataTableHeader<UsersDTO>> _headers = new()
-        {
-            new() { Text = "用户名", Value = nameof(UsersDTO.Name), CellClass = "" },
-            new() { Text = "密码", Value = nameof(UsersDTO.Pwd) },
-            new() { Text = "角色", Value = nameof(UsersDTO.Type) },
-            new() { Text = "操作", Value = "actions" }
-        };
-    bool _visible = false;
-    public List<int> _pageSize = new() { 10, 20, 50 };
-    public UserPage userPage=new();
-    protected override void OnInitialized()
-    {
-        Initialize();
-    }
-    public void Initialize()
-    {
-        var dto = new Request_Users();
-        if (!string.IsNullOrWhiteSpace(userPage.Search)) dto.Name = userPage.Search;
-        var rest = _usersServiceDM.GetUsersList(dto);
-        var result = new UserPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-        userPage = result;
-    }
-    public void EditItem(UsersDTO usersDTO)
-    {
-        _editedItem = usersDTO;
-        _visible = true;
-        _editedIndex = 1;
-        selectvalue = usersDTO.Type.ToString();
-    }
-    public async Task DeleteItem(UsersDTO usersDTO)
-    {
-        var result=_usersServiceDM.DeUsers(usersDTO.Id);
-        if (result.IsSuccess)
-        {
-            await PopupService.ToastAsync("删除成功", AlertTypes.Success);
-            userPage.Datas.RemoveAt(userPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
-        }
-        else
-        {
-            await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
-        }
-    }
-    public void Close()
-    {
-        _visible = false;
-        _editedItem = new UsersDTO();
-        _editedIndex = -1;
-        selectvalue = "";
-    }
+	public string FormTitle
+	{
+		get
+		{
+			return _editedIndex == -1 ? "新增" : "编辑";
+		}
+	}
+	private UsersDTO _editedItem = new UsersDTO
+		{
+			Name = "",
+			Pwd = "",
+			Type = 1
+		};
+	List<DataTableHeader<UsersDTO>> _headers = new()
+		{
+			new() { Text = "用户名", Value = nameof(UsersDTO.Name), CellClass = "" },
+			new() { Text = "密码", Value = nameof(UsersDTO.Pwd) },
+			new() { Text = "角色", Value = nameof(UsersDTO.Type) },
+			new() { Text = "操作", Value = "actions" }
+		};
+	bool _visible = false;
+	public List<int> _pageSize = new() { 10, 20, 50 };
+	public UserPage userPage = new();
+	protected override void OnInitialized()
+	{
+		Initialize();
+	}
+	public void Initialize()
+	{
+		var dto = new Request_Users();
+		if (!string.IsNullOrWhiteSpace(userPage.Search)) dto.Name = userPage.Search;
+		var rest = _usersServiceDM.GetUsersList(dto);
+		var result = new UserPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		userPage = result;
+	}
+	public void EditItem(UsersDTO usersDTO)
+	{
+		_editedItem = usersDTO;
+		_visible = true;
+		_editedIndex = 1;
+		selectvalue = usersDTO.Type.ToString();
+	}
+	public async Task DeleteItem(UsersDTO usersDTO)
+	{
+		var result = _usersServiceDM.DeUsers(usersDTO.Id);
+		if (result.IsSuccess)
+		{
+			await PopupService.ToastAsync("删除成功", AlertTypes.Success);
+			userPage.Datas.RemoveAt(userPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
+		}
+		else
+		{
+			await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
+		}
+	}
+	public void Close()
+	{
+		_visible = false;
+		_editedItem = new UsersDTO();
+		_editedIndex = -1;
+		selectvalue = "";
+	}
 
-    public async Task Save()
-    {
-        ResultEntity<bool> resultEntity = new();
-        if (_editedIndex > -1)
-        {
-            var item = userPage.Datas.Any(x => x.Id == _editedItem.Id);
-            if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-            resultEntity = _usersServiceDM.UpUsers(new UsersModel() { Id = _editedItem.Id, Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
-        }
-        else
-        {
-            resultEntity = _usersServiceDM.AddUsers(new UsersModel() { Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
+	public async Task Save()
+	{
+		ResultEntity<bool> resultEntity = new();
+		if (_editedIndex > -1)
+		{
+			var item = userPage.Datas.Any(x => x.Id == _editedItem.Id);
+			if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
+			resultEntity = _usersServiceDM.UpUsers(new UsersModel() { Id = _editedItem.Id, Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
+		}
+		else
+		{
+			resultEntity = _usersServiceDM.AddUsers(new UsersModel() { Name = _editedItem.Name, Pwd = _editedItem.Pwd, Type = _editedItem.Type });
 
-        }
-        if (resultEntity.IsSuccess)
-        {
-            await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-            if (_editedIndex == -1) userPage.Datas.Add(_editedItem);
-        }
-        else
-        {
-            await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
-        }
-        Close();
-    }
-    public void OnBillChange(string newValue)
-    {
-        _editedItem.Type = Convert.ToInt32(newValue);
-    }
+		}
+		if (resultEntity.IsSuccess)
+		{
+			await PopupService.ToastAsync("操作成功", AlertTypes.Success);
+			if (_editedIndex == -1) userPage.Datas.Add(_editedItem);
+		}
+		else
+		{
+			await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
+		}
+		Close();
+	}
+	public void OnBillChange(string newValue)
+	{
+		_editedItem.Type = Convert.ToInt32(newValue);
+	}
 }

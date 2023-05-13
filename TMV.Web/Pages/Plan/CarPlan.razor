@@ -9,7 +9,7 @@
 @inherits ProCompontentBase
 @inject NavigationManager Nav
 @inject ITransportPlanServiceDM _tranPlanServiceDM
-<MCard Class="mt-6">
+<MCard Class="mt-6 full-card">
 	<MCardText Class="pa-6">
 		<MRow>
 
@@ -69,7 +69,7 @@
 			</MCol>
 		</MRow>
 	</MCardText>
-	<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="TransportPlanDTO" Width="@("120%")" ItemsPerPage="tpPage.PageSize" Class="elevation-1" FixedRight>
+	<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="TransportPlanDTO" ItemsPerPage="tpPage.PageSize" FixedRight>
 		<HeaderColContent Context="header">
 			<span class="text-subtitle">@header.Text</span>
 		</HeaderColContent>
@@ -263,11 +263,6 @@
 		var rest = _tranPlanServiceDM.GetTransportPlanList(dto);
 		var result = new TransportPlanPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
 		tpPage = result;
-		for (int i = 0; i < 10; i++)
-		{
-			tpPage.Datas.AddRange(result.Datas);
-			tpPage.CurrentCount += result.Datas.Count();
-		}
 	}
 	public void EditItem(TransportPlanDTO usersDTO)
 	{

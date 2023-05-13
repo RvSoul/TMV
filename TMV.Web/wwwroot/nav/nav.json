@@ -41,11 +41,5 @@
     "Title": "用户管理",
     "Icon": "mdi-account-outline",
     "Href": "user/listmanage"
-  },
-  {
-    "Id": 9,
-    "Title": "系统设置",
-    "Icon": "mdi-application-cog-outline",
-    "Href": "sysseting/inrdex"
   }
 ]

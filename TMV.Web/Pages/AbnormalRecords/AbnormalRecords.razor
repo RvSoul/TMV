@@ -8,198 +8,197 @@
 @inherits ProCompontentBase
 @inject NavigationManager Nav
 @inject IArServiceDM _arServiceDM
-<MCard Class="mt-6">
-    <MCardText Class="pa-6">
-        <MRow>
+<MCard Class="mt-6 full-card">
+	<MCardText Class="pa-6">
+		<MRow>
 
-            <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="tpPage.Code" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="物流单号">
-                </MTextField>
-                </MCol>
-                <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
-                    查询
-                </MButton>
-                </MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="tpPage.Code" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="物流单号">
+				</MTextField>
+			</MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+					查询
+				</MButton>
+			</MCol>
 
-                <MCol Md=2 Sm=12 Class="d-flex block-center">
-                @* <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
-                新增
-                </MButton>*@
-                </MCol>
-                </MRow>
-                </MCardText>
-                <MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="AbnormalRecordsDTO" Width="@("120%")" ItemsPerPage="tpPage.PageSize" Class="elevation-1" FixedRight>
-        <HeaderColContent Context="header">
-            <span class="text-subtitle">@header.Text</span>
-        </HeaderColContent>
-        <ItemColContent>
-            @switch (context.Header.Value)
-            {
-                case "actions":
-                    <MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
-                    <MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
-                    break;
-                default:
-                    @context.Value
-                    break;
-            }
+			<MCol Md=2 Sm=12 Class="d-flex block-center">
+				@* <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+				新增
+				</MButton>*@
+			</MCol>
+		</MRow>
+	</MCardText>
+	<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="AbnormalRecordsDTO" ItemsPerPage="tpPage.PageSize" FixedRight>
+		<HeaderColContent Context="header">
+			<span class="text-subtitle">@header.Text</span>
+		</HeaderColContent>
+		<ItemColContent>
+			@switch (context.Header.Value)
+			{
+				case "actions":
+					<MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
+					<MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
+					break;
+				default:
+					@context.Value
+					break;
+			}
 
-        </ItemColContent>
-    </MDataTable>
-    <MDialog @bind-Value="_visible"
-             MaxWidth="800">
-        <MCard>
-            <MCardTitle>
-                <span class="text-h5">@FormTitle</span>
-            </MCardTitle>
+		</ItemColContent>
+	</MDataTable>
+	<MDialog @bind-Value="_visible"
+			 MaxWidth="800">
+		<MCard>
+			<MCardTitle>
+				<span class="text-h5">@FormTitle</span>
+			</MCardTitle>
 
-            <MCardText>
-                <MContainer>
-               
-                            
-                            <MTextarea
-                                       ClearIcon="mdi-close-circle"
-                                       Label="处理方式"
-                                       @bind-Value="_editedItem.Disposal">
-                            </MTextarea>
-                            
-                                    </MContainer>
-                                    </MCardText>
-                                    <MCardActions>
-                                    <MSpacer></MSpacer>
-                                    <MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
-                <MButton Color="blue darken-1" Text OnClick="Save">保存</MButton>
-                </MCardActions>
-                </MCard>
-                </MDialog>
-                </MCard>
-                @code {
-    private int _editedIndex = -1;
+			<MCardText>
+				<MContainer>
 
-    private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
-    private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
-    public bool _menu;
-    public void MenuOK()
-    {
-        _prevDate = _date;
-        //_editedItem.ArrivalTime = Convert.ToDateTime(_prevDate.Year + "-" + _prevDate.Month + "-" + _prevDate.Day);
-        _menu = false;
-    }
 
-    public void MenuCancel()
-    {
-        _date = _prevDate;
-        _menu = false;
-    }
-    public static string FormateDate(DateTime date)
-    {
-        return date.ToString("yyyy-MM-dd");
-    }
-    public class RoleItem
-    {
-        public string Label { get; set; }
-        public string Value { get; set; }
-        public RoleItem(string label, string value)
-        {
-            Label = label;
-            Value = value;
-        }
-    }
-    public string FormTitle
-    {
-        get
-        {
-            return _editedIndex == -1 ? "新增" : "编辑";
-        }
-    }
-    public AbnormalRecordsDTO _editedItem = new AbnormalRecordsDTO();
-    List<DataTableHeader<AbnormalRecordsDTO>> _headers = new()
-        {
-            new() { Text = "物流单号", Value = nameof(AbnormalRecordsDTO.Code), CellClass = "" },
-            new() { Text = "异常原因", Value = nameof(AbnormalRecordsDTO.AbnormalCause) },
-            new() { Text = "处理方式", Value = nameof(AbnormalRecordsDTO.Disposal) },
-            new() { Text = "处理人", Value = nameof(AbnormalRecordsDTO.UserName) },
-            new() { Text = "处理时间", Value = nameof(AbnormalRecordsDTO.DisposalTime) },
-            new() { Text = "操作", Value = "actions" }
+					<MTextarea ClearIcon="mdi-close-circle"
+							   Label="处理方式"
+							   @bind-Value="_editedItem.Disposal">
+					</MTextarea>
 
-        };
-    bool _visible = false;
-    public List<int> _pageSize = new() { 10, 20, 50 };
-    public AbnormalRecordsPage tpPage = new();
-    protected override void OnInitialized()
-    {
-        //_editedItem.ArrivalTime = DateTime.Now;
-        Initialize();
-    }
-    public void Initialize()
-    {
-        var dto = new Request_AbnormalRecords();
-        if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
-        var rest = _arServiceDM.GetAbnormalRecordsList(dto);
-        var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-        tpPage = result;
-    }
-    public void EditItem(AbnormalRecordsDTO abnormalRecordsModel)
-    {
-        //_editedItem = usersDTO;
-        _visible = true;
-        _editedIndex = 1;
-        _editedItem.Id = abnormalRecordsModel.Id;
-        _editedItem.Disposal =abnormalRecordsModel.Disposal;
-        //_date = DateOnly.FromDateTime(_editedItem.ArrivalTime);
-        // selectvalue = usersDTO.Type.ToString();
-    }
-    public async Task DeleteItem(AbnormalRecordsDTO usersDTO)
-    {
-        var result = _arServiceDM.DeAbnormalRecords(usersDTO.Id);
-        if (result.IsSuccess)
-        {
-            await PopupService.ToastAsync("删除成功", AlertTypes.Success);
-            tpPage.Datas.RemoveAt(tpPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
-        }
-        else
-        {
-            await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
-        }
-    }
-    public void Close()
-    {
-        _visible = false;
-        _editedItem = new AbnormalRecordsDTO();
-        _editedIndex = -1;
-    }
-    public async Task Save()
-    {
-        ResultEntity<bool> resultEntity = new();
-        var model = _editedItem.Adapt<AbnormalRecordsModel>();
-        if (_editedIndex > -1)
-        {
-            var item = tpPage.Datas.Any(x => x.Id == _editedItem.Id);
-            if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-            resultEntity = _arServiceDM.UpAbnormalRecords(model);
-        }
-        else
-        {
-            //resultEntity = _arServiceDM.AddTransportPlan(model);
+				</MContainer>
+			</MCardText>
+			<MCardActions>
+				<MSpacer></MSpacer>
+				<MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
+				<MButton Color="blue darken-1" Text OnClick="Save">保存</MButton>
+			</MCardActions>
+		</MCard>
+	</MDialog>
+</MCard>
+@code {
+	private int _editedIndex = -1;
 
-        }
-        if (resultEntity.IsSuccess)
-        {
-            //_editedItem.AddTime = DateTime.Now;
-            await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-            if (_editedIndex == -1) tpPage.Datas.Add(_editedItem);
-        }
-        else
-        {
-            await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
-        }
-        Close();
-    }
-    public void OnFiltChange(string newValue)
-    {
-        tpPage.Search = newValue;
-        Initialize();
-    }
+	private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
+	private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
+	public bool _menu;
+	public void MenuOK()
+	{
+		_prevDate = _date;
+		//_editedItem.ArrivalTime = Convert.ToDateTime(_prevDate.Year + "-" + _prevDate.Month + "-" + _prevDate.Day);
+		_menu = false;
+	}
+
+	public void MenuCancel()
+	{
+		_date = _prevDate;
+		_menu = false;
+	}
+	public static string FormateDate(DateTime date)
+	{
+		return date.ToString("yyyy-MM-dd");
+	}
+	public class RoleItem
+	{
+		public string Label { get; set; }
+		public string Value { get; set; }
+		public RoleItem(string label, string value)
+		{
+			Label = label;
+			Value = value;
+		}
+	}
+	public string FormTitle
+	{
+		get
+		{
+			return _editedIndex == -1 ? "新增" : "编辑";
+		}
+	}
+	public AbnormalRecordsDTO _editedItem = new AbnormalRecordsDTO();
+	List<DataTableHeader<AbnormalRecordsDTO>> _headers = new()
+		{
+			new() { Text = "物流单号", Value = nameof(AbnormalRecordsDTO.Code), CellClass = "" },
+			new() { Text = "异常原因", Value = nameof(AbnormalRecordsDTO.AbnormalCause) },
+			new() { Text = "处理方式", Value = nameof(AbnormalRecordsDTO.Disposal) },
+			new() { Text = "处理人", Value = nameof(AbnormalRecordsDTO.UserName) },
+			new() { Text = "处理时间", Value = nameof(AbnormalRecordsDTO.DisposalTime) },
+			new() { Text = "操作", Value = "actions" }
+
+		};
+	bool _visible = false;
+	public List<int> _pageSize = new() { 10, 20, 50 };
+	public AbnormalRecordsPage tpPage = new();
+	protected override void OnInitialized()
+	{
+		//_editedItem.ArrivalTime = DateTime.Now;
+		Initialize();
+	}
+	public void Initialize()
+	{
+		var dto = new Request_AbnormalRecords();
+		if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
+		var rest = _arServiceDM.GetAbnormalRecordsList(dto);
+		var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		tpPage = result;
+	}
+	public void EditItem(AbnormalRecordsDTO abnormalRecordsModel)
+	{
+		//_editedItem = usersDTO;
+		_visible = true;
+		_editedIndex = 1;
+		_editedItem.Id = abnormalRecordsModel.Id;
+		_editedItem.Disposal = abnormalRecordsModel.Disposal;
+		//_date = DateOnly.FromDateTime(_editedItem.ArrivalTime);
+		// selectvalue = usersDTO.Type.ToString();
+	}
+	public async Task DeleteItem(AbnormalRecordsDTO usersDTO)
+	{
+		var result = _arServiceDM.DeAbnormalRecords(usersDTO.Id);
+		if (result.IsSuccess)
+		{
+			await PopupService.ToastAsync("删除成功", AlertTypes.Success);
+			tpPage.Datas.RemoveAt(tpPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
+		}
+		else
+		{
+			await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
+		}
+	}
+	public void Close()
+	{
+		_visible = false;
+		_editedItem = new AbnormalRecordsDTO();
+		_editedIndex = -1;
+	}
+	public async Task Save()
+	{
+		ResultEntity<bool> resultEntity = new();
+		var model = _editedItem.Adapt<AbnormalRecordsModel>();
+		if (_editedIndex > -1)
+		{
+			var item = tpPage.Datas.Any(x => x.Id == _editedItem.Id);
+			if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
+			resultEntity = _arServiceDM.UpAbnormalRecords(model);
+		}
+		else
+		{
+			//resultEntity = _arServiceDM.AddTransportPlan(model);
+
+		}
+		if (resultEntity.IsSuccess)
+		{
+			//_editedItem.AddTime = DateTime.Now;
+			await PopupService.ToastAsync("操作成功", AlertTypes.Success);
+			if (_editedIndex == -1) tpPage.Datas.Add(_editedItem);
+		}
+		else
+		{
+			await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
+		}
+		Close();
+	}
+	public void OnFiltChange(string newValue)
+	{
+		tpPage.Search = newValue;
+		Initialize();
+	}
 }
 

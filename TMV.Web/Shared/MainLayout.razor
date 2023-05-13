@@ -11,7 +11,7 @@
 	else
 	{
 		<CascadingValue Value="UserId">
-			<MAppBar Elevation=0 App MaxHeight=60
+			<MAppBar Elevation=0 App MaxHeight=48 Height=48
 				 Class="@($"{(_pageTab == PageModes.PageTab ?"mx-6":"mx-6 rounded-b-4")}")">
 				<Favorite />
 				<MSpacer />
@@ -20,7 +20,7 @@
 
 			<Navigation />
 
-			<MMain Class="fill-lighten-1" Style="padding-top:60px">
+			<MMain Class="fill-lighten-1">
 				@if (_pageTab == PageModes.PageTab)
 				{
 					<PageTabs>

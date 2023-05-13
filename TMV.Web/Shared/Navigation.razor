@@ -3,7 +3,7 @@
 @inject NavHelper NavHelper
 @inject GlobalConfig GlobalConfig;
 @attribute [Authorize]
-<MNavigationDrawer @bind-Value="Visible" Class="navigation" Width=300 MiniVariantWidth=80 Fixed
+<MNavigationDrawer @bind-Value="Visible" Class="navigation" Width=240 MiniVariantWidth=80 Fixed
 				   ExpandOnHover="GlobalConfig.ExpandOnHover" @bind-MiniVariant="GlobalConfig.NavigationMini" App>
 
 	<div style="height:132px" class="@($"block-center {(GlobalConfig.NavigationMini?"px-4":"px-12")}")"
@@ -86,7 +86,7 @@
 	</MList>
 </MNavigationDrawer>
 
-@if (!(Masa.Breakpoint.Mobile && Visible is true))
+@*@if (!(Masa.Breakpoint.Mobile && Visible is true))
 {
 	<MButton Small Fab Color="primary" OnClick=Switch
 		 Style="@($"bottom:58px;z-index:7;position: fixed;left:{ButtonLeft}px;")">
@@ -94,7 +94,7 @@
 			@(Visible is false || GlobalConfig.NavigationMini ? "mdi-chevron-right" : "mdi-chevron-left")
 		</MIcon>
 	</MButton>
-}
+}*@
 
 @code {
 	[Inject]

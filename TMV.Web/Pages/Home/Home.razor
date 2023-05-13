@@ -16,20 +16,20 @@
 @attribute [Authorize]
 
 
-<MRow Style="height: 100%;">
+<MRow Style="height: 100%;margin-top:4px;">
 	<MCol Md=8 Sm=12 Class="max-height" Style="padding-bottom:0;">
 		<MRow Style="height: 160px">
 			<MCol Md=12 Sm=12 Class="max-height" Style="padding-top:0;">
-				<div style="padding:10px;display:flex;justify-content:center;">
-					<MCard Class="max-height" Style="padding:0 8px 8px 8px;margin-right:32px;">
-						<MCardTitle Style="padding:8px 0;"><MIcon Left>mdi-weight-pound</MIcon><span>称重</span></MCardTitle>
+				<div style="padding:10px;display:flex;justify-content:flex-start;">
+					<MCard Class="max-height" Style="padding:0 32px 8px 32px;margin-right:32px;">
+						<MCardTitle Style="padding:4px 0;"><MIcon Small Left>mdi-weight-pound</MIcon><span style="font-size:16px;">称重</span></MCardTitle>
 						<div style="display:flex;width:200px;justify-content:flex-end;flex-wrap:wrap;">
 							<div style="background-color:yellow;height:64px;line-height:64px;text-align:right;font-size:48px;width:200px;font-weight:bolder;padding:0 24px;">55</div>
 							<div style="background-color:green;width:24px;height:24px;border-radius:24px;margin-top:8px;margin-right:8px;"></div><div style="height:24px;line-height:24px;margin-top:8px;">稳定</div>
 						</div>
 					</MCard>
-					<MCard Class="max-height" Style="padding:0 8px 8px 8px;margin-right:16px;">
-						<MCardTitle Style="padding:8px 0;"><MIcon Left>mdi-line-scan</MIcon><span>红外线</span></MCardTitle>
+					<MCard Class="max-height" Style="padding:0 32px 8px 32px;margin-right:16px;">
+						<MCardTitle Style="padding:4px 0;"><MIcon Small Left>mdi-line-scan</MIcon><span style="font-size:16px;">红外线</span></MCardTitle>
 						<div style="display:flex;">
 							<div style="width:24px;height:96px;background-color:red;"></div>
 							<div style="height:96px;padding:0 24px;">
@@ -101,7 +101,7 @@
 		<MRow Style="height: 240px">
 			<MCol Md=12 Sm=12 Class="max-height" Style="padding-bottom:0;">
 				<MCard Class="max-height">
-					<MCardTitle Style="padding:8px 16px;"><MIcon Left>mdi-audio-video</MIcon><span>过衡记录</span></MCardTitle>
+					<MCardTitle Style="padding:4px 16px;"><MIcon Small Left>mdi-audio-video</MIcon><span style="font-size:16px;">过衡记录</span></MCardTitle>
 					<MDataTable Style="width:100%;" Dense Headers="_headers" Items=" tpPage.Datas" ItemsPerPage="tpPage.PageSize" HideDefaultFooter Class="table-border-none pt-2">
 						<HeaderColContent Context="header">
 							<span class="text-subtitle">@header.Text</span>

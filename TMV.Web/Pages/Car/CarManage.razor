@@ -8,372 +8,372 @@
 @inherits ProCompontentBase
 @inject NavigationManager Nav
 @inject ICarServiceDM _carServiceDM
-<MCard Class="mt-6">
-    <MCardText Class="pa-6">
-        <MRow>
-                
-                <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="carPage.PlateNumber" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="车牌号">
-                </MTextField>
-                </MCol>
-                    <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="carPage.ExerciseCode"
-                            Flat Dense
-                            Color="primary"
-                            Solo
-                            HideDetails="@("auto")"
-                            BackgroundColor="fill-lighten-1"
-                            Label="行驶证号"
-                            Clearable>
-                        </MTextField>
-                        </MCol>
-                <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="carPage.DriverName"
-                            Flat Dense
-                            Color="primary"
-                            Solo
-                            HideDetails="@("auto")"
-                            BackgroundColor="fill-lighten-1"
-                            Label="驾驶员"
-                            Clearable></MTextField>
-                            </MCol>
-                <MCol Md=2 Sm=2 Class="d-flex block-center">
-                <MSelect @bind-Value="carPage.Type"
-                         Items="rooleItem"
-                         ItemText="u => u.Label"
-                         ItemValue="u => u.Value"
-                         Color="primary"
-                         Solo
-                         Flat Dense
-                         TItem="RoleItem"
-                         HideDetails="@("auto")"
-                         BackgroundColor="fill-lighten-1"
-                         TItemValue="string"
-                         TValue="string"
-                         OnSelectedItemUpdate="item=>selectFitItem=item"
-                         OnChange="item=>OnFiltChange(item)"
-                         Label="类型"></MSelect>
-                            </MCol>
+<MCard Class="mt-6 full-card">
+	<MCardText Class="pa-6">
+		<MRow>
 
-            <MCol Md=3 Sm=2 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
-                    查询
-                </MButton>
-            </MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="carPage.PlateNumber" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="车牌号">
+				</MTextField>
+			</MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="carPage.ExerciseCode"
+							Flat Dense
+							Color="primary"
+							Solo
+							HideDetails="@("auto")"
+							BackgroundColor="fill-lighten-1"
+							Label="行驶证号"
+							Clearable>
+				</MTextField>
+			</MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="carPage.DriverName"
+							Flat Dense
+							Color="primary"
+							Solo
+							HideDetails="@("auto")"
+							BackgroundColor="fill-lighten-1"
+							Label="驾驶员"
+							Clearable></MTextField>
+			</MCol>
+			<MCol Md=2 Sm=2 Class="d-flex block-center">
+				<MSelect @bind-Value="carPage.Type"
+						 Items="rooleItem"
+						 ItemText="u => u.Label"
+						 ItemValue="u => u.Value"
+						 Color="primary"
+						 Solo
+						 Flat Dense
+						 TItem="RoleItem"
+						 HideDetails="@("auto")"
+						 BackgroundColor="fill-lighten-1"
+						 TItemValue="string"
+						 TValue="string"
+						 OnSelectedItemUpdate="item=>selectFitItem=item"
+						 OnChange="item=>OnFiltChange(item)"
+						 Label="类型"></MSelect>
+			</MCol>
 
-            <MCol Md=1 Sm=12 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
-                    新增
-                </MButton>
-                </MCol>
-        </MRow>
-    </MCardText>
-                <MDataTable Headers="_headers" Items=" carPage.Datas" TItem="CarDTO" Width="@("120%")" ItemsPerPage="carPage.PageSize" Class="elevation-1" FixedRight>
-        <HeaderColContent Context="header">
-            <span class="text-subtitle">@header.Text</span>
-        </HeaderColContent>
-        <ItemColContent>
-            @switch (context.Header.Value)
-            {
-                case nameof(CarDTO.Type):
-                    
-                        @if (context.Item.Type == 1)
-                        {
-                            <span>进煤车</span>
-                        }
-                        @if (context.Item.Type == 2)
-                        {
-                            <span>运煤车</span>
-                        }
-                        @if (context.Item.Type == 3)
-                        {
-                            <span>转煤车</span>
-                        }
-                        @if (context.Item.Type == 4)
-                        {
-                            <span>洒煤⻋</span>
-                        }
-                
-                    break;
-                case "actions":
-                    <MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
-                    <MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
-                    break;
-                default:
-                    @context.Value
-                    break;
-            }
+			<MCol Md=3 Sm=2 Class="d-flex block-center">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
+					查询
+				</MButton>
+			</MCol>
 
-        </ItemColContent>
-    </MDataTable>
-@*    <MCardText>
-        <div class="d-flex">
-            <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">显示 @((carPage.PageIndex - 1) * carPage.PageSize + 1) 至 @(carPage.PageIndex * carPage.PageSize) 和 @carPage.CurrentCount 跳转</div>
-            @if (carPage.PageCount > 0)
-            {
-                <MPagination @bind-Value="carPage.PageIndex" Color="primary" Circle Length=@carPage.PageCount></MPagination>
-            }
-        </div>
-    </MCardText>*@
-    <MDialog @bind-Value="_visible"
-             MaxWidth="800">
-        <MCard>
-             <MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
-            <MCardTitle>
-                <span class="text-h5" >@FormTitle</span>
-            </MCardTitle>
+			<MCol Md=1 Sm=12 Class="d-flex block-center">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+					新增
+				</MButton>
+			</MCol>
+		</MRow>
+	</MCardText>
+	<MDataTable Headers="_headers" Items=" carPage.Datas" TItem="CarDTO" ItemsPerPage="carPage.PageSize" FixedRight>
+		<HeaderColContent Context="header">
+			<span class="text-subtitle">@header.Text</span>
+		</HeaderColContent>
+		<ItemColContent>
+			@switch (context.Header.Value)
+			{
+				case nameof(CarDTO.Type):
 
-            <MCardText>
-                <MContainer>
-                   
-                    <MCardTitle Class="darken-1">
-                        <span class="text-h5">基本信息</span>
-                    </MCardTitle>
-                    <MRow>
-                        
-                        <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                                <MTextField @bind-Value="_editedItem.PlateNumber" Clearable required
-                                        Label="车牌号"></MTextField>
-                            </MCol>
-                            
-                            <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                            @*<MTextField @bind-Value="_editedItem.Type"  Label="角色"></MTextField>*@
-                            <MSelect @bind-Value="selectvalue"
-                                     Items="rooleItem"
-                                     ItemText="u => u.Label"
-                                     ItemValue="u => u.Value"
-                                     TItem="RoleItem"
-                                         required
-                                     TItemValue="string"
-                                     TValue="string"
-                                     OnSelectedItemUpdate="item=>selectItem=item"
-                                     OnChange="item=>OnBillChange(item)"
-                                     Label="类型"></MSelect>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.SizeC"  Name="input-10-1" Type="number" Label="车厢长"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.SizeK"  Name="input-10-1" Type="number" Label="车厢宽"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.SizeG"  Name="input-10-1" Type="number" Label="车厢高"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.Surveyor" Name="input-10-1" required Type="text" Label="测量人员"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.TieBar1"  Name="input-10-1" Type="text" Label="拉筋一"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.TieBar2"  Name="input-10-1" Type="text" Label="拉筋二"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.TieBar3"  Name="input-10-1" Type="text" Label="拉筋三"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.RatedWeight" Name="input-10-1" required Type="number" Label="额定载重量"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.ExerciseCode" Name="input-10-1" required Type="text" Label="行驶证号"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.TAgCode"  Name="input-10-1" Type="text" Label="电子标签号"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.EmptyWeight" Name="input-10-1" Type="number" required Label="空水空油重量"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.FullWeight" Name="input-10-1" Type="number" required Label="满水满油重量"></MTextField>
-                            </MCol>
-                             </MRow>
-                    <MCardTitle Class="darken-1">
-                        <span class="text-h5">驾驶员信息</span>
-                    </MCardTitle>
-                            <MRow>
-                           
-                            <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.DriverName" Name="input-10-1" required Type="text" Label="驾驶员名称"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.Sex"  Name="input-10-1" Type="text" Label="性别"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.Age"  Name="input-10-1"  Type="number" Label="年龄"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.NativePlace"  Name="input-10-1" Type="text" Label="籍贯"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                                <MTextField @bind-Value="_editedItem.DrivingCode" Name="input-10-1" required Type="text" Label="驾照编号"></MTextField>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MTextField @bind-Value="_editedItem.AddName"  Name="input-10-1" Type="text" Label="建档人"></MTextField>
-                            </MCol>
-                    </MRow>
-                </MContainer>
-            </MCardText>
-            <MCardActions>
-                <MSpacer></MSpacer>
-                <MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
-                <MButton Color="blue darken-1" Text OnClick="Save">保存</MButton>
-            </MCardActions>
-            </MForm>
-        </MCard>
-    </MDialog>
- </MCard>
-                    @code {
-    private int _editedIndex = -1;
-    bool _valid = false;
-    private MForm _form;
-    public class RoleItem
-    {
-        public string Label { get; set; }
-        public string Value { get; set; }
-        public RoleItem(string label, string value)
-        {
-            Label = label;
-            Value = value;
-        }
-    }
-    public string selectvalue { get; set; }
-    public RoleItem selectItem { get; set; }
-    public RoleItem selectFitItem { get; set; }
-    [Parameter]
-    public string Name { get; set; }
-    List<RoleItem> rooleItem = new()
-        {
-            new RoleItem("进煤车", "1"),
-            new RoleItem("运煤车", "2"),
-            new RoleItem("转煤车", "3"),
-            new RoleItem("洒煤⻋", "4")
-        };
+					@if (context.Item.Type == 1)
+					{
+						<span>进煤车</span>
+					}
+					@if (context.Item.Type == 2)
+					{
+						<span>运煤车</span>
+					}
+					@if (context.Item.Type == 3)
+					{
+						<span>转煤车</span>
+					}
+					@if (context.Item.Type == 4)
+					{
+						<span>洒煤⻋</span>
+					}
 
-    public string FormTitle
-    {
-        get
-        {
-            return _editedIndex == -1 ? "新增" : "编辑";
-        }
-    }
-    private CarDTO _editedItem = new CarDTO();
-    List<DataTableHeader<CarDTO>> _headers = new()
-        {
-            new() { Text = "车牌号", Value = nameof(CarDTO.PlateNumber), CellClass = "" },
-            new() { Text = "车辆类型", Value = nameof(CarDTO.Type) },
-            new() { Text = "车厢长", Value = nameof(CarDTO.SizeC) },
-            new() { Text = "车厢宽", Value = nameof(CarDTO.SizeK) },
-            new() { Text = "车厢高", Value = nameof(CarDTO.SizeG) },
-            new() { Text = "测量人员", Value = nameof(CarDTO.Surveyor) },
-            new() { Text = "拉筋一", Value = nameof(CarDTO.TieBar1) },
-            new() { Text = "拉筋二", Value = nameof(CarDTO.TieBar2) },
-            new() { Text = "拉筋三", Value = nameof(CarDTO.TieBar3) },
-            new() { Text = "额定载重量", Value = nameof(CarDTO.RatedWeight) },
-            new() { Text = "行驶证号", Value = nameof(CarDTO.ExerciseCode) },
-            new() { Text = "电子标签号", Value = nameof(CarDTO.TAgCode) },
-            new() { Text = "空⽔空油重量", Value = nameof(CarDTO.EmptyWeight) },
-            new() { Text = "满⽔满油重量", Value = nameof(CarDTO.FullWeight) },
-            new() { Text = "驾驶员名称", Value = nameof(CarDTO.DriverName) },
-            new() { Text = "性别", Value = nameof(CarDTO.Sex) },
-            new() { Text = "年龄", Value = nameof(CarDTO.Age) },
-            new() { Text = "籍贯", Value = nameof(CarDTO.NativePlace) },
-            new() { Text = "驾照编号", Value = nameof(CarDTO.DrivingCode) },
-            new() { Text = "建档人", Value = nameof(CarDTO.AddName) },
-            new() { Text = "建档时间", Value = nameof(CarDTO.AddTime) },
-            new() { Text = "操作", Value = "actions",Sortable=false}
-        };
-    bool _visible = false;
-    public List<int> _pageSize = new() { 10, 20, 50 };
-    public CarPage carPage = new();
-    protected override void OnInitialized()
-    {
-        Initialize();
-    }
-    public void Initialize()
-    {
-        var dto = new Request_Car();
-        if (!string.IsNullOrWhiteSpace(carPage.PlateNumber)) dto.PlateNumber = carPage.PlateNumber;
-        if (!string.IsNullOrWhiteSpace(carPage.Type)) dto.Type = carPage.Type;
-        if (!string.IsNullOrWhiteSpace(carPage.ExerciseCode)) dto.ExerciseCode = carPage.ExerciseCode;
-        if (!string.IsNullOrWhiteSpace(carPage.DriverName)) dto.DriverName = carPage.DriverName;
-        var rest = _carServiceDM.GetCarList(dto);
-        var result = new CarPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-        carPage = result;
-    }
-    public void EditItem(CarDTO usersDTO)
-    {
-        _editedItem = usersDTO;
-        _visible = true;
-        _editedIndex = 1;
-        selectvalue = usersDTO.Type.ToString();
-    }
-    public async Task DeleteItem(CarDTO usersDTO)
-    {
-        var result = _carServiceDM.DeCar(usersDTO.Id);
-        if (result.IsSuccess)
-        {
-            await PopupService.ToastAsync("删除成功", AlertTypes.Success);
-            carPage.Datas.RemoveAt(carPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
-        }
-        else
-        {
-            await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
-        }
-    }
-    public void Close()
-    {
-        _visible = false;
-        _editedItem = new CarDTO();
-        _editedIndex = -1;
-        selectvalue = "";
-    }
+					break;
+				case "actions":
+					<MIcon Small Class="mr-2" OnClick="()=>EditItem(context.Item)">mdi-pencil</MIcon>
+					<MIcon Small OnClick="async()=>await DeleteItem(context.Item)">mdi-delete</MIcon>
+					break;
+				default:
+					@context.Value
+					break;
+			}
 
-    public async Task Save()
-    {
-        ResultEntity<bool> resultEntity = new();
-        var bol = _form.Validate();
-        if (bol)
-        {
-            var model = _editedItem.Adapt<CarModel>();
-            if (_editedIndex > -1)
-            {
-                var item = carPage.Datas.Any(x => x.Id == _editedItem.Id);
-                if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-                resultEntity = _carServiceDM.UpCar(model);
-            }
-            else
-            {
-                resultEntity = _carServiceDM.AddCar(model);
+		</ItemColContent>
+	</MDataTable>
+	@*    <MCardText>
+	<div class="d-flex">
+	<div class="mr-auto pt-3 text-btn neutral-lighten-1--text">显示 @((carPage.PageIndex - 1) * carPage.PageSize + 1) 至 @(carPage.PageIndex * carPage.PageSize) 和 @carPage.CurrentCount 跳转</div>
+	@if (carPage.PageCount > 0)
+	{
+	<MPagination @bind-Value="carPage.PageIndex" Color="primary" Circle Length=@carPage.PageCount></MPagination>
+	}
+	</div>
+	</MCardText>*@
+	<MDialog @bind-Value="_visible"
+			 MaxWidth="800">
+		<MCard>
+			<MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
+				<MCardTitle>
+					<span class="text-h5">@FormTitle</span>
+				</MCardTitle>
 
-            }
-            if (resultEntity.IsSuccess)
-            {
-                _editedItem.AddTime = DateTime.Now;
-                await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-                if (_editedIndex == -1) carPage.Datas.Add(_editedItem);
-            }
-            else
-            {
-                await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
-            }
-            Close();
-        }
-    }
-    public void OnBillChange(string newValue)
-    {
-        _editedItem.Type = Convert.ToInt32(newValue);
-    }
-    public void OnFiltChange(string newValue)
-    {
-        carPage.Search = newValue;
-        Initialize();
-    }
-    public void seach()
-    {
-        Initialize();
-    }
+				<MCardText>
+					<MContainer>
+
+						<MCardTitle Class="darken-1">
+							<span class="text-h5">基本信息</span>
+						</MCardTitle>
+						<MRow>
+
+							<MCol Cols="12"
+								  Sm="6"
+								  Md="4">
+								<MTextField @bind-Value="_editedItem.PlateNumber" Clearable required
+											Label="车牌号"></MTextField>
+							</MCol>
+
+							<MCol Cols="12"
+								  Sm="6"
+								  Md="4">
+								@*<MTextField @bind-Value="_editedItem.Type"  Label="角色"></MTextField>*@
+								<MSelect @bind-Value="selectvalue"
+										 Items="rooleItem"
+										 ItemText="u => u.Label"
+										 ItemValue="u => u.Value"
+										 TItem="RoleItem"
+										 required
+										 TItemValue="string"
+										 TValue="string"
+										 OnSelectedItemUpdate="item=>selectItem=item"
+										 OnChange="item=>OnBillChange(item)"
+										 Label="类型"></MSelect>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.SizeC" Name="input-10-1" Type="number" Label="车厢长"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.SizeK" Name="input-10-1" Type="number" Label="车厢宽"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.SizeG" Name="input-10-1" Type="number" Label="车厢高"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.Surveyor" Name="input-10-1" required Type="text" Label="测量人员"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.TieBar1" Name="input-10-1" Type="text" Label="拉筋一"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.TieBar2" Name="input-10-1" Type="text" Label="拉筋二"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.TieBar3" Name="input-10-1" Type="text" Label="拉筋三"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.RatedWeight" Name="input-10-1" required Type="number" Label="额定载重量"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.ExerciseCode" Name="input-10-1" required Type="text" Label="行驶证号"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.TAgCode" Name="input-10-1" Type="text" Label="电子标签号"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.EmptyWeight" Name="input-10-1" Type="number" required Label="空水空油重量"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.FullWeight" Name="input-10-1" Type="number" required Label="满水满油重量"></MTextField>
+							</MCol>
+						</MRow>
+						<MCardTitle Class="darken-1">
+							<span class="text-h5">驾驶员信息</span>
+						</MCardTitle>
+						<MRow>
+
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.DriverName" Name="input-10-1" required Type="text" Label="驾驶员名称"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.Sex" Name="input-10-1" Type="text" Label="性别"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.Age" Name="input-10-1" Type="number" Label="年龄"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.NativePlace" Name="input-10-1" Type="text" Label="籍贯"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.DrivingCode" Name="input-10-1" required Type="text" Label="驾照编号"></MTextField>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MTextField @bind-Value="_editedItem.AddName" Name="input-10-1" Type="text" Label="建档人"></MTextField>
+							</MCol>
+						</MRow>
+					</MContainer>
+				</MCardText>
+				<MCardActions>
+					<MSpacer></MSpacer>
+					<MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
+					<MButton Color="blue darken-1" Text OnClick="Save">保存</MButton>
+				</MCardActions>
+			</MForm>
+		</MCard>
+	</MDialog>
+</MCard>
+@code {
+	private int _editedIndex = -1;
+	bool _valid = false;
+	private MForm _form;
+	public class RoleItem
+	{
+		public string Label { get; set; }
+		public string Value { get; set; }
+		public RoleItem(string label, string value)
+		{
+			Label = label;
+			Value = value;
+		}
+	}
+	public string selectvalue { get; set; }
+	public RoleItem selectItem { get; set; }
+	public RoleItem selectFitItem { get; set; }
+	[Parameter]
+	public string Name { get; set; }
+	List<RoleItem> rooleItem = new()
+		{
+			new RoleItem("进煤车", "1"),
+			new RoleItem("运煤车", "2"),
+			new RoleItem("转煤车", "3"),
+			new RoleItem("洒煤⻋", "4")
+		};
+
+	public string FormTitle
+	{
+		get
+		{
+			return _editedIndex == -1 ? "新增" : "编辑";
+		}
+	}
+	private CarDTO _editedItem = new CarDTO();
+	List<DataTableHeader<CarDTO>> _headers = new()
+		{
+			new() { Text = "车牌号", Value = nameof(CarDTO.PlateNumber), CellClass = "" },
+			new() { Text = "车辆类型", Value = nameof(CarDTO.Type) },
+			new() { Text = "车厢长", Value = nameof(CarDTO.SizeC) },
+			new() { Text = "车厢宽", Value = nameof(CarDTO.SizeK) },
+			new() { Text = "车厢高", Value = nameof(CarDTO.SizeG) },
+			new() { Text = "测量人员", Value = nameof(CarDTO.Surveyor) },
+			new() { Text = "拉筋一", Value = nameof(CarDTO.TieBar1) },
+			new() { Text = "拉筋二", Value = nameof(CarDTO.TieBar2) },
+			new() { Text = "拉筋三", Value = nameof(CarDTO.TieBar3) },
+			new() { Text = "额定载重量", Value = nameof(CarDTO.RatedWeight) },
+			new() { Text = "行驶证号", Value = nameof(CarDTO.ExerciseCode) },
+			new() { Text = "电子标签号", Value = nameof(CarDTO.TAgCode) },
+			new() { Text = "空⽔空油重量", Value = nameof(CarDTO.EmptyWeight) },
+			new() { Text = "满⽔满油重量", Value = nameof(CarDTO.FullWeight) },
+			new() { Text = "驾驶员名称", Value = nameof(CarDTO.DriverName) },
+			new() { Text = "性别", Value = nameof(CarDTO.Sex) },
+			new() { Text = "年龄", Value = nameof(CarDTO.Age) },
+			new() { Text = "籍贯", Value = nameof(CarDTO.NativePlace) },
+			new() { Text = "驾照编号", Value = nameof(CarDTO.DrivingCode) },
+			new() { Text = "建档人", Value = nameof(CarDTO.AddName) },
+			new() { Text = "建档时间", Value = nameof(CarDTO.AddTime) },
+			new() { Text = "操作", Value = "actions",Sortable=false}
+		};
+	bool _visible = false;
+	public List<int> _pageSize = new() { 10, 20, 50 };
+	public CarPage carPage = new();
+	protected override void OnInitialized()
+	{
+		Initialize();
+	}
+	public void Initialize()
+	{
+		var dto = new Request_Car();
+		if (!string.IsNullOrWhiteSpace(carPage.PlateNumber)) dto.PlateNumber = carPage.PlateNumber;
+		if (!string.IsNullOrWhiteSpace(carPage.Type)) dto.Type = carPage.Type;
+		if (!string.IsNullOrWhiteSpace(carPage.ExerciseCode)) dto.ExerciseCode = carPage.ExerciseCode;
+		if (!string.IsNullOrWhiteSpace(carPage.DriverName)) dto.DriverName = carPage.DriverName;
+		var rest = _carServiceDM.GetCarList(dto);
+		var result = new CarPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		carPage = result;
+	}
+	public void EditItem(CarDTO usersDTO)
+	{
+		_editedItem = usersDTO;
+		_visible = true;
+		_editedIndex = 1;
+		selectvalue = usersDTO.Type.ToString();
+	}
+	public async Task DeleteItem(CarDTO usersDTO)
+	{
+		var result = _carServiceDM.DeCar(usersDTO.Id);
+		if (result.IsSuccess)
+		{
+			await PopupService.ToastAsync("删除成功", AlertTypes.Success);
+			carPage.Datas.RemoveAt(carPage.Datas.FindIndex(u => u.Id == usersDTO.Id));
+		}
+		else
+		{
+			await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
+		}
+	}
+	public void Close()
+	{
+		_visible = false;
+		_editedItem = new CarDTO();
+		_editedIndex = -1;
+		selectvalue = "";
+	}
+
+	public async Task Save()
+	{
+		ResultEntity<bool> resultEntity = new();
+		var bol = _form.Validate();
+		if (bol)
+		{
+			var model = _editedItem.Adapt<CarModel>();
+			if (_editedIndex > -1)
+			{
+				var item = carPage.Datas.Any(x => x.Id == _editedItem.Id);
+				if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
+				resultEntity = _carServiceDM.UpCar(model);
+			}
+			else
+			{
+				resultEntity = _carServiceDM.AddCar(model);
+
+			}
+			if (resultEntity.IsSuccess)
+			{
+				_editedItem.AddTime = DateTime.Now;
+				await PopupService.ToastAsync("操作成功", AlertTypes.Success);
+				if (_editedIndex == -1) carPage.Datas.Add(_editedItem);
+			}
+			else
+			{
+				await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
+			}
+			Close();
+		}
+	}
+	public void OnBillChange(string newValue)
+	{
+		_editedItem.Type = Convert.ToInt32(newValue);
+	}
+	public void OnFiltChange(string newValue)
+	{
+		carPage.Search = newValue;
+		Initialize();
+	}
+	public void seach()
+	{
+		Initialize();
+	}
 }

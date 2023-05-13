@@ -7,288 +7,288 @@
 @inherits ProCompontentBase
 @inject NavigationManager Nav
 @inject IScaleServiceDM _scaleServiceDM
-<MCard Class="mt-6">
-    <MCardText Class="pa-6">
-        <MRow>
+<MCard Class="mt-6 full-card">
+	<MCardText Class="pa-6">
+		<MRow>
 
-            <MCol Md=4 Sm=2 Class="d-flex block-center">
-                <MTextField @bind-Value="scalePage.Name" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="衡名称">
-                </MTextField>
-                </MCol>
-          
-          
-            <MCol Md=4 Sm=2 Class="d-flex block-center">
-                <MSelect @bind-Value="scalePage.Type"
-                         Items="rooleItem"
-                         ItemText="u => u.Label"
-                         ItemValue="u => u.Value"
-                         Color="primary"
-                         Solo
-                         Flat Dense
-                         TItem="RoleItem"
-                         HideDetails="@("auto")"
-                         BackgroundColor="fill-lighten-1"
-                         TItemValue="string"
-                         TValue="string"
-                         OnSelectedItemUpdate="item=>selectFitItem=item"
-                         OnChange="item=>OnFiltChange(item)"
-                         Label="类型"></MSelect>
-                </MCol>
+			<MCol Md=4 Sm=2 Class="d-flex block-center">
+				<MTextField @bind-Value="scalePage.Name" Color="primary" Width="120" Class="rounded-2" Clearable HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="衡名称">
+				</MTextField>
+			</MCol>
 
-                <MCol Md=3 Sm=2 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
-                    查询
-                </MButton>
-                </MCol>
 
-                <MCol Md=1 Sm=12 Class="d-flex block-center">
-                <MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
-                    新增
-                </MButton>
-                </MCol>
-                </MRow>
-                </MCardText>
-    <MDataTable Headers="_headers" Items=" scalePage.Datas" TItem="ScaleDTO" ItemsPerPage="scalePage.PageSize" Class="elevation-1">
-        <HeaderColContent Context="header">
-            <span class="text-subtitle">@header.Text</span>
-        </HeaderColContent>
-        <ItemColContent>
-            @switch (context.Header.Value)
-            {
-                case nameof(ScaleDTO.Type):
-                   
-                        @if (context.Item.Type == 1)
-                        {
-                            <span>重衡</span>
-                        }
-                        @if (context.Item.Type == 2)
-                        {
-                            <span>轻衡</span>
-                        }
-                        @if (context.Item.Type == 3)
-                        {
-                            <span>混合衡</span>
-                        }
-                    break;
-                case nameof(ScaleDTO.State):
-                        @if (context.Item.State == 1)
-                        {
-                            <span>启用</span>
-                        }
-                    @if (context.Item.State == 2)
-                        {
-                            <span>停用</span>
-                        }
-                    break;
-                case "actions":
-                    <a Class="mr-2" @onclick="()=>EditItem(context.Item)">修改</a>
-                    <a @onclick="async()=>await DeleteItem(context.Item)">
-                        @if (context.Item.State == 1)
-                        {
-                            <span>停用</span>
-                        }
-                        @if (context.Item.State == 2)
-                        {
-                            <span>启用</span>
-                        }
-                        </a>
-                    break;
-                default:
-                    @context.Value
-                    break;
-            }
+			<MCol Md=4 Sm=2 Class="d-flex block-center">
+				<MSelect @bind-Value="scalePage.Type"
+						 Items="rooleItem"
+						 ItemText="u => u.Label"
+						 ItemValue="u => u.Value"
+						 Color="primary"
+						 Solo
+						 Flat Dense
+						 TItem="RoleItem"
+						 HideDetails="@("auto")"
+						 BackgroundColor="fill-lighten-1"
+						 TItemValue="string"
+						 TValue="string"
+						 OnSelectedItemUpdate="item=>selectFitItem=item"
+						 OnChange="item=>OnFiltChange(item)"
+						 Label="类型"></MSelect>
+			</MCol>
 
-        </ItemColContent>
-    </MDataTable>
+			<MCol Md=3 Sm=2 Class="d-flex block-center">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>seach()">
+					查询
+				</MButton>
+			</MCol>
 
-    <MDialog @bind-Value="_visible"
-             MaxWidth="800">
-        <MCard>
-            <MCardTitle>
-                <span class="text-h5">@FormTitle</span>
-            </MCardTitle>
+			<MCol Md=1 Sm=12 Class="d-flex block-center">
+				<MButton Color="primary" MinWidth=80 Height=32 OnClick="()=>_visible=true">
+					新增
+				</MButton>
+			</MCol>
+		</MRow>
+	</MCardText>
+	<MDataTable Headers="_headers" Items=" scalePage.Datas" TItem="ScaleDTO" ItemsPerPage="scalePage.PageSize">
+		<HeaderColContent Context="header">
+			<span class="text-subtitle">@header.Text</span>
+		</HeaderColContent>
+		<ItemColContent>
+			@switch (context.Header.Value)
+			{
+				case nameof(ScaleDTO.Type):
 
-            <MCardText>
-                <MContainer>
-                     <MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
-                    <MRow>
-                        <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                                <MTextField @bind-Value="_editedItem.Name" Clearable required
-                                        Label="衡名称"></MTextField>
-                            </MCol>
-                            <MCol Cols="12"
-                              Sm="6"
-                              Md="4">
-                            <MSelect @bind-Value="selectvalue"
-                                     Items="rooleItem"
-                                     ItemText="u => u.Label"
-                                     ItemValue="u => u.Value"
-                                     TItem="RoleItem"
-                                     TItemValue="string"
-                                     TValue="string"
-                                         required
-                                     OnSelectedItemUpdate="item=>selectItem=item"
-                                     OnChange="item=>OnBillChange(item)"
-                                     Label="类型"></MSelect>
-                            </MCol>
-                            <MCol Cols="12" Sm="6" Md="4">
-                            <MSwitch @bind-Value="swstatus" TrueValue="1" FalseValue="0" Label="是否启用"> </MSwitch>
-                            </MCol>
-                            </MRow>
-                            </MForm>
-                            </MContainer>
-                            </MCardText>
+					@if (context.Item.Type == 1)
+					{
+						<span>重衡</span>
+					}
+					@if (context.Item.Type == 2)
+					{
+						<span>轻衡</span>
+					}
+					@if (context.Item.Type == 3)
+					{
+						<span>混合衡</span>
+					}
+					break;
+				case nameof(ScaleDTO.State):
+					@if (context.Item.State == 1)
+					{
+						<span>启用</span>
+					}
+					@if (context.Item.State == 2)
+					{
+						<span>停用</span>
+					}
+					break;
+				case "actions":
+					<a Class="mr-2" @onclick="()=>EditItem(context.Item)">修改</a>
+					<a @onclick="async()=>await DeleteItem(context.Item)">
+						@if (context.Item.State == 1)
+						{
+							<span>停用</span>
+						}
+						@if (context.Item.State == 2)
+						{
+							<span>启用</span>
+						}
+					</a>
+					break;
+				default:
+					@context.Value
+					break;
+			}
 
-                            <MCardActions>
-                            <MSpacer></MSpacer>
-                            <MButton Color="blue darken-1"
-                         Text
-                         OnClick="Close">
-                    取消
-                </MButton>
-                <MButton Color="blue darken-1"
-                         Text
-                         OnClick="Save">
-                    保存
-                </MButton>
-                </MCardActions>
-                </MCard>
-                </MDialog>
-                </MCard>
-                @code {
-    private int _editedIndex = -1;
-    bool _valid = false;
-    private MForm _form;
-    public class RoleItem
-    {
-        public string Label { get; set; }
-        public string Value { get; set; }
-        public RoleItem(string label, string value)
-        {
-            Label = label;
-            Value = value;
-        }
-    }
-    public bool swstatus = true;
-    public RoleItem selectFitItem { get; set; }
-    public string selectvalue { get; set; }
-    public RoleItem selectItem { get; set; }
-    [Parameter]
-    public string Name { get; set; }
-    List<RoleItem> rooleItem = new()
-        {
-            new RoleItem("重衡", "1"),
-            new RoleItem("轻衡", "2"),
-            new RoleItem("混合衡", "3")
-        };
+		</ItemColContent>
+	</MDataTable>
 
-    public string FormTitle
-    {
-        get
-        {
-            return _editedIndex == -1 ? "新增" : "编辑";
-        }
-    }
-    private ScaleDTO _editedItem = new ScaleDTO();
+	<MDialog @bind-Value="_visible"
+			 MaxWidth="800">
+		<MCard>
+			<MCardTitle>
+				<span class="text-h5">@FormTitle</span>
+			</MCardTitle>
 
-    List<DataTableHeader<ScaleDTO>> _headers = new()
-        {
-            new() { Text = "衡名称", Value = nameof(ScaleDTO.Name), CellClass = "" },
-            new() { Text = "类型", Value = nameof(ScaleDTO.Type) },
-            new() { Text = "状态", Value = nameof(ScaleDTO.State) },
-            new() { Text = "启用停用时间", Value = nameof(ScaleDTO.UpTime) },
-            new() { Text = "操作", Value = "actions" }
-        };
-    bool _visible = false;
-    public List<int> _pageSize = new() { 10, 20, 50 };
-    public ScalePage scalePage = new();
-    protected override void OnInitialized()
-    {
-        Initialize();
-    }
-    public void Initialize()
-    {
-        var dto = new Request_Scale();
-        if (!string.IsNullOrWhiteSpace(scalePage.Name)) dto.Name = scalePage.Name;
-        if (!string.IsNullOrWhiteSpace(scalePage.Type)) dto.Name = scalePage.Type;
-        var rest = _scaleServiceDM.GetScaleList(dto);
-        var result = new ScalePage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
-        scalePage = result;
-    }
-    public void EditItem(ScaleDTO usersDTO)
-    {
-        _editedItem = usersDTO;
-        _visible = true;
-        _editedIndex = 1;
-        selectvalue = usersDTO.Type.ToString();
-    }
-    public async Task DeleteItem(ScaleDTO usersDTO)
-    {
-        var result = _scaleServiceDM.QtScale(usersDTO.Id);
-        if (result.IsSuccess)
-        {
-            await PopupService.ToastAsync("更新成功", AlertTypes.Success);
-            var index= scalePage.Datas.FindIndex(x => x.Id == usersDTO.Id);
-            if (index != -1)
-            {
-                scalePage.Datas[index].State = scalePage.Datas[index].State == 1 ? 2 : 1;
-            };
-        }
-        else
-        {
-            await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
-        }
-    }
-    public void Close()
-    {
-        _visible = false;
-        _editedItem = new ScaleDTO();
-        _editedIndex = -1;
-        selectvalue = "";
-    }
+			<MCardText>
+				<MContainer>
+					<MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
+						<MRow>
+							<MCol Cols="12"
+								  Sm="6"
+								  Md="4">
+								<MTextField @bind-Value="_editedItem.Name" Clearable required
+											Label="衡名称"></MTextField>
+							</MCol>
+							<MCol Cols="12"
+								  Sm="6"
+								  Md="4">
+								<MSelect @bind-Value="selectvalue"
+										 Items="rooleItem"
+										 ItemText="u => u.Label"
+										 ItemValue="u => u.Value"
+										 TItem="RoleItem"
+										 TItemValue="string"
+										 TValue="string"
+										 required
+										 OnSelectedItemUpdate="item=>selectItem=item"
+										 OnChange="item=>OnBillChange(item)"
+										 Label="类型"></MSelect>
+							</MCol>
+							<MCol Cols="12" Sm="6" Md="4">
+								<MSwitch @bind-Value="swstatus" TrueValue="1" FalseValue="0" Label="是否启用"> </MSwitch>
+							</MCol>
+						</MRow>
+					</MForm>
+				</MContainer>
+			</MCardText>
 
-    public async Task Save()
-    {
-        ResultEntity<bool> resultEntity = new();
-        var bol = _form.Validate();
-        if (bol)
-        {
-            if (_editedIndex > -1)
-            {
-                var item = scalePage.Datas.Any(x => x.Id == _editedItem.Id);
-                if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
-                resultEntity = _scaleServiceDM.UpScale(new ScaleModel() { Id = _editedItem.Id, Name = _editedItem.Name, State = _editedItem.State, Type = _editedItem.Type });
-            }
-            else
-            {
-                resultEntity = _scaleServiceDM.AddScale(new ScaleModel() { Name = _editedItem.Name, Type = _editedItem.Type, State = _editedItem.State });
+			<MCardActions>
+				<MSpacer></MSpacer>
+				<MButton Color="blue darken-1"
+						 Text
+						 OnClick="Close">
+					取消
+				</MButton>
+				<MButton Color="blue darken-1"
+						 Text
+						 OnClick="Save">
+					保存
+				</MButton>
+			</MCardActions>
+		</MCard>
+	</MDialog>
+</MCard>
+@code {
+	private int _editedIndex = -1;
+	bool _valid = false;
+	private MForm _form;
+	public class RoleItem
+	{
+		public string Label { get; set; }
+		public string Value { get; set; }
+		public RoleItem(string label, string value)
+		{
+			Label = label;
+			Value = value;
+		}
+	}
+	public bool swstatus = true;
+	public RoleItem selectFitItem { get; set; }
+	public string selectvalue { get; set; }
+	public RoleItem selectItem { get; set; }
+	[Parameter]
+	public string Name { get; set; }
+	List<RoleItem> rooleItem = new()
+		{
+			new RoleItem("重衡", "1"),
+			new RoleItem("轻衡", "2"),
+			new RoleItem("混合衡", "3")
+		};
 
-            }
-            if (resultEntity.IsSuccess)
-            {
-                await PopupService.ToastAsync("操作成功", AlertTypes.Success);
-                if (_editedIndex == -1) scalePage.Datas.Add(_editedItem);
-            }
-            else
-            {
-                await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
-            }
-            Close();
-        }
-    }
-    public void OnBillChange(string newValue)
-    {
-        _editedItem.Type = Convert.ToInt32(newValue);
-    }
-    public void OnFiltChange(string newValue)
-    {
-        scalePage.Type = newValue;
-        Initialize();
-    }
-    public void seach()
-    {
-        Initialize();
-    }
+	public string FormTitle
+	{
+		get
+		{
+			return _editedIndex == -1 ? "新增" : "编辑";
+		}
+	}
+	private ScaleDTO _editedItem = new ScaleDTO();
+
+	List<DataTableHeader<ScaleDTO>> _headers = new()
+		{
+			new() { Text = "衡名称", Value = nameof(ScaleDTO.Name), CellClass = "" },
+			new() { Text = "类型", Value = nameof(ScaleDTO.Type) },
+			new() { Text = "状态", Value = nameof(ScaleDTO.State) },
+			new() { Text = "启用停用时间", Value = nameof(ScaleDTO.UpTime) },
+			new() { Text = "操作", Value = "actions" }
+		};
+	bool _visible = false;
+	public List<int> _pageSize = new() { 10, 20, 50 };
+	public ScalePage scalePage = new();
+	protected override void OnInitialized()
+	{
+		Initialize();
+	}
+	public void Initialize()
+	{
+		var dto = new Request_Scale();
+		if (!string.IsNullOrWhiteSpace(scalePage.Name)) dto.Name = scalePage.Name;
+		if (!string.IsNullOrWhiteSpace(scalePage.Type)) dto.Name = scalePage.Type;
+		var rest = _scaleServiceDM.GetScaleList(dto);
+		var result = new ScalePage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		scalePage = result;
+	}
+	public void EditItem(ScaleDTO usersDTO)
+	{
+		_editedItem = usersDTO;
+		_visible = true;
+		_editedIndex = 1;
+		selectvalue = usersDTO.Type.ToString();
+	}
+	public async Task DeleteItem(ScaleDTO usersDTO)
+	{
+		var result = _scaleServiceDM.QtScale(usersDTO.Id);
+		if (result.IsSuccess)
+		{
+			await PopupService.ToastAsync("更新成功", AlertTypes.Success);
+			var index = scalePage.Datas.FindIndex(x => x.Id == usersDTO.Id);
+			if (index != -1)
+			{
+				scalePage.Datas[index].State = scalePage.Datas[index].State == 1 ? 2 : 1;
+			};
+		}
+		else
+		{
+			await PopupService.ToastAsync(result.Msg, AlertTypes.Error);
+		}
+	}
+	public void Close()
+	{
+		_visible = false;
+		_editedItem = new ScaleDTO();
+		_editedIndex = -1;
+		selectvalue = "";
+	}
+
+	public async Task Save()
+	{
+		ResultEntity<bool> resultEntity = new();
+		var bol = _form.Validate();
+		if (bol)
+		{
+			if (_editedIndex > -1)
+			{
+				var item = scalePage.Datas.Any(x => x.Id == _editedItem.Id);
+				if (!item) { await PopupService.ToastAsync("数据不存在", AlertTypes.Warning); return; }
+				resultEntity = _scaleServiceDM.UpScale(new ScaleModel() { Id = _editedItem.Id, Name = _editedItem.Name, State = _editedItem.State, Type = _editedItem.Type });
+			}
+			else
+			{
+				resultEntity = _scaleServiceDM.AddScale(new ScaleModel() { Name = _editedItem.Name, Type = _editedItem.Type, State = _editedItem.State });
+
+			}
+			if (resultEntity.IsSuccess)
+			{
+				await PopupService.ToastAsync("操作成功", AlertTypes.Success);
+				if (_editedIndex == -1) scalePage.Datas.Add(_editedItem);
+			}
+			else
+			{
+				await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
+			}
+			Close();
+		}
+	}
+	public void OnBillChange(string newValue)
+	{
+		_editedItem.Type = Convert.ToInt32(newValue);
+	}
+	public void OnFiltChange(string newValue)
+	{
+		scalePage.Type = newValue;
+		Initialize();
+	}
+	public void seach()
+	{
+		Initialize();
+	}
 }
