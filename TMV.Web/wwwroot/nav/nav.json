@@ -26,7 +26,7 @@
   {
     "Id": 28,
     "Title": "自定义异常",
-    "Icon": "mdi-bell-cog-outlin",
+    "Icon": "mdi-alert-box-outline",
     "Href": "abnormalr/index"
   },
   {
