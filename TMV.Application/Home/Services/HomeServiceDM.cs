@@ -14,6 +14,7 @@ using TMV.Application.Tr.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using TMV.DTO.Authorization;
 using NPOI.SS.Formula.Functions;
+using SqlSugar.Extensions;
 
 namespace TMV.Application.Home.Services
 {
@@ -64,7 +65,7 @@ namespace TMV.Application.Home.Services
 		public ResultEntity<HomeCountDTO> GetHomeCount()
 		{
 			HomeCountDTO dto = new HomeCountDTO();
-			dto.Jzzl = c.Queryable<TMV_TransportationRecords>().Where(w => w.STime.Date == DateTime.Now.Date).Sum(s => s.NetWeight);
+			dto.Jzzl = c.Queryable<TMV_TransportationRecords>().Where(w => w.STime.Date == DateTime.Now.Date).Sum(s => s.NetWeight).ObjToInt();
 			dto.Jrcc = c.Queryable<TMV_TransportationRecords>().Where(w => w.STime.Date == DateTime.Now.Date).Count();
 			dto.Gjcs = c.Queryable<TMV_AbnormalRecords>().Where(w => w.AddTime.Date == DateTime.Now.Date).Count();
 			dto.Jrks = c.Queryable<TMV_TransportPlan>().Where(w => w.AddTime.Date == DateTime.Now.Date).Select(s => s.MineCode).ToList().ToHashSet().Count();

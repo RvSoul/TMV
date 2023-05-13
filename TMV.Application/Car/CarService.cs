@@ -97,7 +97,7 @@ namespace TMV.Application.Car
                     .Map<CarModel>("驾驶证号", t => t.DrivingCode)
                     .Map<CarModel>("建档人", t => t.AddName)
                     .Map<CarModel>("建档时间", t => t.AddTime);
-                var objs1 = mapper.Take<CarModel>();
+                var objs1 = mapper.Take<CarModel>(0,999999); 
 
                 if (objs1.Any()) return await dm.ImportCar(objs1.Select(t => t.Value).ToList());
                 else throw new ArgumentException(nameof(objs1));
