@@ -69,7 +69,9 @@
 			</MCol>
 		</MRow>
 	</MCardText>
-	<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="TransportPlanDTO" ItemsPerPage="tpPage.PageSize" FixedRight>
+				<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="TransportPlanDTO" ItemsPerPage="tpPage.PageSize" FixedRight OnOptionsUpdate="HandleOnOptionsUpdate"
+				ServerItemsLength="tpPage.PageCount"
+				Loading="_loading">
 		<HeaderColContent Context="header">
 			<span class="text-subtitle">@header.Text</span>
 		</HeaderColContent>
@@ -178,6 +180,8 @@
 
 	private int _editedIndex = -1;
 	bool _valid = false;
+	private bool _loading = true;
+	private DataOptions _options = new DataOptions();
 	private MForm _form;
 	private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
 	private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
@@ -255,14 +259,31 @@
 	}
 	public void Initialize()
 	{
+		_loading = true;
 		var dto = new Request_TransportPlan();
 		if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
 		if (!string.IsNullOrWhiteSpace(tpPage.CargoName)) dto.CargoName = tpPage.CargoName;
 		if (!string.IsNullOrWhiteSpace(tpPage.Carrier)) dto.Carrier = tpPage.Carrier;
 		if (!string.IsNullOrWhiteSpace(tpPage.Sampling)) dto.Sampling = tpPage.Sampling;
+		if (_options.ItemsPerPage > 0)
+		{
+			dto.PageSize = _options.ItemsPerPage;
+		}
+		if (_options.ItemsPerPage < 0)
+		{
+			dto.PageSize = 1000000;
+		}
+		dto.PageIndex = _options.Page == 0 ? 1 : _options.Page;
 		var rest = _tranPlanServiceDM.GetTransportPlanList(dto);
-		var result = new TransportPlanPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		var result = new TransportPlanPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize, PageCount = rest.Count };
 		tpPage = result;
+		_loading = false;
+		InvokeAsync(StateHasChanged);
+	}
+	public void HandleOnOptionsUpdate(DataOptions options)
+	{
+		_options = options;
+		Initialize();
 	}
 	public void EditItem(TransportPlanDTO usersDTO)
 	{
