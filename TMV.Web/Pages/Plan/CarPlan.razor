@@ -1,4 +1,4 @@
-﻿@page "/plan/carplan"
+﻿@page "/plan/index"
 @attribute [Authorize]
 @using TMV.Application.TransportPlan.Services;
 @using TMV.DTO;
@@ -342,6 +342,7 @@
 				await PopupService.ToastAsync(resultEntity.Msg, AlertTypes.Error);
 			}
 			Close();
+			Initialize();
 		}
 
 

@@ -9,7 +9,7 @@
     "Id": 18,
     "Title": "进煤计划预制",
     "Icon": "mdi-file-outline",
-    "Href": "plan/carplan"
+    "Href": "plan/index"
   },
   {
     "Id": 8,
@@ -21,25 +21,31 @@
     "Id": 27,
     "Title": "异常记录",
     "Icon": "mdi-bell-alert-outline",
-    "Href": "abnormalrRecords/inrdex"
+    "Href": "abnormalrRecords/index"
+  },
+  {
+    "Id": 28,
+    "Title": "自定义异常",
+    "Icon": "mdi-bell-cog-outlin",
+    "Href": "abnormalr/index"
   },
   {
     "Id": 4,
     "Title": "车辆建档",
     "Icon": "mdi-car-back",
-    "Href": "car/carmanage"
+    "Href": "car/index"
   },
 
   {
     "Id": 8,
     "Title": "衡管理",
     "Icon": "mdi-calendar-check-outline",
-    "Href": "scale/scalemanage"
+    "Href": "scale/index"
   },
   {
     "Id": 14,
     "Title": "用户管理",
     "Icon": "mdi-account-outline",
-    "Href": "user/listmanage"
+    "Href": "user/index"
   }
 ]
