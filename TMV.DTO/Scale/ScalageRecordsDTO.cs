@@ -46,7 +46,7 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 重量
         /// </summary> 
-        public int Weigh { get; set; }
+        public decimal Weigh { get; set; }
 
         /// <summary>
         /// 称重时间
@@ -87,17 +87,17 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 毛量
         /// </summary> 
-        public int? RoughWeight { get; set; }
+        public decimal? RoughWeight { get; set; }
 
         /// <summary>
         /// 皮重
         /// </summary> 
-        public int? TareWeight { get; set; }
+        public decimal? TareWeight { get; set; }
 
         /// <summary>
         /// 净重
         /// </summary> 
-        public int? NetWeight { get; set; }
+        public decimal? NetWeight { get; set; }
 
         /// <summary>
         /// 称重时间

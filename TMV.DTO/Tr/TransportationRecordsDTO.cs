@@ -75,17 +75,17 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 毛量
         /// </summary> 
-        public int? RoughWeight { get; set; }
+        public decimal? RoughWeight { get; set; }
 
         /// <summary>
         /// 皮重
         /// </summary> 
-        public int? TareWeight { get; set; }
+        public decimal? TareWeight { get; set; }
 
         /// <summary>
         /// 净重
         /// </summary> 
-        public int? NetWeight { get; set; }
+        public decimal? NetWeight { get; set; }
 
         /// <summary>
         /// 进厂时间
@@ -112,7 +112,7 @@ namespace TMV.DTO.Tr
         /// <summary>
         /// 扣重
         /// </summary> 
-        public int KouWeight { get; set; }
+        public decimal KouWeight { get; set; }
 
         /// <summary>
         /// 重衡称名称

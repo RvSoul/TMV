@@ -88,7 +88,7 @@ namespace TMV.DTO.Home
 		/// <summary>
 		/// 重量
 		/// </summary> 
-		public int Weigh { get; set; }
+		public decimal Weigh { get; set; }
 
 		/// <summary>
 		/// 称重时间

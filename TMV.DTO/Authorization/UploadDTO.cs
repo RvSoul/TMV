@@ -106,7 +106,7 @@ namespace TMV.DTO.Authorization
         /// <summary>
         /// 扣重
         /// </summary>
-        public int KOUZ { get; set; }
+        public decimal KOUZ { get; set; }
 
         /// <summary>
         /// 进厂秤号

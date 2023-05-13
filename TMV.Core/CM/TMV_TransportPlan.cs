@@ -28,7 +28,7 @@ namespace TMV.Core.CM
         /// 进煤吨数
         /// </summary>
         [DefaultValue("进煤吨数")]
-        public int Tonnage { get; set; }
+        public decimal Tonnage { get; set; }
         /// <summary>
         /// 发货单位
         /// </summary>
