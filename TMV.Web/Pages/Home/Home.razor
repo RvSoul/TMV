@@ -55,43 +55,289 @@
 					<MContainer Fluid>
 						<MRow Align="@AlignTypes.Center">
 							<MCol Cols="4">
-								<MSelect Items="_items"
-										 @bind-Value="@value1"
-										 ItemText="u => u.Label"
-										 ItemValue="u => u.Value"
-										 Filled
-										 Label="Standard"
-										 Dense></MSelect>
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">车号</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled SmallChips
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
 							</MCol>
-
 							<MCol Cols="4">
-								<MSelect Items="_items"
-										 @bind-Value="@value2"
-										 ItemText="u => u.Label"
-										 ItemValue="u => u.Value"
-										 Filled
-										 Label="Filled style"
-										 Dense></MSelect>
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">驾驶员</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
 							</MCol>
-
 							<MCol Cols="4">
-								<MSelect Items="_items"
-										 @bind-Value="@value3"
-										 ItemText="u => u.Label"
-										 ItemValue="u => u.Value"
-										 Label="Outlined style"
-										 Dense
-										 Outlined></MSelect>
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">毛重</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
 							</MCol>
-
-							<MCol Cols="6">
-								<MSelect Items="_items"
-										 @bind-Value="@value4"
-										 ItemText="u => u.Label"
-										 ItemValue="u => u.Value"
-										 Label="Solo field"
-										 Dense
-										 Solo></MSelect>
+							<MCol Cols="8">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">发货单位</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">皮重</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="8">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">收货单位</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">扣重</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">驾驶员</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">货物名称</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">规格型号</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">净重</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">承运单位</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">货单号</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">单价</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">船名</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">卸煤点</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">金额</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">进出</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
+							</MCol>
+							<MCol Cols="4">
+								<MRow>
+									<MCol Cols="3">
+										<MSubheader Style="text-align:right;">备注</MSubheader>
+									</MCol>
+									<MCol Cols="9">
+										<MSelect Items="_items"
+												 @bind-Value="@value1"
+												 ItemText="u => u.Label"
+												 ItemValue="u => u.Value"
+												 Filled
+												 Dense Solo></MSelect>
+									</MCol>
+								</MRow>
 							</MCol>
 						</MRow>
 					</MContainer>

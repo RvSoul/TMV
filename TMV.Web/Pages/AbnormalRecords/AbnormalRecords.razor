@@ -29,7 +29,9 @@
 			</MCol>
 		</MRow>
 	</MCardText>
-	<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="AbnormalRecordsDTO" ItemsPerPage="tpPage.PageSize" FixedRight>
+				<MDataTable Headers="_headers" Items=" tpPage.Datas" TItem="AbnormalRecordsDTO" ItemsPerPage="tpPage.PageSize" FixedRight OnOptionsUpdate="HandleOnOptionsUpdate"
+				ServerItemsLength="tpPage.PageCount"
+				Loading="_loading">
 		<HeaderColContent Context="header">
 			<span class="text-subtitle">@header.Text</span>
 		</HeaderColContent>
@@ -75,7 +77,8 @@
 </MCard>
 @code {
 	private int _editedIndex = -1;
-
+	private bool _loading = true;
+	private DataOptions _options = new DataOptions();
 	private DateOnly _prevDate = DateOnly.FromDateTime(DateTime.Now);
 	private DateOnly _date = DateOnly.FromDateTime(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")));
 	public bool _menu;
@@ -133,11 +136,28 @@
 	}
 	public void Initialize()
 	{
+		_loading = true;
 		var dto = new Request_AbnormalRecords();
 		if (!string.IsNullOrWhiteSpace(tpPage.Code)) dto.Code = tpPage.Code;
+		if (_options.ItemsPerPage > 0)
+		{
+			dto.PageSize = _options.ItemsPerPage;
+		}
+		if (_options.ItemsPerPage < 0)
+		{
+			dto.PageSize = 1000000;
+		}
+		dto.PageIndex = _options.Page == 0 ? 1 : _options.Page;
 		var rest = _arServiceDM.GetAbnormalRecordsList(dto);
-		var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		var result = new AbnormalRecordsPage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize, PageCount = rest.Count };
 		tpPage = result;
+		_loading = false;
+		InvokeAsync(StateHasChanged);
+	}
+	public void HandleOnOptionsUpdate(DataOptions options)
+	{
+		_options = options;
+		Initialize();
 	}
 	public void EditItem(AbnormalRecordsDTO abnormalRecordsModel)
 	{

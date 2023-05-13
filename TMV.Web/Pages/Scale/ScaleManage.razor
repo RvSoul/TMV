@@ -48,7 +48,9 @@
 			</MCol>
 		</MRow>
 	</MCardText>
-	<MDataTable Headers="_headers" Items=" scalePage.Datas" TItem="ScaleDTO" ItemsPerPage="scalePage.PageSize">
+				<MDataTable Headers="_headers" Items=" scalePage.Datas" TItem="ScaleDTO" ItemsPerPage="scalePage.PageSize" OnOptionsUpdate="HandleOnOptionsUpdate"
+				ServerItemsLength="scalePage.PageCount"
+				Loading="_loading">
 		<HeaderColContent Context="header">
 			<span class="text-subtitle">@header.Text</span>
 		</HeaderColContent>
@@ -160,6 +162,8 @@
 @code {
 	private int _editedIndex = -1;
 	bool _valid = false;
+	private bool _loading = true;
+	private DataOptions _options = new DataOptions();
 	private MForm _form;
 	public class RoleItem
 	{
@@ -210,12 +214,29 @@
 	}
 	public void Initialize()
 	{
+		_loading = true;
 		var dto = new Request_Scale();
 		if (!string.IsNullOrWhiteSpace(scalePage.Name)) dto.Name = scalePage.Name;
 		if (!string.IsNullOrWhiteSpace(scalePage.Type)) dto.Name = scalePage.Type;
+		if (_options.ItemsPerPage > 0)
+		{
+			dto.PageSize = _options.ItemsPerPage;
+		}
+		if (_options.ItemsPerPage < 0)
+		{
+			dto.PageSize = 1000000;
+		}
+		dto.PageIndex = _options.Page == 0 ? 1 : _options.Page;
 		var rest = _scaleServiceDM.GetScaleList(dto);
-		var result = new ScalePage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize };
+		var result = new ScalePage(rest.Data) { PageIndex = rest.PageIndex, PageSize = rest.PageSize, PageCount = rest.Count };
 		scalePage = result;
+		_loading = false;
+		InvokeAsync(StateHasChanged);
+	}
+	public void HandleOnOptionsUpdate(DataOptions options)
+	{
+		_options = options;
+		Initialize();
 	}
 	public void EditItem(ScaleDTO usersDTO)
 	{
