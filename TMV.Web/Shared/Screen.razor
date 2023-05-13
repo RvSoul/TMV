@@ -20,7 +20,7 @@
 @attribute [AllowAnonymous]
 
 
-<div style="background:#F0F3FA !important;height:100%;width:100%;padding:16px;overflow:hidden;">
+<div style="background:#F0F3FA !important;height:100%;width:100%;padding:8px;overflow:hidden;">
 	<MRow Style="height:400px;">
 		<MCol Md=12 Sm=12>
 			<MCard Class="max-height">
@@ -33,8 +33,8 @@
 			</MCard>
 		</MCol>
 	</MRow>
-	<MRow Style="height:calc(100% - 400px)">
-		<MCol Md=8 Sm=12 Class="max-height">
+	<MRow Style="height:calc(100% - 366px);margin-top:0;">
+		<MCol Md=8 Sm=12 Class="max-height" Style="padding-right:0;">
 			<MCard Class="max-height">
 				<MCardTitle Style="padding:4px 16px;"><MIcon Left>mdi-bell-ring</MIcon> <span style="font-size:16px;">告警动态</span></MCardTitle>
 				<MDataTable Headers="_saheaders" Items="abRePage.Datas" HideDefaultFooter Class="table-border-none pt-2">
