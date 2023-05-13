@@ -66,6 +66,12 @@
             注销事件
             </summary>
         </member>
+        <member name="M:TMV.Web.Core.ApiAttribute.ExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
         <member name="T:TMV.Web.Core.Const.ClaimConst">
             <summary>
             授权用户常量
