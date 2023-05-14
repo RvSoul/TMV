@@ -42,19 +42,19 @@ namespace TMV.DTO.Abnormal
 		/// <summary>
 		/// 异常编号
 		/// </summary> 
-		[Required]
+		[Required(AllowEmptyStrings =false,ErrorMessage="编号不能为空")]
 		public int Code { get; set; }
 
 		/// <summary>
 		/// 异常原因
 		/// </summary> 
-		[Required]
+		[Required(AllowEmptyStrings = false, ErrorMessage = "异常原因不能为空")]
 		public string AbnormalCause { get; set; }
 
 		/// <summary>
 		/// 异常处理方式
 		/// </summary> 
-		[Required]
+		[Required(AllowEmptyStrings = false, ErrorMessage = "处理方式不能为空")]
 		public string Disposal { get; set; }
     }
 }

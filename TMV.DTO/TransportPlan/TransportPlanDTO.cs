@@ -107,65 +107,65 @@ namespace TMV.DTO.TransportPlan
     {
         public Guid Id { get; set; }
 
-        /// <summary>
-        /// 编号
-        /// </summary>
-        [Required]
-        public string Code { get; set; }
+		/// <summary>
+		/// 编号
+		/// </summary>
+		[Required(ErrorMessage = "编号不能为空")]
+		public string Code { get; set; }
 
-        /// <summary>
-        /// 进煤吨数
-        /// </summary>
-        [Required]
-        public decimal Tonnage { get; set; }
-        /// <summary>
-        /// 发货单位
-        /// </summary>
-        [Required]
-        public string SendUnit { get; set; }
-        /// <summary>
-        /// 收货单位
-        /// </summary>
-        [Required]
-        public string ReceiptUnit { get; set; }
-        /// <summary>
-        /// 货物名称
-        /// </summary>
-        [Required]
-        public string CargoName { get; set; }
-        /// <summary>
-        /// 承运单位
-        /// </summary>
-        [Required]
-        public string Carrier { get; set; }
+		/// <summary>
+		/// 进煤吨数
+		/// </summary>
+		[Required(ErrorMessage = "进煤吨数不能为空")]
+		public decimal Tonnage { get; set; }
+		/// <summary>
+		/// 发货单位
+		/// </summary>
+		[Required(ErrorMessage = "发货单位不能为空")]
+		public string SendUnit { get; set; }
+		/// <summary>
+		/// 收货单位
+		/// </summary>
+		[Required(ErrorMessage = "收货单位不能为空")]
+		public string ReceiptUnit { get; set; }
+		/// <summary>
+		/// 货物名称
+		/// </summary>
+		[Required(ErrorMessage = "货物名称不能为空")]
+		public string CargoName { get; set; }
+		/// <summary>
+		/// 承运单位
+		/// </summary>
+		[Required(ErrorMessage = "承运单位不能为空")]
+		public string Carrier { get; set; }
         /// <summary>
         /// 到货日期
         /// </summary>
         public DateTime ArrivalTime { get; set; }
-        /// <summary>
-        /// 矿号
-        /// </summary>
-        [Required]
-        public string MineCode { get; set; }
-        /// <summary>
-        /// 矿名
-        /// </summary>
-        [Required]
-        public string MineName { get; set; }
+		/// <summary>
+		/// 矿号
+		/// </summary>
+		[Required(ErrorMessage = "矿号不能为空")]
+		public string MineCode { get; set; }
+		/// <summary>
+		/// 矿名
+		/// </summary>
+		[Required(ErrorMessage = "矿名不能为空")]
+		public string MineName { get; set; }
         /// <summary>
         /// 船名
         /// </summary>
         public string ShipName { get; set; }
-        /// <summary>
-        /// 船运单位
-        /// </summary>
-        [Required]
-        public string ShippingUnit { get; set; }
-        /// <summary>
-        /// 采样方式-1.人采，2.机采
-        /// </summary>
-        [Required]
-        public int Sampling { get; set; }
+		/// <summary>
+		/// 船运单位
+		/// </summary>
+		[Required(ErrorMessage = "船运单位不能为空")]
+		public string ShippingUnit { get; set; }
+		/// <summary>
+		/// 采样方式-1.人采，2.机采
+		/// </summary>
+		[Required(ErrorMessage = "采样方式不能为空")]
+		public int Sampling { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>

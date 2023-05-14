@@ -102,7 +102,7 @@
 	<MDialog @bind-Value="_visible"
 			 MaxWidth="800">
 		<MCard>
-			<MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
+			<MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" OnInvalidSubmit="HandleOnInvalidSubmit" OnValidSubmit="HandleOnValidSubmit" EnableValidation>
 				<MCardTitle>
 					<span class="text-h5">@FormTitle</span>
 				</MCardTitle>
@@ -127,41 +127,41 @@
 							<MCol Cols="12"
 								  Sm="6"
 								  Md="4">
-								<MTextField @bind-Value="_editedItem.Code" Clearable required
+								<MTextField @bind-Value="_editedItem.Code" Clearable required HideDetails="true"
 											Label="编号"></MTextField>
 							</MCol>
 
 							<MCol Cols="12"
 								  Sm="6"
 								  Md="4">
-								<MTextField @bind-Value="_editedItem.Tonnage" Clearable required
+								<MTextField @bind-Value="_editedItem.Tonnage" Clearable required HideDetails="true"
 											Label="进煤吨数"></MTextField>
 							</MCol>
 
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.SendUnit" required Name="input-10-1" Type="text" Clearable Label="发货单位"></MTextField>
+								<MTextField @bind-Value="_editedItem.SendUnit" required Name="input-10-1" Type="text" HideDetails="true" Clearable Label="发货单位"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.ReceiptUnit" required Name="input-10-1" Type="text" Clearable Label="收货单位"></MTextField>
+								<MTextField @bind-Value="_editedItem.ReceiptUnit" required Name="input-10-1" Type="text" HideDetails="true" Clearable Label="收货单位"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.CargoName" required Name="input-10-1" Type="text" Clearable Label="货物名称"></MTextField>
+								<MTextField @bind-Value="_editedItem.CargoName" required Name="input-10-1" Type="text" HideDetails="true" Clearable Label="货物名称"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.Carrier" required Name="input-10-1" Type="text" Clearable Label="承运单位"></MTextField>
+								<MTextField @bind-Value="_editedItem.Carrier" required Name="input-10-1" Type="text" HideDetails="true" Clearable Label="承运单位"></MTextField>
 							</MCol>
 
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.MineCode" required Name="input-10-1" Type="text" Clearable Label="矿号"></MTextField>
+								<MTextField @bind-Value="_editedItem.MineCode" required Name="input-10-1" Type="text" HideDetails="true" Clearable Label="矿号"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.MineName" required Name="input-10-1" Type="text" Clearable Label="矿名"></MTextField>
+								<MTextField @bind-Value="_editedItem.MineName" required Name="input-10-1" Type="text" HideDetails="true" Clearable Label="矿名"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
 								<MTextField @bind-Value="_editedItem.ShipName" Name="input-10-1" Type="text" Clearable Label="船名"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.ShippingUnit" required Name="input-10-1" Type="text" Clearable Label="船运单位"></MTextField>
+								<MTextField @bind-Value="_editedItem.ShippingUnit" required Name="input-10-1" Type="text" HideDetails="true" Clearable Label="船运单位"></MTextField>
 							</MCol>
 
 						</MRow>
@@ -170,7 +170,7 @@
 				<MCardActions>
 					<MSpacer></MSpacer>
 					<MButton Color="blue darken-1" Text OnClick="Close">取消</MButton>
-					<MButton Type="submit" Color="blue darken-1" Text OnClick="Save">保存</MButton>
+					<MButton Type="submit" Color="blue darken-1" OnClick="Save" Text>保存</MButton>
 				</MCardActions>
 			</MForm>
 		</MCard>
@@ -370,6 +370,14 @@
 	public void seach()
 	{
 		Initialize();
+	}
+	private void HandleOnValidSubmit()
+	{
+		//valid
+	}
+	private void HandleOnInvalidSubmit()
+	{
+		//invalid
 	}
 }
 

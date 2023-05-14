@@ -117,7 +117,7 @@
 							<MCol Cols="12"
 								  Sm="6"
 								  Md="4">
-								<MTextField @bind-Value="_editedItem.Name" Clearable required
+								<MTextField @bind-Value="_editedItem.Name" Clearable required HideDetails="true"
 											Label="衡名称"></MTextField>
 							</MCol>
 							<MCol Cols="12"
@@ -131,6 +131,7 @@
 										 TItemValue="string"
 										 TValue="string"
 										 required
+										 HideDetails="true"
 										 OnSelectedItemUpdate="item=>selectItem=item"
 										 OnChange="item=>OnBillChange(item)"
 										 Label="类型"></MSelect>

@@ -136,7 +136,7 @@
 							<MCol Cols="12"
 								  Sm="6"
 								  Md="4">
-								<MTextField @bind-Value="_editedItem.PlateNumber" Clearable required
+								<MTextField @bind-Value="_editedItem.PlateNumber" Clearable required HideDetails="true"
 											Label="车牌号"></MTextField>
 							</MCol>
 
@@ -150,6 +150,7 @@
 										 ItemValue="u => u.Value"
 										 TItem="RoleItem"
 										 required
+										 HideDetails="true"
 										 TItemValue="string"
 										 TValue="string"
 										 OnSelectedItemUpdate="item=>selectItem=item"
@@ -166,7 +167,7 @@
 								<MTextField @bind-Value="_editedItem.SizeG" Name="input-10-1" Type="number" Label="车厢高"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.Surveyor" Name="input-10-1" required Type="text" Label="测量人员"></MTextField>
+								<MTextField @bind-Value="_editedItem.Surveyor" Name="input-10-1" required HideDetails="true" Type="text" Label="测量人员"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
 								<MTextField @bind-Value="_editedItem.TieBar1" Name="input-10-1" Type="text" Label="拉筋一"></MTextField>
@@ -178,19 +179,19 @@
 								<MTextField @bind-Value="_editedItem.TieBar3" Name="input-10-1" Type="text" Label="拉筋三"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.RatedWeight" Name="input-10-1" required Type="number" Label="额定载重量"></MTextField>
+								<MTextField @bind-Value="_editedItem.RatedWeight" Name="input-10-1" required HideDetails="true" Type="number" Label="额定载重量"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.ExerciseCode" Name="input-10-1" required Type="text" Label="行驶证号"></MTextField>
+								<MTextField @bind-Value="_editedItem.ExerciseCode" Name="input-10-1" required HideDetails="true" Type="text" Label="行驶证号"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
 								<MTextField @bind-Value="_editedItem.TAgCode" Name="input-10-1" Type="text" Label="电子标签号"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.EmptyWeight" Name="input-10-1" Type="number" required Label="空水空油重量"></MTextField>
+								<MTextField @bind-Value="_editedItem.EmptyWeight" Name="input-10-1" Type="number" required HideDetails="true" Label="空水空油重量"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.FullWeight" Name="input-10-1" Type="number" required Label="满水满油重量"></MTextField>
+								<MTextField @bind-Value="_editedItem.FullWeight" Name="input-10-1" Type="number" required HideDetails="true" Label="满水满油重量"></MTextField>
 							</MCol>
 						</MRow>
 						<MCardTitle Class="darken-1">
@@ -199,7 +200,7 @@
 						<MRow>
 
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.DriverName" Name="input-10-1" required Type="text" Label="驾驶员名称"></MTextField>
+								<MTextField @bind-Value="_editedItem.DriverName" Name="input-10-1" required HideDetails="true" Type="text" Label="驾驶员名称"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
 								<MTextField @bind-Value="_editedItem.Sex" Name="input-10-1" Type="text" Label="性别"></MTextField>
@@ -211,7 +212,7 @@
 								<MTextField @bind-Value="_editedItem.NativePlace" Name="input-10-1" Type="text" Label="籍贯"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
-								<MTextField @bind-Value="_editedItem.DrivingCode" Name="input-10-1" required Type="text" Label="驾照编号"></MTextField>
+								<MTextField @bind-Value="_editedItem.DrivingCode" Name="input-10-1" required HideDetails="true" Type="text" Label="驾照编号"></MTextField>
 							</MCol>
 							<MCol Cols="12" Sm="6" Md="4">
 								<MTextField @bind-Value="_editedItem.AddName" Name="input-10-1" Type="text" Label="建档人"></MTextField>

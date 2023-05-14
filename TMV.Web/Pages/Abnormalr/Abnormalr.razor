@@ -51,9 +51,9 @@
 		</ItemColContent>
 	</MDataTable>
 	<MDialog @bind-Value="_visible"
-			 MaxWidth="800">
+			 MaxWidth="900">
 		<MCard>
-			<MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableI18n EnableValidation>
+			<MForm @bind-Value="_valid" Model="_editedItem" @ref="_form" EnableValidation>
 			<MCardTitle>
 				<span class="text-h5">@FormTitle</span>
 			</MCardTitle>
@@ -61,20 +61,27 @@
 			<MCardText>
 				<MContainer>
 					<MRow>
-						<MTextField @bind-Value="_editedItem.Code" Clearable Label="编号" required></MTextField>
+						<MCol Cols="12" Sm="6" Md="12">
+								<MTextField @bind-Value="_editedItem.Code" Clearable Label="编号" required HideDetails="true"></MTextField>
+						</MCol>
 						
 						</MRow>
 						<MRow>
-						<MTextarea ClearIcon="mdi-close-circle" required
+							<MCol Cols="12" Sm="6" Md="12">
+								<MTextarea ClearIcon="mdi-close-circle" required HideDetails="true"
 								   Label="异常原因"
 								   @bind-Value="_editedItem.AbnormalCause">
 							</MTextarea>
+								</MCol>
 						</MRow>
 						<MRow>
-						<MTextarea ClearIcon="mdi-close-circle" required
+							<MCol Cols="12" Sm="6" Md="12">
+								<MTextarea ClearIcon="mdi-close-circle" required HideDetails="true"
 							   Label="处理方式"
 							   @bind-Value="_editedItem.Disposal">
+							  
 					</MTextarea>
+								</MCol>
 					</MRow>
 				</MContainer>
 			</MCardText>
