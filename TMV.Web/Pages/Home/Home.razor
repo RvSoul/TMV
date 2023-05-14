@@ -508,6 +508,20 @@
 	protected override void OnInitialized()
 	{
 		Initialize();
+		// 中途还可以设置平台信息，后续的请求都以此信息为准
+		HttpUtil.SetPlatformInfo("22288248", "93CIXdOSZMgvL1b046ah", "10.19.132.186", 443, false);
+
+		// 组装body
+		var body = "{\"svrIndexCode\": \"c2cbb247-452e-4278-a341-729dbcd85e50\", \"picUri\": \"/pic?2dd461i36-e*1a943077c165m6ep=t=i1p*i=d1s*i=d2b*i2d26*8b74cebd6-9d80ee--1329088z719s=7if6=\"}";
+
+		// 填充URL
+		var uri = "/artemis/api/visitor/v1/record/pictures";
+		var result = HttpUtil.HttpPost(uri, body, 15);
+		if (null == result)
+		{
+			Console.WriteLine("/artemis/api/visitor/v1/record/pictures: POST fail");
+		}
+
 	}
 	public void Initialize()
 	{

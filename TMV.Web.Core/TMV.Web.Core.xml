@@ -115,6 +115,100 @@
             <param name="httpContext"></param>
             <returns></returns>
         </member>
+        <member name="M:TMV.Web.Core.HttpUtil.SetPlatformInfo(System.String,System.String,System.String,System.Int32,System.Boolean)">
+            <summary>
+            设置信息参数
+            </summary>
+            <param name="appkey">合作方APPKey</param>
+            <param name="secret">合作方APPSecret</param>
+            <param name="ip">平台IP</param>
+            <param name="port">平台端口，默认HTTPS的443端口</param>
+            <param name="isHttps">是否启用HTTPS协议，默认HTTPS</param>
+            <return></return>
+        </member>
+        <member name="M:TMV.Web.Core.HttpUtil.HttpGet(System.String,System.Int32)">
+            <summary>
+            HTTP GET请求
+            </summary>
+            <param name="uri">HTTP接口Url，不带协议和端口，如/artemis/api/resource/v1/cameras/indexCode?cameraIndexCode=a10cafaa777c49a5af92c165c95970e0</param>
+            <param name="timeout">请求超时时间，单位：秒</param>
+            <returns></returns>
+        </member>
+        <member name="M:TMV.Web.Core.HttpUtil.HttpPost(System.String,System.String,System.Int32)">
+            <summary>
+            HTTP Post请求
+            </summary>
+            <param name="uri">HTTP接口Url，不带协议和端口，如/artemis/api/resource/v1/org/advance/orgList</param>
+            <param name="body">请求参数</param>
+            <param name="timeout">请求超时时间，单位：秒</param>
+            <return>请求结果</return>
+        </member>
+        <member name="M:TMV.Web.Core.HttpUtil.computeContentMd5(System.String)">
+            <summary>
+            计算content-md5
+            </summary>
+            <param name="body"></param>
+            <returns>base64后的content-md5</returns>
+        </member>
+        <member name="M:TMV.Web.Core.HttpUtil.remoteCertificateValidate(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+            <summary>
+            远程证书验证
+            </summary>
+            <param name="sender"></param>
+            <param name="cert"></param>
+            <param name="chain"></param>
+            <param name="error"></param>
+            <returns>验证是否通过，始终通过</returns>
+        </member>
+        <member name="M:TMV.Web.Core.HttpUtil.computeForHMACSHA256(System.String,System.String)">
+            <summary>
+            计算HMACSHA265
+            </summary>
+            <param name="str">待计算字符串</param>
+            <param name="secret">平台APPSecet</param>
+            <returns>HMAXH265计算结果字符串</returns>
+        </member>
+        <member name="M:TMV.Web.Core.HttpUtil.buildSignString(System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            计算签名字符串
+            </summary>
+            <param name="method">HTTP请求方法，如“POST”</param>
+            <param name="url">接口Url，如/artemis/api/resource/v1/org/advance/orgList</param>
+            <param name="header">请求头</param>
+            <returns>签名字符串</returns>
+        </member>
+        <member name="M:TMV.Web.Core.HttpUtil.buildSignHeader(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            计算签名头
+            </summary>
+            <param name="header">请求头</param>
+            <returns>签名头</returns>
+        </member>
+        <member name="F:TMV.Web.Core.HttpUtil._ip">
+            <summary>
+            平台ip
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.HttpUtil._port">
+            <summary>
+            平台端口
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.HttpUtil._appkey">
+            <summary>
+            平台APPKey
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.HttpUtil._secret">
+            <summary>
+            平台APPSecret
+            </summary>
+        </member>
+        <member name="F:TMV.Web.Core.HttpUtil._isHttps">
+            <summary>
+            是否使用HTTPS协议
+            </summary>
+        </member>
         <member name="T:TMV.Web.Core.ChatHub">
             <summary>
             集线器
