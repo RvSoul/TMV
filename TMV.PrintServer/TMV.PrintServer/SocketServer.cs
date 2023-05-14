@@ -17,15 +17,15 @@ namespace TMV.PrintServer
     public class SocketServer
     {
         DbContext  dbContext;
-        static List<Socket> clientScoketLis ;
-        PrintServer printServer = new();
+        PrintServer printServer;
         DoWorkEventArgs work;
         public string msg = "";
         public SocketServer()
         {
-            clientScoketLis = new List<Socket>();
             dbContext = new DbContext();
-        }
+			printServer = new PrintServer(dbContext);
+
+		}
         public  string OpenServerSocket(string ip ,int port, DoWorkEventArgs e)
         {
             try
@@ -91,94 +91,30 @@ namespace TMV.PrintServer
             //创建缓存内存，存储接收的信息   ,不能放到while中，这块内存可以循环利用
             byte[] data = new byte[1020 * 1024];
             while (true)
-            {
-                int len = 0;
-                try
-                {
-                    //接收消息,返回字节长度
-                    len = proxSocket.Receive(data, 0, data.Length, SocketFlags.None);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                    // LoggerHelper.Error(ex, $"ReceiveClientMsg->");
-                    return;
-                }
+			{
+				int len = 0;
+				try
+				{
+					//接收消息,返回字节长度
+					len = proxSocket.Receive(data, 0, data.Length, SocketFlags.None);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.ToString());
+					// LoggerHelper.Error(ex, $"ReceiveClientMsg->");
+					return;
+				}
 
-                if (len <= 0)//判断接收的字节数
-                {
-                    return;
-                }
-                string msgStr = "DK1577";// Encoding.Default.GetString(data, 0, len);
-                msg += "\r\n接受到的数据：" + msgStr;
-               
-
-                //储存到数据库
-                //Task.Run(() =>
-                //{
-                    try
-                    {
-                        if (!string.IsNullOrWhiteSpace(msgStr))
-                        {
-                            WordUtil wordUtil = new();
-                            var printdata = dbContext.db.Queryable<TransportationRecords, TransportPlan, Car, ScalageRecords>((a, b, c, d) => a.CarId == c.Id && a.CollieryId == b.Id && a.Id == d.TId)
-                            .Where((a, b, c) => c.PlateNumber.ToString() == msgStr)
-                            .Select((a, b, c, d) => new PrintDto()
-                            {
-                                unit = b.MEIKDW,
-                                scalenumber =d.ScaleId.ToString(),
-                                number = a.Code,
-                                shipper = b.SendUnit,
-                                consignee = b.ReceiptUnit,
-                                name = b.CargoName,
-                                carryunit = b.Carrier,
-                                specification = "",
-                                splatenumber = c.PlateNumber,
-                                roughweight = a.RoughWeight.ToString(),
-                                tareweight = a.TareWeight.ToString(),
-                                buckleweight = a.KouWeight.ToString(),
-                                netweight = a.NetWeight.ToString(),
-                                shipnumber = b.ShipName,
-                                truckscar = "",
-                                emptycar = "",
-                                trucktime = "",
-                                lighttime = ""
-                            }).Mapper(it =>
-                            {
-                                it.scalenumber = dbContext.db.Queryable<Scale>().Where(x => x.Id.ToString() == it.scalenumber).First()?.Name;
-                            }).First();
-                            if (printdata == null)
-                            {
-                                msg += $"\r\n没有找到车牌号为{msgStr}的记录";
-                            }
-                            else
-                            {
-                                var strm=wordUtil.WordWrite(printdata);
-                                printServer.Print(strm);
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        msg += "\r\n解析数据错误：" + ex.Message;
-                    }
-                byte[] sd = Encoding.ASCII.GetBytes("ooo999999");
-                SendClientMsg(proxSocket, "uuuuuuuuuuuu");
-                work.Result+= "\r\n"+msg;
-               // });
-            }
-        }
-        private  void SendClientMsg(Socket socket, string msg)
-        {
-            try
-            {
-                Byte[] bytesSent = Encoding.ASCII.GetBytes(msg);
-                socket.Send(bytesSent, bytesSent.Length, 0);
-            }
-            catch (Exception ex)
-            {
-                //Log.Information($"发送消息异常：{ex.Message}");
-            }
-        }
-    }
+				if (len <= 0)//判断接收的字节数
+				{
+					return;
+				}
+				string msgStr = "DK1577";// Encoding.Default.GetString(data, 0, len);
+				msg += "\r\n接受到的数据：" + msgStr;
+				msg += printServer.BeginPtint(msgStr);
+				work.Result += "\r\n" + msg;
+				// });
+			}
+		}
+	}
 }
