@@ -6,24 +6,25 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>TMV.Web</title>
-	<base href="~/" />
-	<link href="_content/Masa.Blazor/css/masa-blazor.min.css" rel="stylesheet">
-	<link href="css/materialdesign/v6.x/css/materialdesignicons.min.css" rel="stylesheet">
-	<link href="css/material/icons.css" rel="stylesheet">
-	<link href="css/fontawesome/v5.15.4/css/all.min.css" rel="stylesheet">
-	<link href="css/masa-blazor-pro.css" rel="stylesheet" />
-	<component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TMV.Web</title>
+    <base href="~/" />
+    <link href="_content/Masa.Blazor/css/masa-blazor.min.css" rel="stylesheet">
+    <link href="css/materialdesign/v6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/material/icons.css" rel="stylesheet">
+    <link href="css/fontawesome/v5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/masa-blazor-pro.css" rel="stylesheet" />
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 
 <body>
-	@RenderBody()
-	<script src="_framework/blazor.server.js"></script>
-	<script src="_content/BlazorComponent/js/blazor-component.js"></script>
-	<script src="js/echarts/5.1.1/echarts.min.js"></script>
-	<script src="~/js/warning.js"></script>
+    @RenderBody()
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/BlazorComponent/js/blazor-component.js"></script>
+    <script src="~/js/socket.io.js"></script>
+    <script src="~/js/warning.js"></script>
+    <script src="~/js/videos.js"></script>
 </body>
 
 </html>
