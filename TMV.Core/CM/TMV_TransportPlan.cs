@@ -50,6 +50,12 @@ namespace TMV.Core.CM
         [DefaultValue("承运单位")]
         public string Carrier { get; set; }
         /// <summary>
+        /// 发货日期
+        /// </summary>
+        [DefaultValue("发货日期")]
+        public DateTime SendTime { get; set; }
+        
+        /// <summary>
         /// 到货日期
         /// </summary>
         [DefaultValue("到货日期")]

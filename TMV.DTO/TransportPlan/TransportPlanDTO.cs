@@ -63,6 +63,10 @@ namespace TMV.DTO.TransportPlan
         /// </summary>
         public string Carrier { get; set; }
         /// <summary>
+        /// 发货日期
+        /// </summary> 
+        public DateTime SendTime { get; set; }
+        /// <summary>
         /// 到货日期
         /// </summary>
         public DateTime ArrivalTime { get; set; }
@@ -138,6 +142,10 @@ namespace TMV.DTO.TransportPlan
 		/// </summary>
 		[Required(ErrorMessage = "承运单位不能为空")]
 		public string Carrier { get; set; }
+         /// <summary>
+        /// 发货日期
+        /// </summary> 
+        public DateTime SendTime { get; set; }
         /// <summary>
         /// 到货日期
         /// </summary>
