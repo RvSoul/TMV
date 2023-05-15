@@ -324,6 +324,11 @@
             承运单位
             </summary>
         </member>
+        <member name="P:TMV.Core.CM.TMV_TransportPlan.SendTime">
+            <summary>
+            发货日期
+            </summary>
+        </member>
         <member name="P:TMV.Core.CM.TMV_TransportPlan.ArrivalTime">
             <summary>
             到货日期

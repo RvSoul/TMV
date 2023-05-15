@@ -59,7 +59,8 @@ namespace TMV.Web.Core.Global
 
         public string? Favorite
         {
-            get => _favorite;
+            get => 
+                _favorite;
             set
             {
                 _favorite = value;

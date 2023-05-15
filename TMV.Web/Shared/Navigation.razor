@@ -3,7 +3,6 @@
 @inherits LayComponentBase
 @inject NavHelper NavHelper
 @inject GlobalConfig GlobalConfig;
-@attribute [Authorize]
 <MNavigationDrawer @bind-Value="Visible" Class="navigation" Width=240 MiniVariantWidth=80 Fixed
 				   ExpandOnHover="GlobalConfig.ExpandOnHover" @bind-MiniVariant="GlobalConfig.NavigationMini" App>
 

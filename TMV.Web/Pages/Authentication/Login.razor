@@ -39,6 +39,11 @@
     </MCol>
 </MRow>
 
+<MOverlay Value="overlay">
+		<MProgressCircular indeterminate
+						   Size="20"></MProgressCircular>
+    登录成功！正在初始化数据！
+	</MOverlay>
 <a href="https://beian.miit.gov.cn/" target="_blank" class="neutral-lighten-3--text"
     style="position:absolute;bottom:48px;margin-left:63%;text-decoration:none;font-size:14px;"></a>
 
@@ -52,17 +57,21 @@
     private bool _show;
     private string LoginName { get; set; }
     private string PassWord { get; set; }
+    private  bool overlay=false;
     public async void OnLogin(MouseEventArgs args)
     {
+        overlay = true;
         loginMode.Account = LoginName??"admin2";
         loginMode.Password = PassWord??"123456";
         var lo=await WebsiteAuthenticator.LoginAsync(loginMode);
         if (lo)
         {
+            overlay = false;
             Navigation.NavigateTo(Navigation.BaseUri + "home/home");
         }
         else
         {
+            overlay = false;
             await PopupService.ToastAsync("登录失败，请检查用户名或密码是否正确", AlertTypes.Error);
         }
     }

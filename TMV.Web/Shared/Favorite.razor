@@ -22,20 +22,6 @@
     <MMenu OffsetY Bottom Right CloseOnContentClick="false" ValueChanged="OnOpen" Value="_open" MinWidth="@("auto")">
         <ActivatorContent>
             <MTooltip Color="primary" Bottom>
-                <ActivatorContent Context="tooltipContext">
-                    @{
-                        var attrs = new Dictionary<string, object>();
-                        foreach (var (key, value) in context.Attrs)
-                        {
-                            attrs.Add(key, value);
-                        }
-                        foreach (var (key, value) in tooltipContext.Attrs)
-                        {
-                            if (attrs.ContainsKey(key) is false) attrs.Add(key, value);
-                        }
-                    }
-                    <MIcon @attributes="@attrs" Size=20 Color="dark-yellow">mdi-star-outline</MIcon>
-                </ActivatorContent>
                 <ChildContent>
                     <span>@T("Favorite")</span>
                 </ChildContent>

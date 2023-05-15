@@ -37,7 +37,11 @@
 			<Settings @bind-PageModel="_pageTab" @bind-Show=_showSetting />
 		</CascadingValue>
 	}
-
+	<MOverlay Value="overlay">
+		<MProgressCircular indeterminate
+						   Size="20"></MProgressCircular>
+						   正在初始化数据.......
+	</MOverlay>
 </MApp>
 
 @code {
@@ -45,6 +49,7 @@
 	private string? _pageTab;
 	private bool forceRender { get; set; } = false;
 	public string UserId { get; set; }
+	private bool overlay = true;
 	[Inject]
 	public IPopupService PopupService
 	{
@@ -63,8 +68,10 @@
 			var user = authState?.User;
 			if (user?.Identity is not null && user.Identity.IsAuthenticated)
 			{
+				overlay = false;
 				UserId = user.Claims.FirstOrDefault(it => it.Type == ClaimConst.UserId).Value;
 				await PopupService.ToastSuccessAsync($"欢迎{user.Identity.Name} 进入系统！！");
+				await InvokeAsync(StateHasChanged);
 			}
 		}
 	}
