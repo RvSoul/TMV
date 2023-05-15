@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMV_Upload", "TMV_Upload\TM
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TMV.PrintServer", "TMV.PrintServer\TMV.PrintServer\TMV.PrintServer.csproj", "{6F559C34-8454-49B9-AC51-A9794394CC18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMV.WebService", "TMV.WebService\TMV.WebService.csproj", "{85437966-84F6-44E5-9945-4F2E5856A989}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{6F559C34-8454-49B9-AC51-A9794394CC18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F559C34-8454-49B9-AC51-A9794394CC18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F559C34-8454-49B9-AC51-A9794394CC18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85437966-84F6-44E5-9945-4F2E5856A989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85437966-84F6-44E5-9945-4F2E5856A989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85437966-84F6-44E5-9945-4F2E5856A989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85437966-84F6-44E5-9945-4F2E5856A989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

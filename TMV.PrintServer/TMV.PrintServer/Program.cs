@@ -13,7 +13,6 @@ namespace TMV.PrintServer
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            Serve.RunNative(includeWeb: false);
 			Serve.RunNative(services =>
 			{
 				services.AddFileLogging("Log/InformLog-{0:yyyy}-{0:MM}-{0:dd}.log", options =>
@@ -38,7 +37,7 @@ namespace TMV.PrintServer
 						return logMsg.LogLevel == LogLevel.Error;
 					};
 				});
-			});
+			},false);
 			ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
         }
