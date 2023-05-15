@@ -1,8 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigation
-@using App = Furion.App
+@using TMV.Web.Core.Const;
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-
 <MApp>
 	@if (Navigation.Uri == Navigation.BaseUri + "screen")
 	{
@@ -62,18 +61,10 @@
 		{
 			var authState = await authenticationState;
 			var user = authState?.User;
-			string dp = Navigation.Uri;
-			var spurl = Navigation.BaseUri + "screen";
 			if (user?.Identity is not null && user.Identity.IsAuthenticated)
 			{
+				UserId = user.Claims.FirstOrDefault(it => it.Type == ClaimConst.UserId).Value;
 				await PopupService.ToastSuccessAsync($"欢迎{user.Identity.Name} 进入系统！！");
-			}
-			else
-			{
-				if (dp != spurl)
-				{
-					Navigation.NavigateTo($"{Navigation.BaseUri}pages/authentication/login-v2");
-				}
 			}
 		}
 	}
@@ -88,6 +79,7 @@
 			if (!usering.Success)
 			{
 				await PopupService.ToastErrorAsync($"登录已过期，请重新登录！！");
+				Navigation.NavigateTo($"{Navigation.BaseUri}pages/authentication/login-v2");
 			}
 			else
 			{

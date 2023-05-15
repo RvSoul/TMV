@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using Furion;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Newtonsoft.Json;
 using System;
@@ -11,6 +14,7 @@ using System.Threading.Tasks;
 using TMV.Application.AuthService;
 using TMV.DTO.Authorization;
 using TMV.DTO.Users;
+using TMV.Web.Core.Const;
 
 namespace TMV.Web.Core.Handle
 {
@@ -31,8 +35,8 @@ namespace TMV.Web.Core.Handle
 
             try
             {
-                var storedPrincipal = await _protectedLocalStorage.GetAsync<string>("identity");
-
+               var storedPrincipal = await _protectedLocalStorage.GetAsync<string>("identity");
+               // var userId = App.HttpContext.User.Claims.FirstOrDefault(it => it.Type == ClaimConst.UserId).Value;
                 if (storedPrincipal.Success)
                 {
                     var user = JsonConvert.DeserializeObject<LoginInputDTO>(storedPrincipal.Value);
@@ -43,7 +47,7 @@ namespace TMV.Web.Core.Handle
                         var identity = CreateIdentityFromUser(us);
                         principal = new(identity);
                     }
-                }
+               }
             }
             catch
             {
@@ -62,8 +66,15 @@ namespace TMV.Web.Core.Handle
             {
                 var identity = CreateIdentityFromUser(userInDatabase);
                 principal = new ClaimsPrincipal(identity);
-                await _protectedLocalStorage.SetAsync("identity", JsonConvert.SerializeObject(userInDatabase));
-				NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
+                await _protectedLocalStorage.SetAsync("identity", JsonConvert.SerializeObject(loginFormModel));
+                var diffTime = DateTimeOffset.Now.AddMinutes(30);
+                //await App.HttpContext.SignInAsync(new ClaimsPrincipal(identity), new AuthenticationProperties()
+                //{
+                //    IsPersistent = true,
+                //    ExpiresUtc = diffTime,
+                //});
+                var sd = new AuthenticationState(principal);
+                NotifyAuthenticationStateChanged(Task.FromResult(sd));
 				return true;
 			}
             return false;
@@ -76,13 +87,15 @@ namespace TMV.Web.Core.Handle
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
         }
 
-        private static ClaimsIdentity CreateIdentityFromUser(LoginOutDto user)
+        private static  ClaimsIdentity CreateIdentityFromUser(LoginOutDto user)
         {
-            return new ClaimsIdentity(new Claim[]
-            {
-            new (ClaimTypes.Name, user.Name),
-            new("UserId", user.UserId)
-            }, "User");
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim(ClaimConst.UserId, user.UserId.ToString()));
+            identity.AddClaim(new Claim(ClaimConst.Account, user.Name));
+			identity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
+			identity.AddClaim(new Claim(ClaimConst.IsSuperAdmin, user.Type.ToString()));
+            identity.AddClaim(new Claim(ClaimConst.IsOpenApi, false.ToString()));
+            return identity;
         }
 
         private async Task<(LoginOutDto, bool) >LookUpUser(string username, string password)

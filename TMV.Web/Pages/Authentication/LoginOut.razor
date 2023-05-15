@@ -1,0 +1,13 @@
+﻿@page "/pages/authentication/LoginOut"
+@layout EmptyLayout
+@inherits BaseComponentBase
+@inject WebsiteAuthenticator WebsiteAuthenticator
+@code {
+    [Inject]
+    public NavigationManager Navigation { get; set; } = default!;
+    protected override async Task  OnInitializedAsync()
+    {
+        await WebsiteAuthenticator.LogoutAsync();
+        Navigation.NavigateTo($"{Navigation.BaseUri}pages/authentication/login-v2");
+    }
+}

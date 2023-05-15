@@ -1,7 +1,6 @@
 ﻿@page "/pages/authentication/Login-v2"
 @layout EmptyLayout
 @inherits BaseComponentBase
-@inject IAuthService usersServiceDM
 @inject WebsiteAuthenticator WebsiteAuthenticator
 <MRow Class="max-height ma-0">
     <MCol Md=4 Sm=12 Class="neutral-lighten-5">
@@ -66,22 +65,5 @@
         {
             await PopupService.ToastAsync("登录失败，请检查用户名或密码是否正确", AlertTypes.Error);
         }
-
-        //var ajaxOption = new AjaxOption { Url = Navigation.BaseUri + "api/auth/login", Data = loginMode };
-        // var str = await AjaxService.GetMessageAsync(ajaxOption);
-        //var str =await usersServiceDM.Login(loginMode);
-        //if (str.IsSuccessStatusCode)
-        //{
-        //    //authenticationStateProvider.UserAuthenticated(str.UserId);
-        //    //await sessionStorage.SetItemAsync("UserId", str.UserId);
-        //    _cookieStorage?.SetItemAsync("UserId", str.ReasonPhrase);
-        //    await PopupService.ToastAsync("登录成功", AlertTypes.Success);
-        //   
-        //}
-        //await PopupService.ToastAsync("登录失败", AlertTypes.Error);
-    }
-    protected async override Task OnInitializedAsync()
-    {
-        //await PopupService.ToastAsync("登录成功", AlertTypes.Success);
     }
 }

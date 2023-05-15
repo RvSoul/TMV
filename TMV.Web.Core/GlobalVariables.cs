@@ -1,4 +1,4 @@
-﻿namespace TMV.Web.Core.Data.Base
+﻿namespace TMV.Web.Core
 {
     public static class GlobalVariables
     {

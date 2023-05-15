@@ -1,13 +1,13 @@
 ﻿@page "/"
 @inherits LayoutComponentBase
 @inject NavigationManager Nav
-
+@attribute [Authorize]
 @code {
     protected override void OnAfterRender(bool firstRender)
     {
         if(firstRender)
         {
-           // Nav.NavigateTo(GlobalVariables.DefaultRoute,true);    
+            Nav.NavigateTo(GlobalVariables.DefaultRoute,true);    
         }
     }
 }

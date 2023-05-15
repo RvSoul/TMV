@@ -80,6 +80,7 @@ namespace TMV.Web.Core
 			services.AddHttpContextAccessor();
 			services.AddGlobalForServer();
 			services.AddRemoteRequest();
+
 			services.AddScoped<AjaxService>();
 			services.AddScoped<WebsiteAuthenticator>();
 			services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<WebsiteAuthenticator>());
