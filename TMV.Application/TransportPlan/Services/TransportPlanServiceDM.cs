@@ -14,6 +14,38 @@ namespace TMV.Application.TransportPlan.Services
             c = db;
         }
 
+        public ResultEntity<string> GetCode(int Sampling)
+        {
+            TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.Sampling == Sampling && w.AddTime.Date == DateTime.Now.Date).OrderByDescending(o => o.AddTime).First();
+            if (tp != null)
+            {
+                if (Sampling == 1)
+                {
+                    int oldcode = Convert.ToInt32(tp.Code);
+                    int code = oldcode + 1;
+                    return new ResultEntityUtil<string>().Success(code.ToString());
+                }
+                else
+                {
+                    int oldcode = Convert.ToInt32(tp.Code.Replace("J", ""));
+                    int code = oldcode + 1;
+                    return new ResultEntityUtil<string>().Success(code.ToString() + "J");
+                }
+            }
+            else
+            {
+                if (Sampling == 1)
+                {
+                    return new ResultEntityUtil<string>().Success("100");
+                }
+                else
+                {
+                    return new ResultEntityUtil<string>().Success("100J");
+                }
+            }
+
+        }
+
         public ResultEntity<bool> AddTransportPlan(TransportPlanModel model)
         {
             TMV_TransportPlan tp = c.Queryable<TMV_TransportPlan>().Where(w => w.MineCode == model.MineCode && w.AddTime.Date == DateTime.Now.Date).First();
@@ -21,9 +53,9 @@ namespace TMV.Application.TransportPlan.Services
             {
                 return new ResultEntityUtil<bool>().Failure("矿号已经存在");
             }
-             
+
             TMV_TransportPlan pt = model.Adapt<TMV_TransportPlan>();
-            pt.AddTime=DateTime.Now;
+            pt.AddTime = DateTime.Now;
 
             var result = c.Insertable(pt).ExecuteCommand();
             if (result > 0)
@@ -52,7 +84,7 @@ namespace TMV.Application.TransportPlan.Services
         public ResultPageEntity<TransportPlanDTO> GetTransportPlanList(Request_TransportPlan dto)
         {
             int total = 0;
-            var expr = Expressionable.Create<TMV_TransportPlan>(); 
+            var expr = Expressionable.Create<TMV_TransportPlan>();
             if (!dto.Code.IsNullOrEmpty())
             {
                 expr = expr.And(n => n.Code == dto.Code);
