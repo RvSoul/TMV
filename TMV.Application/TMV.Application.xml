@@ -114,6 +114,13 @@
             <param name="dto"></param>
             <returns></returns>
         </member>
+        <member name="M:TMV.Application.TransportPlan.Services.ITransportPlanServiceDM.GetCode(System.Int32)">
+            <summary>
+            根基采样方式获取编号
+            </summary>
+            <param name="Sampling">1.人采，2.机采</param>
+            <returns></returns>
+        </member>
         <member name="M:TMV.Application.TransportPlan.TransportPlanService.GetTransportPlanList(TMV.DTO.TransportPlan.Request_TransportPlan)">
             <summary>
             获取运输计划列表
